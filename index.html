@@ -778,20 +778,45 @@ function ringDistJS(px, pz, ring) { let d = Infinity; for (let i = 0; i < ring.l
 const sArea = (r) => { let s = 0; for (let i = 0; i < r.length; i++) { const a = r[i], b = r[(i + 1) % r.length]; s += a[0] * b[1] - b[0] * a[1]; } return s / 2; };
 
 const OFFS = [0, 0.03, -0.03, 0.06, -0.06, 0.1, -0.1, 0.15, -0.15];
-// The wall band across an opening line at parameter t: [extent towards n, extent against n], or null where there is no wall.
+const MAXBAND = 0.7; // the thickest wall in the building is the 0.62 m exterior band
+// The wall's cross-section at parameter t of an opening line: [extent towards n, extent against n], or null where there is
+// no wall — or where the "wall" found is really the length of a wall running across the line (a T-junction), not its thickness.
 // Probing at small offsets finds the wall even when the line lies on one of its faces (as base door lines do).
 function bandAt(rings, at, n, t) {
-  for (const off of OFFS) { const [x, z] = at(t, off); if (ringsContain(rings, x, z)) return [off + depthIn(rings, x, z, n[0], n[1]), -off + depthIn(rings, x, z, -n[0], -n[1])]; }
+  for (const off of OFFS) {
+    const [x, z] = at(t, off); if (!ringsContain(rings, x, z)) continue;
+    const b = [off + depthIn(rings, x, z, n[0], n[1]), -off + depthIn(rings, x, z, -n[0], -n[1])];
+    return b[0] + b[1] <= MAXBAND ? b : null;
+  }
   return null;
 }
+const wallNear = (rings, at, t) => OFFS.some((off) => { const [x, z] = at(t, off); return ringsContain(rings, x, z); });
 const polyArea = (poly) => Math.abs(sArea(poly[0])) - poly.slice(1).reduce((s, h) => s + Math.abs(sArea(h)), 0);
-const JD = [0.02, 0.05, 0.08, 0.12, 0.16, 0.22];
-// The nearest wall beyond each end of an opening (the jambs): [{dist, band} | null, {dist, band} | null].
-function jambsOf(rings, o, at, n) {
+const JD = [0.02, 0.05, 0.08, 0.12, 0.16];
+// Is there wall just beyond each end of an opening (its jambs)? Returns the distance to it, or null.
+function jambDist(rings, o, at) {
   const L = Math.hypot(o.b[0] - o.a[0], o.b[1] - o.a[1]) || 1;
-  return [-1, 1].map((side) => { for (const dd of JD) { const b = bandAt(rings, at, n, side < 0 ? -dd / L : 1 + dd / L); if (b) return { dist: dd, band: b }; } return null; });
+  return [-1, 1].map((side) => { for (const dd of JD) if (wallNear(rings, at, side < 0 ? -dd / L : 1 + dd / L)) return dd; return null; });
+}
+// The jamb walls' cross-sections, kept only where the wall continues along the opening line with the same section
+// (so a wall meeting the line at a right angle is never mistaken for a thick jamb). Picks the thinner of the two.
+function jambBand(rings, o, at, n, dist) {
+  const L = Math.hypot(o.b[0] - o.a[0], o.b[1] - o.a[1]) || 1, got = [];
+  dist.forEach((dd, k) => { if (dd === null) return; const t = (x) => (k ? 1 + x / L : -x / L);
+    const b1 = bandAt(rings, at, n, t(dd + 0.01)), b2 = bandAt(rings, at, n, t(dd + 0.06));
+    if (b1 && b2 && Math.abs(b1[0] - b2[0]) < 0.04 && Math.abs(b1[1] - b2[1]) < 0.04) got.push(b1); });
+  return got.length ? got.sort((x, y) => (x[0] + x[1]) - (y[0] + y[1]))[0] : null;
 }
 const quadPC = (at, t0, t1, p, m) => { const A = at(t0, p), B = at(t1, p), C = at(t1, -m), E = at(t0, -m); return [[A, B, C, E, A]]; };
+const isGeneric = (o) => (o.d0 ?? 0.9) >= 0.55 && (o.d1 ?? 0.9) >= 0.55; // added or moved by an edit: no surveyed wall depths
+// Wall depths surveyed from the plans for a base opening (the cut box minus its margins).
+const surveyed = (o) => { const m = o.kind === 'door' ? 0.02 : 0.05; return [Math.max(0, (o.d0 ?? 0) - m), Math.max(0, (o.d1 ?? 0) - m)]; };
+function measuredBand(rings, at, n) { // the median of the valid cross-sections along the opening
+  const f = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9].map((t) => bandAt(rings, at, n, t)).filter(Boolean);
+  if (f.length < 2) return null;
+  const med = (v) => v.sort((x, y) => x - y)[Math.floor(v.length / 2)];
+  return [med(f.map((b) => b[0])), med(f.map((b) => b[1]))];
+}
 function computeWalls(key) {
   const d = D.F[key], st = STATE.floors[key] || {}, warn = (what, e) => console.warn(what, key, e);
   const baseRings = d._baseRings || (d._baseRings = fromPC(PC.union(toPC(d.lb), toPC(d.thin))));
@@ -814,42 +839,42 @@ function computeWalls(key) {
   try { solid = PC.union(toPC(d.lb), thin, ...add); } catch (e) { warn('added partitions failed', e); solid = PC.union(toPC(d.lb), thin); }
   let rings = fromPC(solid);
   const lineAt = (o) => { const n = openingNormal(o), L = Math.hypot(o.b[0] - o.a[0], o.b[1] - o.a[1]) || 1; return { n, L, at: (t, off) => [o.a[0] + (o.b[0] - o.a[0]) * t + n[0] * off, o.a[1] + (o.b[1] - o.a[1]) * t + n[1] * off] }; };
-  const maxBand = (bs, fb) => { const f = bs.filter(Boolean); return f.length ? [Math.max(...f.map((b) => b[0])), Math.max(...f.map((b) => b[1]))] : fb; };
-  // walls that close gaps: removed base openings (jamb to jamb) and the narrow see-through slits the plans leave beside some doors
+  // Walls that close gaps, all at the surveyed depth of the opening they belong to: a removed base opening and the original
+  // place of a moved one (jamb to jamb), and the narrow see-through slits the plans leave beside some base doors.
   const fills = [], live = [];
+  const sectionOf = (o, at, n, j) => (o.kind === 'door' && jambBand(rings, o, at, n, j)) || surveyed(o); // a door's own depth is only its thin infill
+  const fillGap = (o) => { const { n, L, at } = lineAt(o), j = jambDist(rings, o, at), [p, m] = sectionOf(o, at, n, j);
+    if (p + m > 0.05) fills.push(quadPC(at, j[0] && j[0] <= 0.16 ? -j[0] / L : 0, j[1] && j[1] <= 0.16 ? 1 + j[1] / L : 1, p, m)); };
   for (const o of st.openings || []) {
     if (!o.a || !o.b) continue;
     try {
-      const { n, L, at } = lineAt(o), j = jambsOf(rings, o, at, n);
-      if (o.removed) {
-        if (!o.base) continue;
-        const band = maxBand(j.map((x) => x && x.band), null);
-        if (band && band[0] + band[1] > 0.05) fills.push(quadPC(at, j[0] ? -j[0].dist / L : 0, j[1] ? 1 + j[1].dist / L : 1, band[0], band[1]));
-        continue;
-      }
-      const jb = o.base ? jambsOf(baseRings, o, at, n) : j;
-      live.push({ o0: o, n, L, at, j, orphan: jb.some(Boolean) && !j.some(Boolean) }); // its wall was there and is gone now
-      j.forEach((x, k) => { if (x && x.dist > 0.03 && x.dist <= 0.16 && x.band[0] + x.band[1] > 0.05) fills.push(quadPC(at, k ? 1 : 0, k ? 1 + x.dist / L : -x.dist / L, x.band[0], x.band[1])); });
+      if (o.base && o.orig) fillGap(o.orig); // moved: wall up where it was (the new place is cut below)
+      if (o.removed) { if (o.base && !o.orig) fillGap(o); continue; }
+      const { n, L, at } = lineAt(o), j = jambDist(rings, o, at);
+      // a base opening whose jamb existed in the plans and is gone now has lost its wall: no lintel, no leaf hinging on air
+      const jb = o.base ? jambDist(baseRings, o, at) : [null, null];
+      const orphan = !!o.base && jb.some((x, k) => x !== null && j[k] === null);
+      const section = !isGeneric(o) ? sectionOf(o, at, n, j) : null;
+      live.push({ o0: o, n, L, at, j, jb, orphan, section });
+      if (o.base && !isGeneric(o) && !orphan) { const [p, m] = section;
+        j.forEach((x, k) => { if (x && x > 0.03 && p + m > 0.05) fills.push(quadPC(at, k ? 1 : 0, k ? 1 + x / L : -x / L, p, m)); }); }
     } catch (e) { warn(`opening ${o.id} skipped`, e); }
   }
   if (fills.length) { try { solid = PC.union(solid, ...fills); rings = fromPC(solid); } catch (e) { warn('closing gaps failed', e); } }
   const cuts = [];
-  for (const { o0, n, L, at, j, orphan } of live) {
+  for (const it of live) {
+    const { o0, n, at, j, orphan, section } = it;
     try {
-      let o = o0;
-      const inner = [0.25, 0.5, 0.75].map((t) => bandAt(rings, at, n, t));
-      if ((o0.d0 ?? 0.9) >= 0.55 && (o0.d1 ?? 0.9) >= 0.55) { // generic depth (added or moved opening): cut only this wall's thickness
-        const f = inner.filter(Boolean);
-        if (f.length) { const med = (v) => v.sort((x, y) => x - y)[Math.floor(v.length / 2)]; o = { ...o0, d0: med(f.map((b) => b[0])) + 0.03, d1: med(f.map((b) => b[1])) + 0.03 }; }
-      }
+      let o = o0, band;
+      if (isGeneric(o0)) { // added or moved: measure this wall's thickness; never fall back to a deep generic box
+        band = measuredBand(rings, at, n) || jambBand(rings, o0, at, n, j);
+        if (!band) { if (!j.some((x) => x !== null)) continue; band = [0.12, 0.12]; } // no wall along the line: open air, nothing to cut
+        o = { ...o0, d0: band[0] + 0.03, d1: band[1] + 0.03 };
+      } else band = section; // the surveyed cut box stays as it is; only the lintel follows the wall section
       if (orphan) { const mp = PC.intersection(cutPC(o, -0.03), solid); if (mp.length) cuts.push({ o: o0, mp, orphan }); continue; }
       const mp = PC.intersection(cutPC(o), solid);
-      // the opening needs its wall: some wall across it, or jambs at its ends (door gaps are often open in the plans)
-      if (!mp.length && !j.some(Boolean)) continue;
-      if (mp.length && !j.some(Boolean) && inner.filter(Boolean).length < 2) continue; // only a stray corner of another wall in the box
-      // sill / lintel span the full wall thickness found at the jambs (or across the opening), from end to end
-      const band = maxBand([...j.map((x) => x && x.band), ...inner], [o.d0 ?? 0.2, o.d1 ?? 0.2]);
-      cuts.push({ o: o0, mp, piece: quadPC(at, 0, 1, Math.min(band[0], 1), Math.min(band[1], 1)) });
+      if (!mp.length && !j.some((x) => x !== null)) continue; // no wall here at all
+      cuts.push({ o: o0, mp, piece: quadPC(at, 0, 1, Math.min(band[0], MAXBAND), Math.min(band[1], MAXBAND)), it });
     } catch (e) { warn(`opening ${o0.id} skipped`, e); }
   }
   let walls = solid;
@@ -859,7 +884,15 @@ function computeWalls(key) {
     walls = solid;
     for (const c of withCut) { try { walls = PC.difference(walls, c.mp); } catch (e2) { warn(`opening ${c.o.id} not cut`, e2); c.skip = true; } }
   }
-  return { walls: fromPC(walls), pieces: cuts.filter((c) => !c.orphan && !c.skip).map((c) => ({ o: c.o, polys: fromPC(c.piece) })) };
+  // a jamb another opening has just cut away counts as lost too
+  let finalRings = null;
+  for (const c of cuts) {
+    if (c.orphan || c.skip || !c.o.base) continue;
+    finalRings = finalRings || fromPC(walls);
+    const now = jambDist(finalRings, c.o, c.it.at);
+    if (c.it.jb.some((x, k) => x !== null && now[k] === null)) c.orphan = true;
+  }
+  return { walls: fromPC(walls), pieces: cuts.filter((c) => !c.orphan && !c.skip).map((c) => ({ o: c.o, polys: fromPC([c.piece]) })) };
 }
 function computeWallsSafe(key) {
   try { return computeWalls(key); }
