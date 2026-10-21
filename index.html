@@ -1372,6 +1372,7 @@ T.az.ed={ title:'Dəyişikliklər', lead:'Nəyi dəyişmək istədiyinizi deyin 
   noMic:'Bu brauzer səs yazmağı dəstəkləmir — mətnlə yazın.', empty:'Səs tanınmadı — yenidən deyin və ya yazın.',
   refused:'Claude bu göstərişi yerinə yetirmədi. Başqa sözlərlə yazın.', notReady:'Server hələ tam qurulmayıb — açarları və PIN-i yoxlayın.', badAnswer:'Claude-un cavabı natamam alındı. Göstərişi qısaldıb yenidən göndərin.',
   claudeDown:'Claude hazırda cavab vermir. Bir dəqiqədən sonra yenidən cəhd edin.', sttDown:'Səs tanıma hazırda işləmir — göstərişi mətnlə yazın.', badAudio:'Səs yazısı oxunmadı — yenidən yazın.',
+  already:'Bu göstəriş artıq əvvəl tətbiq olunub (v{n}) — təkrar saxlanmadı.', uncheck:'Əlaqə kəsildi və yoxlamaq mümkün olmadı — PIN-i yenidən daxil edib tarixçəyə baxın.', recFail:'Səs yazmaq alınmadı — göstərişi mətnlə yazın.',
   conflict:'Model eyni anda başqa yerdən dəyişdi. Yenidən göndərin.', tooBig:'Model həddən artıq böyüyüb — dəyişiklik saxlanmadı.', noVersion:'Bu versiya tapılmadı.' };
 T.ru.ed={ title:'Правки', lead:'Скажите или напишите, что изменить, — Claude обновит модель. Каждая правка сохраняется отдельной версией, к любой можно вернуться.',
   pin:'PIN-код', login:'Войти', logout:'Выйти', ownerOnly:'Вносить правки может только владелец. Для просмотра PIN не нужен.',
@@ -1389,6 +1390,7 @@ T.ru.ed={ title:'Правки', lead:'Скажите или напишите, ч
   noMic:'Этот браузер не умеет записывать звук — напишите текстом.', empty:'Речь не распознана — повторите или напишите.',
   refused:'Claude не стал выполнять эту просьбу. Сформулируйте иначе.', notReady:'Сервер ещё не настроен до конца — проверьте ключи и PIN.', badAnswer:'Ответ Claude пришёл неполным. Сократите просьбу и отправьте ещё раз.',
   claudeDown:'Claude сейчас не отвечает. Попробуйте через минуту.', sttDown:'Распознавание речи сейчас не работает — напишите текстом.', badAudio:'Запись не прочиталась — запишите ещё раз.',
+  already:'Эта просьба уже была применена раньше (v{n}) — повторно не сохранена.', uncheck:'Связь прервалась, и проверить не удалось — войдите снова и посмотрите историю.', recFail:'Записать звук не получилось — напишите текстом.',
   conflict:'Модель одновременно изменили в другом месте. Отправьте ещё раз.', tooBig:'Модель стала слишком большой — правка не сохранена.', noVersion:'Эта версия не найдена.' };
 
 const API=String(window.__API__||'').replace(/\/+$/,'');
@@ -1450,8 +1452,14 @@ async function pullState(){ // the latest version for everyone; owners also refr
     }
   } catch(e){}
   if (ED.authed && (changed || !ED.versions || !byId(VERSION))) { await loadVersions(); changed=true; }
+  if (ED.key && ED.err===T[LANG].ed.lost){ const hit=(ED.versions||[]).find(v=>v.kind==='edit' && v.request_key===ED.key.key); // the 'lost' edit was saved late after all
+    if (hit){ ED.result={ reply_az:hit.reply_az, reply_ru:hit.reply_ru, warnings:hit.warnings, applied:hit.applied, rejected:hit.rejected, saved:true }; if (ED.text.trim()===ED.key.text){ ED.text=''; ED.transcript=''; } ED.key=null; ED.err=''; ED.note=T[LANG].ed.recovered; announce(ED.note); changed=true; } }
   pulling=false;
   if (changed || was!==ED.online) refreshEdit();
+}
+async function refreshNow(){ // newest state + history now, even while an operation holds 'busy'
+  try { const r=await api('/api/state'); const v=vid(r.version); if (r.state && (VERSION==null || v>VERSION)) setDesignState(r.state,v); } catch(e){}
+  await loadVersions();
 }
 async function loadVersions(){
   if (!ED.authed) return;
@@ -1492,9 +1500,17 @@ async function restoreTo(id,mode){
     ED.note=T[LANG].ed.restored.replace('{n}',id); announce(ED.note);
     const k=floorOfVersion(undone||byId(id)); if (k && k!==state.floor) setFloor(k);
   } catch(e){
-    if (e.status===409){ ED.redo=[]; ED.err=T[LANG].ed.moved; setBusy(''); await pullState(); }
+    if (e.status===409){ ED.redo=[]; ED.err=T[LANG].ed.moved; await refreshNow(); }
+    else if (e.status===0){ // the answer was lost: did the server make this restore anyway?
+      const before=VERSION; await refreshNow();
+      const h=(ED.versions||[])[0];
+      if (h && h.id>before && h.kind==='restore' && h.restored_from===id && (h.restore_mode||'pick')===mode){
+        if (mode==='undo' && undone) ED.redo.push(undone.id); else if (mode==='pick') ED.redo=[];
+        ED.note=T[LANG].ed.restored.replace('{n}',id);
+      } else { if (mode==='redo') ED.redo.push(id); ED.err=errText(e); }
+    }
     else { if (mode==='redo') ED.redo.push(id); ED.err=errText(e); if (e.status===401) dropAuth(ED.err); }
-    announce(ED.err);
+    announce(ED.err||ED.note);
   }
   setBusy(''); renderEdit();
 }
@@ -1517,7 +1533,8 @@ async function runEdit(){
   try {
     const r=await api('/api/edit',{method:'POST',json:{instruction:text,lang:LANG,transcript:ED.transcript?ED.transcript.slice(0,4000):undefined,request_key:key},auth:true,timeout:300000});
     ED.result=r; ED.text=''; ED.transcript=''; ED.key=null;
-    if (r.saved!==false || vid(r.version)!==before) ED.redo=[]; // the head moved (ours, or another device's): old redo steps no longer apply
+    if (r.replay){ ED.result={...r, applied:[]}; ED.note=T[LANG].ed.already.replace('{n}',r.replayed_version||'?'); } // saved earlier: nothing new happened
+    if ((r.saved!==false && !r.replay) || vid(r.version)!==before) ED.redo=[]; // the head moved (ours, or another device's): old redo steps no longer apply
     if (r.state) setDesignState(r.state,vid(r.version));
     focusChange(r.applied); await loadVersions();
     announce(LANG==='ru'?(r.reply_ru||r.reply_az):(r.reply_az||r.reply_ru));
@@ -1527,7 +1544,8 @@ async function runEdit(){
       setBusy('verify'); ED.note=T[LANG].ed.verifying; renderEdit(); announce(ED.note);
       let found=false;
       for (let i=0; i<6 && !found && ED.authed; i++){ if (i) await new Promise(r=>setTimeout(r,8000)); found=await reconcileEdit(key,text); }
-      if (!found){ ED.note=''; ED.err=T[LANG].ed.lost; } // a resend keeps the same key, so a late save is never applied twice
+      if (!found){ ED.note=''; ED.err=ED.authed?T[LANG].ed.lost:T[LANG].ed.uncheck; } // a resend keeps the same key, so a late save is never applied twice
+      else { const r=ED.result||{}; announce((LANG==='ru'?r.reply_ru:r.reply_az)||ED.note); }
     } else ED.err=errText(e);
     if (ED.err) announce(ED.err);
   }
@@ -1548,18 +1566,18 @@ async function toWav16k(blob){
   for (let i=0;i<pcm.length;i++){ const s=Math.max(-1,Math.min(1,pcm[i])); dv.setInt16(44+i*2,s<0?s*0x8000:s*0x7FFF,true); }
   return new Blob([dv],{type:'audio/wav'});
 }
-function micError(err){ const e=T[LANG].ed, n=err&&err.name; if (n==='NotFoundError'||n==='OverconstrainedError') return e.micNone; if (n==='NotReadableError'||n==='AbortError') return e.micBusy; return e.micDenied; }
+function micError(err){ const e=T[LANG].ed, n=err&&err.name; if (n==='NotAllowedError'||n==='SecurityError') return e.micDenied; if (n==='NotFoundError'||n==='OverconstrainedError') return e.micNone; if (n==='NotReadableError'||n==='AbortError') return e.micBusy; return e.recFail; }
 async function toggleRec(){
   if (REC){ REC.stop(); return; }
   if (ED.busy) return;
   const e=T[LANG].ed;
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder){ ED.err=e.noMic; renderEdit(); return; }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder){ ED.err=e.noMic; renderEdit(); announce(ED.err); return; }
   setBusy('mic'); ED.err=''; ED.note=''; renderEdit(); // blocks a second tap while the permission prompt / device opens
   let stream; try { stream=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:true,noiseSuppression:true,autoGainControl:true}}); }
-  catch(err){ setBusy(''); ED.err=micError(err); renderEdit(); return; }
+  catch(err){ setBusy(''); ED.err=micError(err); renderEdit(); announce(ED.err); return; }
   if (ED.busy!=='mic' || !ED.authed){ stream.getTracks().forEach(t=>t.stop()); if (ED.busy==='mic') setBusy(''); return; }
   const mt=['audio/webm;codecs=opus','audio/mp4','audio/webm','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t));
-  let mr; try { mr=new MediaRecorder(stream,mt?{mimeType:mt}:undefined); } catch(err){ stream.getTracks().forEach(t=>t.stop()); setBusy(''); ED.err=e.noMic; renderEdit(); return; }
+  let mr; try { mr=new MediaRecorder(stream,mt?{mimeType:mt}:undefined); } catch(err){ stream.getTracks().forEach(t=>t.stop()); setBusy(''); ED.err=e.noMic; renderEdit(); announce(ED.err); return; }
   const chunks=[], cap=setTimeout(()=>{ if (mr.state!=='inactive') mr.stop(); },120000);
   mr.ondataavailable=(ev)=>{ if (ev.data && ev.data.size) chunks.push(ev.data); };
   mr.onstop=async ()=>{
@@ -1576,10 +1594,10 @@ async function toggleRec(){
     setBusy(''); renderEdit();
     const ta=document.getElementById('ed-text'); if (ta && ED.text){ ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length); }
   };
-  const fail=(err)=>{ clearTimeout(cap); stream.getTracks().forEach(t=>t.stop()); REC=null; setBusy(''); ED.err=micError(err); renderEdit(); };
+  const fail=(err)=>{ clearTimeout(cap); stream.getTracks().forEach(t=>t.stop()); REC=null; setBusy(''); ED.err=micError(err); renderEdit(); announce(ED.err); };
   REC={ mr, stop:()=>{ if (mr.state!=='inactive') mr.stop(); else fail(); } };
   try { mr.start(250); } catch(err){ fail(err); return; }
-  setBusy('rec'); ED.t0=performance.now(); renderEdit(); announce(e.recording);
+  setBusy('rec'); ED.t0=performance.now(); renderEdit(); announce(e.recording); focusId('ed-mic'); // keyboard users land on Stop
 }
 function keepTranscript(){ // forget the voice transcript once the owner has rewritten most of it by hand
   if (!ED.transcript) return; if (!ED.text.trim()){ ED.transcript=''; return; }
