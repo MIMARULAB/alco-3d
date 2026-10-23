@@ -1929,7 +1929,17 @@ T.az.ed={ title:'Dəyişikliklər', lead:'Nəyi dəyişmək istədiyinizi deyin 
   conflict:'Model eyni anda başqa yerdən dəyişdi. Yenidən göndərin.', tooBig:'Model həddən artıq böyüyüb — dəyişiklik saxlanmadı.', noVersion:'Bu versiya tapılmadı.',
   phAdd:'Şəkil əlavə et', phRemove:'Şəkli sil', phAlt:'Şəkil', phN:'şəkil', phDefault:'Şəkildəki kimi et', phWork:'Şəkil hazırlanır…', phAdded:'Şəkil əlavə olundu: {n} / 4.', phRemoved:'Şəkil silindi.',
   phMax:'Ən çox 4 şəkil əlavə etmək olar.', phBad:'Bu faylı şəkil kimi açmaq olmadı — JPEG, PNG və ya WebP seçin.', phBig:'Şəkil çox böyükdür — daha kiçik şəkil seçin.',
-  phHint:'Şəkil də əlavə edə bilərsiniz (📷, sürükləyib buraxmaq və ya mətn sahəsinə yapışdırmaq) — məsələn, «belə et» nümunəsi, otağın fotosu və ya eskiz.' };
+  phHint:'Fayl da əlavə edə bilərsiniz (📎, sürükləyib buraxmaq və ya mətn sahəsinə yapışdırmaq): «belə et» fotosu və ya eskiz, PDF (plan, spesifikasiya, kataloq), DXF çertyoj, Excel cədvəli, Word sənədi.',
+  fAdd:'Fayl əlavə et', fRemove:'Faylı sil', fWork:'Fayl hazırlanır…', fAdded:'Əlavə olundu: {name}.', fRemoved:'Fayl silindi.', fDefault:'Əlavə olunan fayla əsasən et', fFiles:'Fayllar', fOpen:'Çertyoju aç', fCut:'qısaldılıb',
+  fMax:'Şəkillərdən başqa ən çox 3 fayl əlavə etmək olar.', fType:'Bu fayl növü dəstəklənmir. Şəkil, PDF, DXF, Excel (xlsx, xls, csv, tsv), Word (docx) və ya TXT seçin.',
+  fDwg:'DWG faylını brauzerdə oxumaq mümkün deyil — CAD-dan PDF və ya DXF kimi ixrac edin.', fDoc:'Köhnə .doc formatı oxunmur — Word-da DOCX və ya PDF kimi saxlayın.',
+  fBig:'Fayl çox böyükdür — daha kiçik fayl seçin.', fAll:'Şəkillər və fayllar birlikdə çox böyükdür (ən çox ~25 MB) — bəzilərini silin.', fRead:'Faylı oxumaq olmadı — zədələnib və ya başqa formatdadır.',
+  fEmpty:'Faylda mətn tapılmadı.', fDup:'Bu fayl artıq əlavə olunub: {n}.', fLib:'Faylı oxumaq üçün lazım olan modul yüklənmədi — interneti yoxlayıb yenidən cəhd edin.',
+  pdfBad:'Bu fayl PDF deyil və ya zədələnib.', pdfBig:'PDF çox böyükdür (ən çox 10 MB) — lazımi səhifələri ayrıca PDF kimi saxlayın.', pdfLock:'PDF parol ilə qorunur — parolsuz nüsxəni seçin.',
+  pdfPages:'PDF-də {n} səhifə var, ən çox 100 səhifə göndərmək olar — lazımi səhifələri ayrıca PDF kimi saxlayın.',
+  dxfBin:'Bu ikilik (binary) DXF-dir — CAD-da ASCII DXF və ya PDF kimi saxlayın.', dxfEmpty:'DXF-də çertyoj tapılmadı.',
+  pdfRej:'Claude PDF-i oxuya bilmədi — ola bilsin, 100 səhifədən çoxdur, parol ilə qorunur və ya zədələnib. Lazımi səhifələri ayrıca PDF kimi saxlayıb yenidən göndərin.',
+  allRej:'Fayllar Claude üçün çox böyükdür — daha az səhifə və ya daha kiçik fayl göndərin.', docSrv:'Server faylı qəbul etmədi — başqa fayl seçin.' };
 T.ru.ed={ title:'Правки', lead:'Скажите или напишите, что изменить, — Claude обновит модель. Каждая правка сохраняется отдельной версией, к любой можно вернуться.',
   pin:'PIN-код', login:'Войти', logout:'Выйти', ownerOnly:'Вносить правки может только владелец. Для просмотра PIN не нужен.',
   rec:'Записать голосом', stop:'Остановить', micWait:'Включаем микрофон…', recording:'Идёт запись', stt:'Распознаём речь…',
@@ -1950,10 +1960,20 @@ T.ru.ed={ title:'Правки', lead:'Скажите или напишите, ч
   conflict:'Модель одновременно изменили в другом месте. Отправьте ещё раз.', tooBig:'Модель стала слишком большой — правка не сохранена.', noVersion:'Эта версия не найдена.',
   phAdd:'Добавить фото', phRemove:'Удалить фото', phAlt:'Фото', phN:'фото', phDefault:'Сделай как на фото', phWork:'Готовим фото…', phAdded:'Добавлено фото: {n} из 4.', phRemoved:'Фото удалено.',
   phMax:'Можно добавить не больше 4 фото.', phBad:'Не удалось открыть файл как изображение — выберите JPEG, PNG или WebP.', phBig:'Фото слишком большое — выберите поменьше.',
-  phHint:'Можно добавить и фото (📷, перетаскиванием или вставкой в поле текста) — например, образец «сделай так», снимок комнаты или эскиз.' };
+  phHint:'Можно добавить и файлы (📎, перетаскиванием или вставкой в поле текста): фото «сделай так» или эскиз, PDF (план, спецификация, каталог), DXF-чертёж, таблицу Excel, документ Word.',
+  fAdd:'Добавить файл', fRemove:'Удалить файл', fWork:'Готовим файл…', fAdded:'Добавлено: {name}.', fRemoved:'Файл удалён.', fDefault:'Сделай по приложенному файлу', fFiles:'Файлы', fOpen:'Открыть чертёж', fCut:'обрезано',
+  fMax:'Кроме фото, можно добавить не больше 3 файлов.', fType:'Этот тип файла не поддерживается. Выберите фото, PDF, DXF, Excel (xlsx, xls, csv, tsv), Word (docx) или TXT.',
+  fDwg:'Файл DWG нельзя прочитать в браузере — сохраните из CAD в PDF или DXF.', fDoc:'Старый формат .doc не читается — сохраните его в Word как DOCX или PDF.',
+  fBig:'Файл слишком большой — выберите поменьше.', fAll:'Фото и файлы вместе слишком большие (не больше ~25 МБ) — удалите часть.', fRead:'Не удалось прочитать файл — он повреждён или в другом формате.',
+  fEmpty:'В файле не найден текст.', fDup:'Этот файл уже добавлен: {n}.', fLib:'Не загрузился модуль для чтения файла — проверьте интернет и попробуйте ещё раз.',
+  pdfBad:'Файл не похож на PDF или повреждён.', pdfBig:'PDF слишком большой (не больше 10 МБ) — сохраните нужные страницы отдельным PDF.', pdfLock:'PDF защищён паролем — выберите копию без пароля.',
+  pdfPages:'В PDF {n} стр., а можно не больше 100 — сохраните нужные страницы отдельным PDF.',
+  dxfBin:'Это двоичный (binary) DXF — сохраните в CAD как ASCII DXF или PDF.', dxfEmpty:'В DXF не найден чертёж.',
+  pdfRej:'Claude не смог прочитать PDF — возможно, в нём больше 100 страниц, он защищён паролем или повреждён. Сохраните нужные страницы отдельным PDF и отправьте ещё раз.',
+  allRej:'Файлы слишком большие для Claude — отправьте меньше страниц или файлы поменьше.', docSrv:'Сервер не принял файл — выберите другой.' };
 
 const API=String(window.__API__||'').replace(/\/+$/,'');
-const ED={ pin:null, authed:false, busy:'', t0:0, text:'', transcript:'', result:null, err:'', note:'', versions:null, redo:[], online:null, ticker:null, mut:0, lock:null, wantLock:false, key:null, focus:null, photos:[], phWork:0, phSeq:0, phGen:0, lost:null };
+const ED={ pin:null, authed:false, busy:'', t0:0, text:'', transcript:'', result:null, err:'', note:'', versions:null, redo:[], online:null, ticker:null, mut:0, lock:null, wantLock:false, key:null, focus:null, photos:[], docs:[], docPend:[], phWork:0, docWork:0, phSeq:0, phGen:0, lost:null };
 const newKey=()=>{ try { if (crypto.randomUUID) return crypto.randomUUID(); } catch(e){} return 'k'+Date.now().toString(36)+Math.random().toString(36).slice(2,12); };
 try { ED.pin=localStorage.getItem('alco3d-pin'); ED.authed=!!ED.pin; } catch(e){}
 const vid=(v)=>(v && typeof v==='object') ? v.id : v;
@@ -1961,7 +1981,8 @@ const PIN_OK=/^[\x21-\x7E]+$/; // the PIN travels in the Authorization header: p
 class ApiError extends Error { constructor(status,msg,code){ super(msg); this.status=status; this.code=code||''; } }
 async function api(path,{method='GET',json,body,type,auth=false,timeout=30000}={}){
   const ctl=new AbortController(), tm=setTimeout(()=>ctl.abort(),timeout), headers={};
-  if (json!==undefined){ headers['Content-Type']='application/json'; body=JSON.stringify(json); } else if (type) headers['Content-Type']=type;
+  if (json!==undefined){ headers['Content-Type']='application/json'; body=JSON.stringify(json).replace(/[\u007f-\uffff]/g,c=>'\\u'+c.charCodeAt(0).toString(16).padStart(4,'0')); } // ASCII-only JSON: the worker keeps a large body as a one-byte string
+  else if (type) headers['Content-Type']=type;
   if (auth && ED.pin) headers['Authorization']='Bearer '+ED.pin;
   try {
     // GET revalidates with the server's ETag (a 304 is served from the browser cache); writes are never cached
@@ -1978,7 +1999,8 @@ async function api(path,{method='GET',json,body,type,auth=false,timeout=30000}={
 function errText(e,ctx){ const t=T[LANG].ed; if (!(e instanceof ApiError)) return t.failed;
   if (e.status===0) return e.message==='timeout'?t.timeout:t.offline; if (e.status===401) return ctx==='login'?t.badPin:t.expired;
   const c=e.code||'';
-  if (e.status===429) return t.tooMany; if (e.status===413) return (ctx==='edit'||c==='image_too_large')?t.phBig:t.tooLong; if (c==='bad_image') return t.phBad;
+  if (c==='document_rejected') return t.pdfRej; if (c==='attachments_too_large') return t.allRej; if (c==='document_too_large') return t.fBig; if (c==='bad_document') return t.docSrv; if (c==='image_rejected') return t.phBad;
+  if (e.status===429) return t.tooMany; if (e.status===413) return c==='image_too_large'?t.phBig:ctx==='edit'?t.fAll:t.tooLong; if (c==='bad_image') return t.phBad;
   if (c==='refused') return t.refused; if (c==='not_configured') return t.notReady; if (c==='answer_truncated'||c==='bad_answer') return t.badAnswer;
   if (c==='conflict') return t.conflict; if (c==='state_too_large') return t.tooBig; if (c==='version_not_found') return t.noVersion; if (c==='bad_audio') return t.badAudio;
   if (c.startsWith('claude')) return t.claudeDown; if (c.startsWith('stt')||ctx==='stt') return t.sttDown;
@@ -2013,7 +2035,7 @@ async function pullState(){ // the latest version for everyone; owners also refr
   if (ED.authed && (changed || !ED.versions || !byId(VERSION))) { await loadVersions(); changed=true; }
   if (ED.lost){ const L0=ED.lost, hit=(ED.versions||[]).find(v=>v.kind==='edit' && v.request_key===L0.key); // the 'lost' edit was saved late after all
     if (hit){ ED.lost=null; ED.result={ reply_az:hit.reply_az, reply_ru:hit.reply_ru, warnings:hit.warnings, applied:hit.applied, rejected:hit.rejected, saved:true };
-      if (ED.text.trim()===L0.text && photoSig()===L0.sig){ ED.text=''; ED.transcript=''; clearPhotos(); ED.key=null; } // only if the owner has not changed the request since
+      if (ED.text.trim()===L0.text && attachSig()===L0.sig){ ED.text=''; ED.transcript=''; clearPhotos(); ED.key=null; } // only if the owner has not changed the request since
       if (ED.err===T[LANG].ed.lost) ED.err=''; ED.note=T[LANG].ed.recovered; announce(ED.note); changed=true; } }
   pulling=false;
   if (changed || was!==ED.online) refreshEdit();
@@ -2082,20 +2104,22 @@ async function reconcileEdit(key,text,sig){ // after a dropped connection: did t
   const hit=(ED.versions||[]).find(v=>v.kind==='edit' && v.request_key===key);
   if (!hit) return false;
   ED.result={ reply_az:hit.reply_az, reply_ru:hit.reply_ru, warnings:hit.warnings, applied:hit.applied, rejected:hit.rejected, saved:true };
-  if (ED.text.trim()===text && photoSig()===sig){ ED.text=''; ED.transcript=''; ED.key=null; clearPhotos(); }
+  if (ED.text.trim()===text && attachSig()===sig){ ED.text=''; ED.transcript=''; ED.key=null; clearPhotos(); }
   ED.redo=[]; ED.err=''; ED.note=T[LANG].ed.recovered; focusChange(hit.applied); return true;
 }
-const canApply=()=>!ED.busy && !ED.phWork && (!!ED.text.trim() || ED.photos.length>0);
+const canApply=()=>!ED.busy && !ED.phWork && !ED.docWork && (!!ED.text.trim() || ED.photos.length>0 || ED.docs.length>0);
 async function runEdit(){
   if (!canApply()) return;
-  const typed=ED.text.trim().slice(0,2000), photos=ED.photos.slice(), sig=photoSig();
-  const text=typed||T[LANG].ed.phDefault, before=VERSION; // photos without text: "make it like the photo"
-  if (!ED.key || ED.key.text!==typed || ED.key.sig!==sig) ED.key={text:typed,sig,key:newKey()}; // a resend of the same text + photos reuses its key: the server never applies it twice
+  const typed=cutUnits(ED.text.trim(),2000), photos=ED.photos.slice(), docs=ED.docs.slice(), sig=attachSig();
+  const text=typed||(docs.length?T[LANG].ed.fDefault:T[LANG].ed.phDefault), before=VERSION; // files / photos without text: "do it like the file / photo"
+  if (!ED.key || ED.key.text!==typed || ED.key.sig!==sig) ED.key={text:typed,sig,key:newKey()}; // a resend of the same text + attachments reuses its key: the server never applies it twice
   const key=ED.key.key;
   setBusy('edit'); ED.mut++; ED.err=''; ED.note=''; ED.result=null; ED.t0=performance.now(); renderEdit(); announce(T[LANG].ed.thinking+'…');
   try {
-    const images=photos.length?photos.map(p=>({media_type:'image/jpeg',data:p.data})):undefined;
-    const r=await api('/api/edit',{method:'POST',json:{instruction:text,lang:LANG,transcript:ED.transcript?ED.transcript.slice(0,4000):undefined,request_key:key,images},auth:true,timeout:300000});
+    // photos, then the renderings of CAD drawings (named after their file); files: PDF as base64, the rest as text
+    const img=[...photos.map(p=>({media_type:'image/jpeg',data:p.data})), ...docs.filter(d=>d.image).map(d=>({media_type:d.image.type,data:d.image.data,name:d.name}))];
+    const documents=docs.length?docs.map(d=>d.kind==='pdf'?{kind:'pdf',name:d.name,data:d.data}:{kind:'text',name:d.name,text:d.text}):undefined;
+    const r=await api('/api/edit',{method:'POST',json:{instruction:text,lang:LANG,transcript:ED.transcript?cutUnits(ED.transcript,4000):undefined,request_key:key,images:img.length?img:undefined,documents},auth:true,timeout:300000});
     ED.result=r; ED.text=''; ED.transcript=''; ED.key=null; ED.lost=null; clearPhotos();
     if (r.replay){ ED.result={...r, applied:[]}; ED.note=T[LANG].ed.already.replace('{n}',r.replayed_version||'?'); } // saved earlier: nothing new happened
     if ((r.saved!==false && !r.replay) || vid(r.version)!==before) ED.redo=[]; // the head moved (ours, or another device's): old redo steps no longer apply
@@ -2153,7 +2177,7 @@ async function toggleRec(){
       const wav=await toWav16k(blob);
       const r=await api('/api/transcribe',{method:'POST',body:wav,type:'audio/wav',auth:true,timeout:120000});
       const t=String(r.text||'').trim();
-      if (t){ ED.text=(ED.text.trim()?ED.text.trim()+' '+t:t).slice(0,2000); ED.transcript=ED.transcript?ED.transcript+' '+t:t; announce(t); } else { ED.err=T[LANG].ed.empty; announce(ED.err); }
+      if (t){ ED.text=cutUnits(ED.text.trim()?ED.text.trim()+' '+t:t,2000); ED.transcript=ED.transcript?ED.transcript+' '+t:t; announce(t); } else { ED.err=T[LANG].ed.empty; announce(ED.err); }
     } catch(err){ ED.err=err instanceof ApiError?errText(err,'stt'):T[LANG].ed.badAudio; announce(ED.err); if (err.status===401) dropAuth(ED.err); }
     setBusy(''); renderEdit();
     const ta=document.getElementById('ed-text'); if (ta && ED.text){ ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length); }
@@ -2163,10 +2187,11 @@ async function toggleRec(){
   try { mr.start(250); } catch(err){ fail(err); return; }
   setBusy('rec'); ED.t0=performance.now(); renderEdit(); announce(e.recording); focusId('ed-mic'); // keyboard users land on Stop
 }
-/* ---- reference photos: decoded (EXIF orientation applied), long side ≤ 1568 px, re-encoded as JPEG 0.85 (also drops EXIF / GPS) */
+/* ---- reference photos (files: part_files.js): decoded (EXIF orientation applied), long side ≤ 1568 px, re-encoded as JPEG 0.85 (also drops EXIF / GPS) */
 const PH_MAX=4, PH_SIDE=1568, PH_Q=0.85, PH_IN=40*1024*1024, PH_OUT=3.5*1024*1024, PH_TOTAL=12*1024*1024;
-const photoSig=()=>ED.photos.map(p=>p.id).join(',');
-function clearPhotos(){ for (const p of ED.photos) try { URL.revokeObjectURL(p.url); } catch(e){} ED.photos=[]; ED.phGen++; } // photos still being prepared are dropped too
+const attachSig=()=>[...ED.photos.map(p=>'p'+p.id),...ED.docs.map(d=>'d'+d.id)].join(','); // part of the request key: another set of photos / files is another request
+function clearPhotos(){ for (const p of ED.photos) try { URL.revokeObjectURL(p.url); } catch(e){} for (const d of ED.docs) if (d.image) try { URL.revokeObjectURL(d.image.url); } catch(e){}
+  ED.photos=[]; ED.docs=[]; ED.docPend=[]; ED.phGen++; } // photos and files; ones still being prepared are dropped too
 class PhotoError extends Error {}
 async function decodeImage(f){ // → {img, w, h, done()}
   if (window.createImageBitmap){ try { const b=await createImageBitmap(f,{imageOrientation:'from-image'}); return {img:b,w:b.width,h:b.height,done:()=>b.close&&b.close()}; } catch(e){} }
@@ -2193,20 +2218,39 @@ async function prepPhoto(f){
     return { id:++ED.phSeq, data:await blobB64(blob), url:URL.createObjectURL(blob), bytes:blob.size, w, h };
   } finally { src.done(); }
 }
-async function addPhotos(list){
+const payloadNow=()=>ED.photos.reduce((a,p)=>a+p.data.length,0)+ED.docs.reduce((a,d)=>a+docPayload(d),0);
+async function addFiles(list){ // photos (≤ 4) and files (≤ 3: PDF, spreadsheets, Word / text, DXF), from the picker, paste or drop
   const e=T[LANG].ed, files=[...(list||[])].filter(Boolean);
   if (!files.length || !ED.authed || ED.busy) return;
-  const room=PH_MAX-ED.photos.length-ED.phWork, take=files.slice(0,Math.max(0,room));
-  ED.err=''; ED.note=''; if (!take.length){ ED.err=e.phMax; renderEdit(); announce(ED.err); return; }
-  const gen=ED.phGen; ED.phWork+=take.length; photosRefresh(); announce(e.phWork);
-  let err=files.length>take.length?e.phMax:'';
-  for (const f of take){ // one at a time: keeps phone memory low
-    try { const p=await prepPhoto(f); if (gen!==ED.phGen){ URL.revokeObjectURL(p.url); } else { if (ED.photos.reduce((a,q)=>a+q.bytes,0)+p.bytes>PH_TOTAL){ URL.revokeObjectURL(p.url); throw new PhotoError('big'); } ED.photos.push(p); } }
-    catch(x){ err=(x instanceof PhotoError && x.message==='big')?e.phBig:e.phBad; }
-    ED.phWork=Math.max(0,ED.phWork-1); photosRefresh();
+  ED.err=''; ED.note='';
+  let err='', phRoom=PH_MAX-ED.photos.length-ED.phWork, docRoom=DOC_MAX-ED.docs.length-ED.docWork; const take=[];
+  for (const f of files){ const k=fileKind(f); // what cannot be used at all is said at once
+    if (!k) err=e.fType; else if (k==='dwg') err=e.fDwg; else if (k==='doc') err=e.fDoc;
+    else if (k==='image'){ if (phRoom>0){ phRoom--; take.push([f,k]); } else err=e.phMax; }
+    else if (docRoom>0){ const src=fileSrc(f), have=[...ED.docs,...ED.docPend];
+      if (have.some(d=>d.src===src)) err=e.fDup.replace('{n}',fileName(f.name)); // the same file twice
+      else { docRoom--; const tag={src,name:freeName(fileName(f.name),have.map(d=>d.name))}; ED.docPend.push(tag); take.push([f,k,tag]); } } // another file of that name: "plan (2).pdf"
+    else err=e.fMax; }
+  if (!take.length){ ED.err=err; renderEdit(); announce(ED.err); return; }
+  const gen=ED.phGen, nImg=take.filter(t=>t[1]==='image').length, added=[];
+  ED.phWork+=nImg; ED.docWork+=take.length-nImg; photosRefresh(); announce(nImg===take.length?e.phWork:e.fWork);
+  for (const [f,k,tag] of take){ // one at a time: keeps phone memory low
+    try {
+      if (k==='image'){ const p=await prepPhoto(f);
+        if (gen!==ED.phGen) URL.revokeObjectURL(p.url);
+        else if (ED.photos.reduce((a,q)=>a+q.bytes,0)+p.bytes>PH_TOTAL){ URL.revokeObjectURL(p.url); throw new PhotoError('big'); }
+        else if (payloadNow()+p.data.length>PAYLOAD_MAX){ URL.revokeObjectURL(p.url); throw new FileError('fAll'); }
+        else ED.photos.push(p); }
+      else { const d=await prepDoc(f,k,tag.name), drop=()=>{ if (d.image) URL.revokeObjectURL(d.image.url); };
+        if (gen!==ED.phGen) drop();
+        else if (payloadNow()+docPayload(d)>PAYLOAD_MAX){ drop(); throw new FileError('fAll'); }
+        else { ED.docs.push(d); added.push(d.name); } }
+    } catch(x){ err=x instanceof FileError?String(e[x.message]||e.fRead).replace('{n}',x.n==null?'':x.n):(x instanceof PhotoError && x.message==='big')?e.phBig:e.phBad; }
+    if (k==='image') ED.phWork=Math.max(0,ED.phWork-1); else { ED.docWork=Math.max(0,ED.docWork-1); const i=ED.docPend.indexOf(tag); if (i>=0) ED.docPend.splice(i,1); }
+    photosRefresh();
   }
   if (gen!==ED.phGen) return; // logged out or cleared meanwhile
-  ED.err=err; announce(err||e.phAdded.replace('{n}',ED.photos.length));
+  ED.err=err; announce(err||(added.length?e.fAdded.replace('{name}',added.join(', ')):e.phAdded.replace('{n}',ED.photos.length)));
   photosRefresh();
 }
 // Photo changes while the owner types: patch the photo row, Apply and the status in place (a full redraw would swap the textarea)
@@ -2217,26 +2261,36 @@ function photosRefresh(){
   const b=document.getElementById('ed-apply'); if (b) b.disabled=!canApply();
   const st=document.getElementById('ed-status'); if (st){ st.textContent=ED.err||statusText(); st.classList.toggle('err',!!ED.err); }
 }
-function wirePhotos(){ const b=document.getElementById('ed-photo'); if (b) b.addEventListener('click',pickPhotos); $('#pbody').querySelectorAll('[data-ph]').forEach(x=>x.addEventListener('click',()=>removePhoto(+x.dataset.ph))); }
+function wirePhotos(){ const b=document.getElementById('ed-photo'); if (b) b.addEventListener('click',pickPhotos);
+  $('#pbody').querySelectorAll('[data-ph]').forEach(x=>x.addEventListener('click',()=>removePhoto(+x.dataset.ph)));
+  $('#pbody').querySelectorAll('[data-doc]').forEach(x=>x.addEventListener('click',()=>removeDoc(+x.dataset.doc))); }
 function removePhoto(id){
   if (ED.busy) return; const i=ED.photos.findIndex(p=>p.id===id); if (i<0) return;
   try { URL.revokeObjectURL(ED.photos[i].url); } catch(e){} ED.photos.splice(i,1);
-  const next=ED.photos[i]||ED.photos[i-1]; ED.focus=next?'ed-phx-'+next.id:'ed-photo'; ED.err=''; // focus the next ×, else the add button
+  const next=ED.photos[i]||ED.docs[0]||ED.photos[i-1]; ED.focus=next?'ed-phx-'+next.id:'ed-photo'; ED.err=''; // focus the next ×, else the add button
   renderEdit(); announce(T[LANG].ed.phRemoved);
 }
+function removeDoc(id){
+  if (ED.busy) return; const i=ED.docs.findIndex(d=>d.id===id); if (i<0) return;
+  const d=ED.docs[i]; if (d.image) try { URL.revokeObjectURL(d.image.url); } catch(e){} ED.docs.splice(i,1);
+  const next=ED.docs[i]||ED.docs[i-1]||ED.photos[ED.photos.length-1]; ED.focus=next?'ed-phx-'+next.id:'ed-photo'; ED.err='';
+  renderEdit(); announce(T[LANG].ed.fRemoved);
+}
 let FILE=null;
+const attachFull=()=>ED.photos.length+ED.phWork>=PH_MAX && ED.docs.length+ED.docWork>=DOC_MAX;
 function pickPhotos(){
-  if (ED.busy || ED.photos.length+ED.phWork>=PH_MAX) return;
-  if (!FILE){ FILE=document.createElement('input'); FILE.type='file'; FILE.accept='image/*'; FILE.multiple=true; FILE.hidden=true; FILE.tabIndex=-1; FILE.id='ed-file'; // phones offer camera or gallery
-    FILE.addEventListener('change',()=>{ const f=[...FILE.files]; FILE.value=''; addPhotos(f); }); document.body.appendChild(FILE); }
+  if (ED.busy || attachFull()) return;
+  if (!FILE){ FILE=document.createElement('input'); FILE.type='file'; FILE.accept=FILE_ACCEPT; FILE.multiple=true; FILE.hidden=true; FILE.tabIndex=-1; FILE.id='ed-file'; // phones offer camera, gallery or files
+    FILE.addEventListener('change',()=>{ const f=[...FILE.files]; FILE.value=''; addFiles(f); }); document.body.appendChild(FILE); }
   FILE.click();
 }
 function clipFiles(dt, imagesOnly){ if (!dt) return []; const f=[...(dt.files||[])]; return (f.length?f:[...(dt.items||[])].filter(i=>i.kind==='file').map(i=>i.getAsFile())).filter(x=>x && (!imagesOnly || /^image\//.test(x.type||''))); }
 function photosHtml(){
-  const e=T[LANG].ed, busy=!!ED.busy, full=ED.photos.length+ED.phWork>=PH_MAX;
+  const e=T[LANG].ed, busy=!!ED.busy, np=ED.photos.length+ED.phWork, nd=ED.docs.length+ED.docWork;
   const li=ED.photos.map((p,i)=>`<li><img src="${esc(p.url)}" alt="${esc(e.phAlt)} ${i+1}" width="64" height="64"><button type="button" class="ph-x" id="ed-phx-${p.id}" data-ph="${p.id}" aria-label="${esc(e.phRemove)} ${i+1}" ${busy?'disabled':''}>×</button></li>`).join('')+
-    Array.from({length:ED.phWork},()=>`<li class="wait" aria-hidden="true"><i></i></li>`).join('');
-  return `<div class="phs"><button type="button" class="btn" id="ed-photo" ${busy||full?'disabled':''}><span aria-hidden="true">📷</span> ${esc(e.phAdd)}</button>${ED.photos.length||ED.phWork?`<span class="ph-n">${ED.photos.length}/${PH_MAX}</span>`:''}${li?`<ul class="ph-list">${li}</ul>`:''}</div>`;
+    ED.docs.map(docChip).join('')+Array.from({length:ED.phWork+ED.docWork},()=>`<li class="wait" aria-hidden="true"><i></i></li>`).join('');
+  const n=[np?`${esc(e.phN)} ${ED.photos.length}/${PH_MAX}`:'', nd?`${esc(e.fFiles.toLowerCase())} ${ED.docs.length}/${DOC_MAX}`:''].filter(Boolean).join(' · ');
+  return `<div class="phs"><button type="button" class="btn" id="ed-photo" ${busy||attachFull()?'disabled':''}><span aria-hidden="true">📎</span> ${esc(e.fAdd)}</button>${n?`<span class="ph-n">${n}</span>`:''}${li?`<ul class="ph-list">${li}</ul>`:''}</div>`;
 }
 const PH_CSS=`.phs{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px}
 .phs .ph-n{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
@@ -2262,7 +2316,7 @@ function statusText(){
   const e=T[LANG].ed, s=Math.floor((performance.now()-ED.t0)/1000);
   if (ED.busy==='mic') return e.micWait; if (ED.busy==='rec') return `${e.recording} · ${mmss(s)}`;
   if (ED.busy==='stt') return e.stt; if (ED.busy==='edit') return `${e.thinking} · ${mmss(s)}. ${e.keepOpen}`; if (ED.busy==='restore') return e.restoring; if (ED.busy==='verify') return e.verifying;
-  if (ED.phWork) return e.phWork; return ED.note||'';
+  if (ED.docWork) return e.fWork; if (ED.phWork) return e.phWork; return ED.note||'';
 }
 function tick(on){ clearInterval(ED.ticker); ED.ticker=null; if (on) ED.ticker=setInterval(()=>{ const el=document.getElementById('ed-status'); if (el && !ED.err) el.textContent=statusText(); },500); }
 const MIC=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>`;
@@ -2280,7 +2334,9 @@ function versionsHtml(){
     const cur=v.id===VERSION, kind=v.kind==='restore'&&v.restore_mode?e.modes[v.restore_mode]:e.kinds[v.kind];
     const txt=v.kind==='restore'?`${e.backTo}${v.restored_from}`:(v.kind==='seed'?e.seedTxt:(v.instruction||''));
     const ph=v.kind==='edit'&&v.images>0?` · <span class="phc" title="${esc(v.images)} ${esc(e.phN)}">📷 ${esc(v.images)}</span>`:'';
-    return `<li${cur?' aria-current="true"':''}><div class="vh"><b>v${esc(v.id)} · ${esc(kind||v.kind||'')}${ph}${cur?` · ${esc(e.current)}`:''}</b><time>${esc(fmtTime(v.created_at))}</time></div>${txt?`<p>${esc(txt)}</p>`:''}${!cur?`<button class="back" id="ed-r-${esc(v.id)}" data-restore="${esc(v.id)}" ${ED.busy?'disabled':''}>${esc(e.restore)}</button>`:''}</li>`;
+    const fl=v.kind==='edit'?(v.attachments||[]).map(a=>String(a&&a.name||'')).filter(Boolean):[]; // the files sent with this edit (names only)
+    const files=fl.length?`<p class="vf" title="${esc(e.fFiles)}: ${esc(fl.join(', '))}"><span aria-hidden="true">📎</span><span class="sr">${esc(e.fFiles)}:</span> ${esc(fl.map(n=>n.length>40?cutUnits(n,38)+'…':n).join(', '))}</p>`:'';
+    return `<li${cur?' aria-current="true"':''}><div class="vh"><b>v${esc(v.id)} · ${esc(kind||v.kind||'')}${ph}${cur?` · ${esc(e.current)}`:''}</b><time>${esc(fmtTime(v.created_at))}</time></div>${txt?`<p>${esc(txt)}</p>`:''}${files}${!cur?`<button class="back" id="ed-r-${esc(v.id)}" data-restore="${esc(v.id)}" ${ED.busy?'disabled':''}>${esc(e.restore)}</button>`:''}</li>`;
   }).join('')+`</ol>`;
 }
 function headHtml(){ const e=T[LANG].ed; return `<h2>${esc(e.title)}</h2>${VERSION!=null?`<span>v${esc(VERSION)}</span>`:''}`; }
@@ -2324,13 +2380,13 @@ function renderEdit(){
   on('ed-mic','click',toggleRec);
   on('ed-text','input',(ev)=>{ ED.text=ev.target.value; keepTranscript(); const b=document.getElementById('ed-apply'); if (b) b.disabled=!canApply(); });
   on('ed-text','paste',(ev)=>{ if ((ev.clipboardData&&ev.clipboardData.getData('text/plain')||'').trim()) return; // text wins: Office copies carry a picture of the text too
-    const f=clipFiles(ev.clipboardData,true); if (!f.length) return; ev.preventDefault(); addPhotos(f); });
+    const f=clipFiles(ev.clipboardData); if (!f.length) return; ev.preventDefault(); addFiles(f); });
   wirePhotos();
   on('ed-text','keydown',(ev)=>{ if (ev.key==='Enter' && (ev.metaKey||ev.ctrlKey)){ ev.preventDefault(); runEdit(); } });
   on('ed-apply','click',runEdit);
   on('ed-undo','click',()=>restoreTo(undoTarget(),'undo'));
   on('ed-redo','click',()=>{ const id=ED.redo.pop(); restoreTo(id,'redo'); });
-  on('ed-logout','click',()=>{ if (ED.busy) return; dropAuth(''); clearPhotos(); ED.phWork=0; ED.lost=null; renderEdit(); focusId('ed-pin'); });
+  on('ed-logout','click',()=>{ if (ED.busy) return; dropAuth(''); clearPhotos(); ED.phWork=0; ED.docWork=0; ED.lost=null; renderEdit(); focusId('ed-pin'); });
   wireHistory();
   const pin=document.getElementById('ed-pin'); if (pin && pinVal) pin.value=pinVal;
   let want=focus; if (!ED.busy && ED.focus){ want=ED.focus; ED.focus=null; } // after an action, return focus to the control that started it
@@ -2341,17 +2397,442 @@ function startEditing(){
   if (!API) return;
   document.getElementById('tab-edit').hidden=false;
   const live=document.createElement('div'); live.id='ed-live'; live.className='sr'; live.setAttribute('aria-live','polite'); document.body.appendChild(live);
-  const css=document.createElement('style'); css.id='ed-ph-css'; css.textContent=PH_CSS; document.head.appendChild(css);
+  const css=document.createElement('style'); css.id='ed-ph-css'; css.textContent=PH_CSS+'\n'+FILES_CSS; document.head.appendChild(css);
   const panel=$('#panel'); let dragT=0; const canDrop=(ev)=>state.tab==='edit' && ED.authed && !ED.busy && [...((ev.dataTransfer&&ev.dataTransfer.types)||[])].includes('Files');
   panel.addEventListener('dragover',(ev)=>{ if (!canDrop(ev)) return; ev.preventDefault(); ev.dataTransfer.dropEffect='copy'; panel.classList.add('ph-drop'); clearTimeout(dragT); dragT=setTimeout(()=>panel.classList.remove('ph-drop'),150); });
-  panel.addEventListener('drop',(ev)=>{ panel.classList.remove('ph-drop'); if (!canDrop(ev)) return; ev.preventDefault(); ev.stopPropagation(); addPhotos(clipFiles(ev.dataTransfer)); });
+  panel.addEventListener('drop',(ev)=>{ panel.classList.remove('ph-drop'); if (!canDrop(ev)) return; ev.preventDefault(); ev.stopPropagation(); addFiles(clipFiles(ev.dataTransfer)); });
   const isFiles=(ev)=>[...((ev.dataTransfer&&ev.dataTransfer.types)||[])].includes('Files'); // elsewhere: never let the browser open the file instead of the model
   window.addEventListener('dragover',(ev)=>{ if (isFiles(ev)){ ev.preventDefault(); ev.dataTransfer.dropEffect=canDrop(ev)?'copy':'none'; } });
-  window.addEventListener('drop',(ev)=>{ if (!isFiles(ev)) return; ev.preventDefault(); if (canDrop(ev)) addPhotos(clipFiles(ev.dataTransfer)); });
+  window.addEventListener('drop',(ev)=>{ if (!isFiles(ev)) return; ev.preventDefault(); if (canDrop(ev)) addFiles(clipFiles(ev.dataTransfer)); });
   pullState();
   setInterval(()=>{ if (document.visibilityState==='visible') pullState(); },25000);
   document.addEventListener('visibilitychange',()=>{ if (document.visibilityState==='visible'){ if (ED.busy==='rec'||ED.busy==='stt'||ED.busy==='edit') wake(true); pullState(); } });
 }
+
+/* ------------------------------------------------------------------ attached files → what /api/edit takes (spliced in by tools/patch_editor.py)
+   PDF: sent as it is (base64 document). Spreadsheets (xlsx/xls via SheetJS, csv/tsv directly), Word (docx via mammoth)
+   and text: converted here to plain text. CAD (DXF via dxf-parser): drawn here to a white PNG + a text summary.
+   DWG cannot be read in a browser. The libraries load only when such a file is added. */
+const DOC_MAX=3, PDF_MAX=10*1024*1024, PDF_PAGES=100, TEXT_CAP=100000, SHEET_ROWS=300, SHEET_COLS=40;
+const PAYLOAD_MAX=25*1024*1024, FILE_IN_MAX=40*1024*1024, DXF_IN_MAX=30*1024*1024, DXF_SIDE=1568, NAME_MAX=120;
+// Pinned builds, loaded as classic <script>s with Subresource Integrity (the page holds the owner's PIN). Not import():
+// a failed module fetch stays failed for the life of the page, a failed <script> can simply be tried again. SheetJS
+// comes from its own CDN (npm stops at 0.18.5, which has file-parsing CVEs); the full build has the code pages for .xls.
+const FILE_LIBS={
+  xlsx:{ src:'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js', g:'XLSX', sri:'sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT' },
+  mammoth:{ src:'https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js', g:'mammoth', sri:'sha384-/cXAMbzovUIKbBERjPmR3SnPTh8siWr5lsvFYj1Uq4XP0yaJUZJmsh0YXyGv5P0y' },
+  dxf:{ src:'https://cdn.jsdelivr.net/npm/dxf-parser@1.1.2/dist/dxf-parser.js', g:'DxfParser', sri:'sha384-bFhNbiyxHEo2RbidLz4oUgawuuHSALUTKp85+l9Vg+WFNX2gMnROUY6I/e8MWhuD' } };
+// phones offer camera / gallery / files with this list
+const FILE_ACCEPT='image/*,.pdf,.dxf,.dwg,.xlsx,.xls,.csv,.tsv,.txt,.docx,application/pdf,text/csv,text/plain,text/tab-separated-values,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+class FileError extends Error { constructor(code,n){ super(code); this.n=n; } } // code = a key of T[LANG].ed
+const LIB_MS={}, LIBS={}, LIB_TRY={};
+function loadLib(k){ // one load per page; the time is kept for ?debug=1 (window.__alcoLibMs). A failed load is tried again with the next file.
+  if (!LIBS[k]){ const L=FILE_LIBS[k], t0=performance.now(), n=LIB_TRY[k]=(LIB_TRY[k]||0)+1;
+    LIBS[k]=new Promise((res,rej)=>{ if (window[L.g]) return res(window[L.g]);
+        const s=document.createElement('script'); s.src=L.src+(n>1?'?r='+(n-1):''); s.async=true; s.crossOrigin='anonymous'; s.integrity=L.sri; // ?r=N: never a cached failure
+        const fail=()=>{ s.remove(); rej(new Error(k)); };
+        s.onload=()=>window[L.g]?res(window[L.g]):fail(); s.onerror=fail; document.head.appendChild(s); })
+      .then(m=>{ LIB_MS[k]=Math.round(performance.now()-t0); if (/[?&]debug\b/.test(location.search)) window.__alcoLibMs=LIB_MS; return m; },
+            ()=>{ delete LIBS[k]; throw new FileError('fLib'); }); }
+  return LIBS[k];
+}
+// At most n UTF-16 units, never half of a surrogate pair (a lone half makes the request invalid JSON for the Claude API).
+function cutUnits(s,n){ s=String(s); if (s.length<=n) return s; let i=Math.max(0,n); const c=s.charCodeAt(i-1); if (c>=0xD800 && c<=0xDBFF) i--; return s.slice(0,i); }
+const wellFormed=(s)=>String(s).replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g,'\uFFFD');
+const fileExt=(n)=>{ const m=/\.([a-z0-9]{1,5})$/i.exec(n||''); return m?m[1].toLowerCase():''; };
+function fileKind(f){
+  const x=fileExt(f.name), t=(f.type||'').toLowerCase();
+  if (x==='dwg' || /dwg|acad/.test(t)) return 'dwg'; // before images: some systems call DWG / DXF image/vnd.*
+  if (x==='dxf' || /dxf/.test(t)) return 'dxf';
+  if (x==='pdf' || t==='application/pdf') return 'pdf';
+  if (x==='xlsx' || x==='xlsm' || x==='xls' || /spreadsheetml|ms-excel/.test(t)) return 'sheet';
+  if (x==='csv' || t==='text/csv') return 'csv';
+  if (x==='tsv' || t==='text/tab-separated-values') return 'tsv';
+  if (x==='docx' || /wordprocessingml/.test(t)) return 'docx';
+  if (x==='doc' || t==='application/msword') return 'doc';
+  if (x==='txt' || x==='md' || t==='text/plain' || t==='text/markdown') return 'txt';
+  if (/^image\//.test(t) || /^(jpe?g|png|webp|gif|heic|heif|avif|bmp)$/.test(x)) return 'image';
+  return null;
+}
+const FILE_ICON={ pdf:'📄', sheet:'📊', csv:'📊', tsv:'📊', docx:'📝', txt:'📝', dxf:'📐' };
+// the server takes names ≤ 120 characters without control characters
+function fileName(n){ let s=wellFormed(String(n||'file').normalize('NFC')).replace(/[\u0000-\u001F\u007F-\u009F\u2028\u2029\u202A-\u202E\u2066-\u2069\uFEFF]/g,'').trim()||'file';
+  if (s.length>NAME_MAX){ const x=fileExt(s); s=cutUnits(s,NAME_MAX-2-x.length)+'…'+(x?'.'+x:''); } return s; }
+// another file already has this name: "plan (2).pdf" (Claude and the history tell the files apart by name)
+function freeName(nm,used){ if (!used.includes(nm)) return nm; const x=fileExt(nm), stem=x?nm.slice(0,-x.length-1):nm;
+  for (let k=2;;k++){ const tail=` (${k})`+(x?'.'+x:''), c=cutUnits(stem,NAME_MAX-tail.length).trimEnd()+tail; if (!used.includes(c)) return c; } }
+const fileSrc=(f)=>[f.name,f.size,f.lastModified].join('\u0000'); // the same file picked twice
+// bytes of a string in the request body (the page sends JSON with \uXXXX escapes, so every non-ASCII character is 6 bytes)
+const jsonBytes=(s)=>{ let n=s.length; for (let i=0;i<s.length;i++) if (s.charCodeAt(i)>0x7e) n+=5; return n; };
+const docPayload=(d)=>(d.kind==='pdf'?d.data.length:jsonBytes(d.text))+(d.image?d.image.data.length:0);
+function decodeText(buf){ // UTF-8 (or UTF-16 with a BOM); else Windows-1251, the usual legacy code page here
+  const b=new Uint8Array(buf);
+  if (b[0]===0xFF && b[1]===0xFE) return new TextDecoder('utf-16le').decode(b);
+  if (b[0]===0xFE && b[1]===0xFF) return new TextDecoder('utf-16be').decode(b);
+  try { return new TextDecoder('utf-8',{fatal:true}).decode(b); } catch(e){ return new TextDecoder('windows-1251').decode(b); }
+}
+const cutNote=(why)=>`\n[The text was cut here: ${why}.]`;
+function capText(t,why){ if (t.length<=TEXT_CAP) return {text:t,cut:false}; const room=TEXT_CAP-120; let i=t.lastIndexOf('\n',room); if (i<room*0.8) i=room; return {text:cutUnits(t,i)+cutNote(why||`only the first ${TEXT_CAP} characters are included`),cut:true}; }
+
+/* ---- PDF: checked, sent as it is */
+function pdfFacts(b){ // page count and encryption, from the raw bytes (no PDF library)
+  // An incremental save (a stamp, markups, deleted pages) appends new copies of objects and keeps the old ones: only
+  // the LAST definition of each object number counts, and the page count is /Count of the page tree the newest
+  // trailer's /Root points to. pages = null when the count cannot be read (object streams); the API decides then.
+  const s=new TextDecoder('latin1').decode(b), defs=new Map(), re=/(?<![\d.])(\d{1,10})\s+\d{1,5}\s+obj\b/g; let m, again=0;
+  while ((m=re.exec(s))){ const a=re.lastIndex, e=s.indexOf('endobj',a), st=s.indexOf('stream',a), end=Math.min(e<0?s.length:e, st<0?s.length:st, a+65536);
+    if (defs.has(m[1])) again++; defs.set(m[1],s.slice(a,end)); re.lastIndex=end; }
+  const ref=(t,key)=>{ const r=new RegExp('/'+key+'\\s*(\\d+)\\s+\\d+\\s+R').exec(t||''); return r?r[1]:null; }, count=(t)=>{ const r=/\/Count\s+(\d+)/.exec(t||''); return r?+r[1]:null; };
+  let root=null; for (const r of s.matchAll(/\/Root\s*(\d+)\s+\d+\s+R/g)) root=r[1]; // the newest trailer comes last
+  const tree=root!=null?ref(defs.get(root),'Pages'):null;
+  let pages=tree!=null?count(defs.get(tree)):null, nodes=null, leaves=0;
+  for (const t of defs.values()){ if (/\/Type\s*\/Pages\b/.test(t)){ const c=count(t); if (c!=null) nodes=Math.max(nodes||0,c); } else if (/\/Type\s*\/Page(?![a-zA-Z])/.test(t)) leaves++; }
+  if (pages==null) pages=nodes; // the root of the page tree has the largest /Count
+  if (pages==null && leaves && !again) pages=leaves; // a page tree in an object stream: count the pages of a never-updated file
+  return { pages:pages||null, locked:/\/Encrypt\s*(\d+\s+\d+\s+R|<<)/.test(s) };
+}
+async function prepPdf(f){
+  if (f.size>PDF_MAX) throw new FileError('pdfBig');
+  const b=new Uint8Array(await f.arrayBuffer());
+  if (String.fromCharCode(...b.subarray(0,5))!=='%PDF-') throw new FileError('pdfBad');
+  const {pages,locked}=pdfFacts(b);
+  if (locked) throw new FileError('pdfLock');
+  if (pages && pages>PDF_PAGES) throw new FileError('pdfPages',pages);
+  return { kind:'pdf', data:await blobB64(new Blob([b],{type:'application/pdf'})), pages };
+}
+
+/* ---- spreadsheets: each sheet as CSV under "Sheet: name"; at most SHEET_ROWS × SHEET_COLS per sheet */
+const csvCell=(v)=>{ const s=String(v??''); return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
+const colName=(i)=>{ let s=''; i++; while (i>0){ const r=(i-1)%26; s=String.fromCharCode(65+r)+s; i=Math.floor((i-1)/26); } return s; };
+function sheetBlock(name,rows,totalRows,totalCols,more){ // rows: arrays of strings (already cut to the caps); more: the sheet goes on below them (how far is unknown)
+  const shown=rows.length;
+  while (rows.length && rows[rows.length-1].every(c=>c==='')) rows.pop();
+  const w=rows.reduce((a,r)=>{ let n=r.length; while (n && r[n-1]==='') n--; return Math.max(a,n); },0);
+  const rowsCut=!!more || totalRows>shown, colsCut=totalCols>SHEET_COLS, cut=rowsCut||colsCut;
+  const head=`Sheet: ${name}`+(cut?` (cut: rows 1–${rowsCut?shown:totalRows} of ${more?`more than ${shown}`:totalRows}, columns A–${colName(Math.min(totalCols,SHEET_COLS)-1)} of ${totalCols})`:'');
+  return { text: head+'\n'+(rows.length? rows.map(r=>r.slice(0,w).map(csvCell).join(',')).join('\n') : '(empty)'), cut };
+}
+function parseDelimited(t,sep){ // RFC 4180 quoting; stops after SHEET_ROWS+1 rows (the rest is only counted)
+  const rows=[]; let row=[], cell='', q=false, total=0, cols=0;
+  const end=()=>{ row.push(cell); cell=''; }, line=()=>{ end(); total++; cols=Math.max(cols,row.length); if (rows.length<SHEET_ROWS) rows.push(row.slice(0,SHEET_COLS)); row=[]; };
+  for (let i=0;i<t.length;i++){ const c=t[i];
+    if (q){ if (c==='"'){ if (t[i+1]==='"'){ cell+='"'; i++; } else q=false; } else cell+=c; continue; }
+    if (c==='"' && cell==='') q=true; else if (c===sep) end(); else if (c==='\n') line(); else if (c==='\r'){ if (t[i+1]!=='\n') line(); } else cell+=c; }
+  if (cell!=='' || row.length) line();
+  return {rows,total,cols};
+}
+async function prepDelimited(f,kind,name){
+  if (f.size>FILE_IN_MAX) throw new FileError('fBig');
+  const t=decodeText(await f.arrayBuffer()).replace(/^\uFEFF/,'');
+  let sep=kind==='tsv'?'\t':',';
+  if (kind==='csv'){ const first=t.slice(0,4000).split('\n')[0]||''; const n=(c)=>first.split(c).length; if (n(';')>n(',') && n(';')>=n('\t')) sep=';'; else if (n('\t')>n(',')) sep='\t'; } // Excel in many locales writes ";"
+  const {rows,total,cols}=parseDelimited(t,sep);
+  if (!total || rows.every(r=>r.every(c=>!c.trim()))) throw new FileError('fEmpty');
+  const s=sheetBlock(name.replace(/\.[^.]+$/,''),rows,total,cols);
+  const out=capText(`Table "${name}" (${kind.toUpperCase()}), converted in the browser to CSV.\n`+s.text);
+  return { kind:'text', text:out.text, cut:s.cut||out.cut, sheets:1 };
+}
+// Many ".xls" files are text: HTML tables, SpreadsheetML 2003 XML, TSV / CSV (exports of 1C, banks, ERPs), often in
+// Windows-1251. Decoded here with their declared or sniffed charset and read as text, values kept as written ("42,5"
+// stays 42,5, not 425). null = a binary workbook (xlsx / xlsb zip, OLE xls, old BIFF) for SheetJS itself.
+function sheetText(b){
+  const at=(sig)=>sig.every((x,i)=>b[i]===x);
+  if (at([0x50,0x4B,0x03,0x04]) || at([0xD0,0xCF,0x11,0xE0])) return null;
+  const bom=(b[0]===0xFF&&b[1]===0xFE)||(b[0]===0xFE&&b[1]===0xFF)||(b[0]===0xEF&&b[1]===0xBB&&b[2]===0xBF);
+  if (!bom){ for (let i=0,n=Math.min(b.length,8192);i<n;i++) if (b[i]===0) return null; }
+  const head=new TextDecoder('latin1').decode(b.subarray(0,Math.min(b.length,8192)));
+  const cs=(/<meta[^>]*charset\s*=\s*["']?\s*([\w.:-]+)/i.exec(head)||/<\?xml[^>]*encoding\s*=\s*["']([\w.:-]+)/i.exec(head)||[])[1];
+  if (!bom && cs && !/^utf-?8$/i.test(cs)){ try { return new TextDecoder(cs).decode(b); } catch(e){} }
+  return decodeText(b).replace(/^\uFEFF/,''); // UTF-8 / UTF-16 with a BOM, else Windows-1251
+}
+async function prepSheet(f,name){
+  if (f.size>FILE_IN_MAX) throw new FileError('fBig');
+  const b=new Uint8Array(await f.arrayBuffer()), X=await loadLib('xlsx'), txt=sheetText(b);
+  // one row more than is shown: when it is there, the sheet is cut (!fullref comes only from a <dimension>, which writers may leave out or stub)
+  const opt={sheetRows:SHEET_ROWS+1,cellFormula:false,cellHTML:false,cellStyles:false,cellDates:true};
+  let wb; try { wb=txt!=null?X.read(txt,{...opt,type:'string',raw:true}):X.read(b,{...opt,type:'array'}); } catch(e){ throw new FileError('fRead'); }
+  const parts=[], names=wb.SheetNames||[]; let cut=false;
+  for (const sn of names){
+    const ws=wb.Sheets[sn]; if (!ws) continue;
+    if (!ws['!ref']){ parts.push(`Sheet: ${sn}\n(empty)`); continue; }
+    const got=X.utils.decode_range(ws['!ref']), full=X.utils.decode_range(ws['!fullref']||ws['!ref']);
+    const more=got.e.r>=SHEET_ROWS && full.e.r<=got.e.r; // sheetRows counts from row 1: the row past the cap was read, and the file does not say how many follow
+    const totalRows=Math.max(full.e.r,got.e.r)-got.s.r+1, totalCols=Math.max(full.e.c,got.e.c)-got.s.c+1;
+    const ref={s:{...got.s},e:{c:Math.min(got.e.c,got.s.c+SHEET_COLS-1),r:Math.min(got.e.r,got.s.r+SHEET_ROWS-1)}};
+    const rows=X.utils.sheet_to_json(ws,{header:1,range:ref,raw:false,defval:'',blankrows:true}).map(r=>r.map(v=>String(v??'').replace(/\r\n?/g,'\n')));
+    while (rows.length<ref.e.r-ref.s.r+1) rows.push([]); // blank rows at the end of the range
+    const s=sheetBlock(sn,rows,totalRows,totalCols,more); cut=cut||s.cut; parts.push(s.text);
+  }
+  const body=parts.join('\n\n');
+  if (!body.replace(/^Sheet: .*$|\(empty\)/gm,'').trim()) throw new FileError('fEmpty');
+  const out=capText(`Spreadsheet "${name}" converted in the browser: every sheet as CSV (comma-separated) under "Sheet: <name>".\n\n`+body);
+  return { kind:'text', text:out.text, cut:cut||out.cut, sheets:names.length };
+}
+
+/* ---- Word (.docx): text with headings, lists and tables (cells joined by " | "); txt as it is */
+function htmlText(html){
+  const doc=new DOMParser().parseFromString(html,'text/html'), out=[];
+  const txt=(n)=>n.textContent.replace(/\s+/g,' ').trim();
+  const walk=(el)=>{ for (const n of el.children){ const t=n.tagName;
+    if (/^H[1-6]$/.test(t)){ const s=txt(n); if (s) out.push('#'.repeat(+t[1])+' '+s); }
+    else if (t==='P'){ const s=txt(n); if (s) out.push(s); }
+    else if (t==='UL'||t==='OL'){ let k=0; for (const li of n.children) if (li.tagName==='LI'){ k++; const s=txt(li); if (s) out.push((t==='OL'?k+'.':'-')+' '+s); } }
+    else if (t==='TABLE'){ for (const tr of n.querySelectorAll('tr')){ const cells=[...tr.children].filter(c=>c.tagName==='TD'||c.tagName==='TH').map(txt); if (cells.some(Boolean)) out.push('| '+cells.join(' | ')+' |'); } out.push(''); }
+    else walk(n); } };
+  walk(doc.body); return out.join('\n').replace(/\n{3,}/g,'\n\n').trim();
+}
+async function prepDocx(f,name){
+  if (f.size>FILE_IN_MAX) throw new FileError('fBig');
+  const buf=await f.arrayBuffer(), m=await loadLib('mammoth');
+  let html; try { html=(await m.convertToHtml({arrayBuffer:buf},{convertImage:m.images.imgElement(()=>({src:''}))})).value; } catch(e){ throw new FileError('fRead'); }
+  const t=htmlText(html); if (!t) throw new FileError('fEmpty');
+  const out=capText(`Word document "${name}" converted in the browser to text (tables as rows with cells separated by " | ").\n\n`+t);
+  return { kind:'text', text:out.text, cut:out.cut };
+}
+async function prepTxt(f){
+  if (f.size>FILE_IN_MAX) throw new FileError('fBig');
+  const t=decodeText(await f.arrayBuffer()).replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g,'').trim();
+  if (!t) throw new FileError('fEmpty');
+  const out=capText(t); return { kind:'text', text:out.text, cut:out.cut };
+}
+
+/* ---- CAD (.dxf): model space drawn to a white PNG (long side 1568 px) + a text summary */
+const DXF_UNITS={1:'inches',2:'feet',3:'miles',4:'millimetres',5:'centimetres',6:'metres',7:'kilometres',8:'microinches',9:'mils',10:'yards',11:'ångströms',12:'nanometres',13:'micrometres',14:'decimetres',15:'decametres',16:'hectometres',17:'gigametres',18:'astronomical units',19:'light years',20:'parsecs'};
+const DXF_VER={AC1009:'R12',AC1012:'R13',AC1014:'R14',AC1015:'2000',AC1018:'2004',AC1021:'2007',AC1024:'2010',AC1027:'2013',AC1032:'2018'};
+function dxfDecode(b){ // R2007+ files are UTF-8; older ones use $DWGCODEPAGE (e.g. ANSI_1251)
+  try { return new TextDecoder('utf-8',{fatal:true}).decode(b); } catch(e){}
+  const head=new TextDecoder('latin1').decode(b.subarray(0,Math.min(b.length,200000)));
+  const cp=/\$DWGCODEPAGE\s*\r?\n\s*3\s*\r?\n\s*ANSI_(\d{3,4})/i.exec(head);
+  try { return new TextDecoder('windows-'+(cp?cp[1]:'1252')).decode(b); } catch(e){ return new TextDecoder('windows-1252').decode(b); }
+}
+const pctCodes=(s)=>s.replace(/%%%/g,'%').replace(/%%[cC]/g,'Ø').replace(/%%[dD]/g,'°').replace(/%%[pP]/g,'±').replace(/%%[uUoOkK]/g,'').replace(/%%(\d{3})/g,(_,n)=>String.fromCharCode(+n));
+const uniCodes=(s)=>s.replace(/\\U\+([0-9A-Fa-f]{4})/g,(_,h)=>String.fromCharCode(parseInt(h,16)));
+function textPlain(s){ return pctCodes(uniCodes(String(s||''))).trim(); } // TEXT: only %%-codes and \U+XXXX; braces and backslashes are literal
+function mtextPlain(s){ // MTEXT formatting codes → plain text (\P = new paragraph; \p…; = paragraph format, dropped; \{ \} \\ = literal)
+  s=String(s||''); let o='';
+  for (let i=0;i<s.length;i++){ const c=s[i];
+    if (c==='{'||c==='}') continue; // grouping
+    if (c!=='\\'){ o+=c; continue; }
+    const d=s[++i]; if (d===undefined) break;
+    if (d==='P'){ o+='\n'; continue; }
+    if (d==='~'){ o+=' '; continue; }
+    if (d==='\\'||d==='{'||d==='}'){ o+=d; continue; }
+    if (d==='U' && /^\+[0-9A-Fa-f]{4}/.test(s.slice(i+1,i+6))){ o+=String.fromCharCode(parseInt(s.slice(i+2,i+6),16)); i+=5; continue; }
+    if (d==='S'){ const j=s.indexOf(';',i); if (j<0) break; o+=s.slice(i+1,j).replace(/[\^#/]/,'/'); i=j; continue; } // stacked fraction
+    if ('pfFcCHhTtQqWwAa'.includes(d)){ const j=s.indexOf(';',i); i=j<0?s.length:j; continue; } // codes with an argument up to ";"
+    if ('LlOoKkNX'.includes(d)) continue; // switches
+    o+=d;
+  }
+  return pctCodes(o).trim();
+}
+// dxf-parser 1.1.2 drops the extrusion (210/220/230) of CIRCLE, ELLIPSE and TEXT: its handlers are wrapped to keep it
+// (a mirrored copy is drawn with extrusion 0,0,-1 and its centre in that mirrored frame).
+function dxfParser(DxfParser){
+  const p=new DxfParser(), H=p._entityHandlers;
+  if (H) for (const t of ['CIRCLE','ELLIPSE','TEXT']){ const h=H[t]; if (!h || !h.parseEntity) continue;
+    H[t]={ ForEntityName:t, parseEntity(sc,curr){ const n={};
+      const spy={ next(){ const g=sc.next(); if (g.code===210) n.x=g.value; else if (g.code===220) n.y=g.value; else if (g.code===230) n.z=g.value; return g; },
+        rewind:(k)=>sc.rewind(k), isEOF:()=>sc.isEOF(), hasNext:()=>sc.hasNext(), peek:()=>sc.peek(), get lastReadGroup(){ return sc.lastReadGroup; } };
+      const e=h.parseEntity(spy,curr); if (e && typeof n.z==='number') e.extrusionDirection={x:+n.x||0,y:+n.y||0,z:n.z}; return e; } }; }
+  return p;
+}
+const M_ID=[1,0,0,1,0,0];
+const mMul=(m,n)=>[m[0]*n[0]+m[2]*n[1], m[1]*n[0]+m[3]*n[1], m[0]*n[2]+m[2]*n[3], m[1]*n[2]+m[3]*n[3], m[0]*n[4]+m[2]*n[5]+m[4], m[1]*n[4]+m[3]*n[5]+m[5]];
+const mT=(x,y)=>[1,0,0,1,x||0,y||0], mR=(a)=>[Math.cos(a),Math.sin(a),-Math.sin(a),Math.cos(a),0,0], mS=(x,y)=>[x,0,0,y,0,0];
+const ACI=['#000000','#FF0000','#FFFF00','#00FF00','#00FFFF','#0000FF','#FF00FF','#000000','#808080','#C0C0C0'];
+function inkOf(color){ // a readable ink on white: very light colours (yellow, white, light grey) are darkened
+  if (color==null || color===16777215) return '#1A1A1A';
+  let r=(color>>16)&255, g=(color>>8)&255, b=color&255; const L=(0.299*r+0.587*g+0.114*b)/255;
+  if (L>0.6){ const k=0.6/L*0.75; r=Math.round(r*k); g=Math.round(g*k); b=Math.round(b*k); }
+  return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+function dxfGeometry(dxf){
+  const layers=((dxf.tables||{}).layer||{}).layers||{}, blocks=dxf.blocks||{};
+  const paths=[], texts=[], counts={}, layerCount={}, inserts={}, hidden=new Set(); let simplified=false, nPts=0;
+  const P_MAX=600000, T_MAX=20000;
+  const layerOn=(n)=>{ const l=layers[n]; if (l && (l.visible===false || l.frozen)){ hidden.add(n); return false; } return true; };
+  const colorOf=(e,parent)=>{ if (e.colorIndex===0) return parent; if (e.colorIndex==null || e.colorIndex===256){ const l=layers[e.layer]; return l&&l.color!=null?l.color:parent; } return e.color!=null?e.color:parent; };
+  const flip=(e)=>{ const z=e.extrusionDirectionZ!=null?e.extrusionDirectionZ:(e.extrusionDirection&&e.extrusionDirection.z); return z!=null&&z<0; };
+  const ocs=(e)=>flip(e)?[-1,0,0,1,0,0]:M_ID; // the object frame of N=(0,0,-1): mirrored X
+  const add=(m,pts,closed,ink)=>{ if (pts.length<4) return; if (nPts>P_MAX){ simplified=true; return; }
+    const o=new Float64Array(pts.length); for (let i=0;i<pts.length;i+=2){ const x=pts[i], y=pts[i+1]; o[i]=m[0]*x+m[2]*y+m[4]; o[i+1]=m[1]*x+m[3]*y+m[5]; }
+    for (let i=0;i<o.length;i++) if (!isFinite(o[i])) return; nPts+=o.length/2; paths.push({p:o,c:closed,ink}); };
+  const arcPts=(cx,cy,r,a0,a1)=>{ let sw=a1-a0; while (sw<=0) sw+=2*Math.PI; const n=Math.max(2,Math.ceil(sw/(Math.PI/36))), out=[]; for (let i=0;i<=n;i++){ const a=a0+sw*i/n; out.push(cx+r*Math.cos(a),cy+r*Math.sin(a)); } return out; };
+  const bulgePts=(v,closed)=>{ const out=[], n=v.length; for (let i=0;i<n;i++){ const a=v[i]; out.push(a.x,a.y); const b=v[(i+1)%n]; if (i===n-1 && !closed) break;
+      const k=a.bulge||0; if (!k || !b) continue; const th=4*Math.atan(k), dx=b.x-a.x, dy=b.y-a.y, c=Math.hypot(dx,dy); if (!c) continue;
+      const r=c/(2*Math.sin(th/2)), ang=Math.atan2(dy,dx)+Math.PI/2-th/2, cx=a.x+r*Math.cos(ang), cy=a.y+r*Math.sin(ang), s=Math.atan2(a.y-cy,a.x-cx), R=Math.abs(r), m=Math.max(2,Math.ceil(Math.abs(th)/(Math.PI/36)));
+      for (let j=1;j<m;j++){ const t=s+th*j/m; out.push(cx+R*Math.cos(t),cy+R*Math.sin(t)); } }
+    if (closed && n) out.push(v[0].x,v[0].y); return out; };
+  const splinePts=(e)=>{ const cp=e.controlPoints||[], kv=e.knotValues||[], p=e.degreeOfSplineCurve||3;
+    if (cp.length>p && kv.length===cp.length+p+1){ // de Boor (weights ignored)
+      const out=[], t0=kv[p], t1=kv[cp.length], N=Math.min(400,Math.max(16,cp.length*8));
+      for (let s=0;s<=N;s++){ const t=Math.min(t0+(t1-t0)*s/N,t1-1e-12*(t1-t0||1)); let k=p; while (k<cp.length-1 && kv[k+1]<=t) k++;
+        const d=[]; for (let j=0;j<=p;j++){ const q=cp[j+k-p]; d.push([q.x,q.y]); }
+        for (let r=1;r<=p;r++) for (let j=p;j>=r;j--){ const i=j+k-p, den=kv[i+p-r+1]-kv[i], al=den?(t-kv[i])/den:0; d[j]=[(1-al)*d[j-1][0]+al*d[j][0],(1-al)*d[j-1][1]+al*d[j][1]]; }
+        out.push(d[p][0],d[p][1]); }
+      return out; }
+    const pts=(e.fitPoints&&e.fitPoints.length>1)?e.fitPoints:cp; return pts.flatMap(q=>[q.x,q.y]); };
+  const walk=(list,m,depth,parentInk,top)=>{
+    for (const e of list||[]){
+      if (!e || e.visible===false || (e.layer && !layerOn(e.layer))) continue;
+      if (top){ counts[e.type]=(counts[e.type]||0)+1; layerCount[e.layer||'0']=(layerCount[e.layer||'0']||0)+1; }
+      const ink=colorOf(e,parentInk), mm=mMul(m,ocs(e));
+      switch (e.type){
+        case 'LINE': if (e.vertices&&e.vertices.length>1) add(m,[e.vertices[0].x,e.vertices[0].y,e.vertices[1].x,e.vertices[1].y],false,ink); break;
+        case 'LWPOLYLINE': case 'POLYLINE': if (e.vertices&&e.vertices.length) add(e.type==='LWPOLYLINE'||!e.is3dPolyline?mm:m,bulgePts(e.vertices,!!e.shape),false,ink); break;
+        case 'CIRCLE': if (e.center&&e.radius>0) add(mm,arcPts(e.center.x,e.center.y,e.radius,0,2*Math.PI),true,ink); break;
+        case 'ARC': if (e.center&&e.radius>0) add(mm,arcPts(e.center.x,e.center.y,e.radius,e.startAngle||0,e.endAngle||0),false,ink); break;
+        case 'ELLIPSE': if (e.center&&e.majorAxisEndPoint){ const M=e.majorAxisEndPoint, q=(e.axisRatio||1)*(flip(e)?-1:1); let a0=e.startAngle||0, a1=e.endAngle==null?2*Math.PI:e.endAngle; while (a1<=a0) a1+=2*Math.PI; // WCS; minor axis = N × major (N = 0,0,-1: the other half)
+          const n=Math.max(8,Math.ceil((a1-a0)/(Math.PI/36))), out=[]; for (let i=0;i<=n;i++){ const t=a0+(a1-a0)*i/n; out.push(e.center.x+M.x*Math.cos(t)-q*M.y*Math.sin(t), e.center.y+M.y*Math.cos(t)+q*M.x*Math.sin(t)); } add(m,out,false,ink); } break;
+        case 'SPLINE': add(m,splinePts(e),false,ink); break;
+        case 'SOLID': case '3DFACE': { const v=(e.points||e.vertices||[]).filter(Boolean); const o=(e.type==='SOLID'&&v.length===4)?[v[0],v[1],v[3],v[2]]:v; if (o.length>2) add(e.type==='SOLID'?mm:m,[...o.flatMap(q=>[q.x,q.y]),o[0].x,o[0].y],true,ink); break; } // SOLID lies in its OCS, 3DFACE in WCS
+        case 'TEXT': case 'MTEXT': case 'ATTDEF': {
+          if (e.type==='ATTDEF') break; // attribute definitions are not shown on inserted blocks
+          const mt=e.type==='MTEXT', s=mt?mtextPlain(e.text):textPlain(e.text); if (!s) break;
+          let p, a, ha, va, fit=0, w=0;
+          if (mt){ p=e.position; a=e.directionVector?Math.atan2(e.directionVector.y,e.directionVector.x):(e.rotation||0); // MTEXT: radians
+            ha=[0,0,1,2,0,1,2,0,1,2][e.attachmentPoint||1]; va=[0,3,3,3,2,2,2,1,1,1][e.attachmentPoint||1]; }
+          else { const h0=e.halign||0, v0=e.valign||0, P1=e.startPoint, P2=e.endPoint; a=(e.rotation||0)*Math.PI/180;
+            if ((h0===3||h0===5) && P1 && P2 && (P2.x!==P1.x||P2.y!==P1.y)){ p=P1; a=Math.atan2(P2.y-P1.y,P2.x-P1.x); ha=0; va=0; fit=h0; w=Math.hypot(P2.x-P1.x,P2.y-P1.y); } // Aligned / Fit: from the first point to the second
+            else if (h0===4){ p=P2||P1; ha=1; va=2; } // Middle: centred both ways on the second point
+            else { p=(h0||v0)&&P2?P2:P1; ha=h0<3?h0:0; va=v0; } }
+          if (!p) break;
+          const M=mt?m:mm; // TEXT lies in its OCS, MTEXT in WCS
+          const lin=(vx,vy)=>[M[0]*vx+M[2]*vy, M[1]*vx+M[3]*vy], [dx,dy]=lin(Math.cos(a),Math.sin(a)), [ux,uy]=lin(-Math.sin(a),Math.cos(a));
+          const mir=M[0]*M[3]-M[1]*M[2]<0; // a mirrored block or frame: drawn readable, upright along its "up", anchored on the other side
+          if (mir && ha!==1) ha=ha===2?0:2;
+          if (texts.length<T_MAX) texts.push({ x:M[0]*p.x+M[2]*p.y+M[4], y:M[1]*p.x+M[3]*p.y+M[5], h:(e.textHeight||e.height||2.5)*Math.hypot(ux,uy),
+            rot:mir?Math.atan2(uy,ux)-Math.PI/2:Math.atan2(dy,dx), s, ink, ha, va, ml:mt, fit, w:w*Math.hypot(dx,dy) });
+          break; }
+        case 'INSERT': case 'DIMENSION': {
+          const bn=e.type==='INSERT'?e.name:e.block, b=bn&&blocks[bn]; if (!b){ if (e.type==='DIMENSION') dimText(e,m,ink); break; }
+          if (e.type==='INSERT') inserts[bn]=(inserts[bn]||0)+1;
+          if (depth>=10){ simplified=true; break; }
+          const base=b.position||{x:0,y:0};
+          if (e.type==='DIMENSION'){ walk(b.entities,m,depth+1,ink,false); break; } // dimension blocks are drawn in place
+          const cols=Math.max(1,Math.min(e.columnCount||1,100)), rows=Math.max(1,Math.min(e.rowCount||1,100));
+          for (let r=0;r<rows;r++) for (let c=0;c<cols;c++){
+            const t=mMul(mMul(mMul(mMul(m,ocs(e)),mT(e.position&&e.position.x,e.position&&e.position.y)),mR((e.rotation||0)*Math.PI/180)),mMul(mT(c*(e.columnSpacing||0),r*(e.rowSpacing||0)),mMul(mS(e.xScale??1,e.yScale??1),mT(-base.x,-base.y))));
+            walk(b.entities,t,depth+1,ink,false); }
+          break; }
+      }
+    }
+  };
+  const dimText=(e,m,ink)=>{ const s=e.text&&e.text!=='<>'?mtextPlain(e.text.replace('<>',e.actualMeasurement!=null?String(+e.actualMeasurement.toFixed(2)):'')):(e.actualMeasurement!=null?String(+e.actualMeasurement.toFixed(2)):''); const p=e.middleOfText;
+    if (s && p && texts.length<T_MAX) texts.push({x:m[0]*p.x+m[2]*p.y+m[4],y:m[1]*p.x+m[3]*p.y+m[5],h:2.5*Math.hypot(m[0],m[1]),rot:0,s,ink,ha:1,va:2,dim:true}); };
+  let ents=(dxf.entities||[]).filter(e=>!e.inPaperSpace); if (!ents.length) ents=dxf.entities||[]; // model space; paper space only if the model is empty
+  walk(ents,M_ID,0,null,true);
+  return {paths,texts,counts,layerCount,inserts,hidden:[...hidden],simplified};
+}
+function dxfExtents(g){ // bounds of what is drawn, leaving out a few far-away strays (common in CAD files)
+  // Per entity, not per vertex (a furnished corner with hundreds of circles must not pull the frame toward itself):
+  // a core of the middle 98 % of entity centres, grown by every entity that touches it or lies within 60 % of its
+  // size, again and again: it spreads through the whole drawing and stops only at a wide empty gap.
+  const B=[]; for (const p of g.paths){ let x0=Infinity,y0=Infinity,x1=-Infinity,y1=-Infinity; for (let i=0;i<p.p.length;i+=2){ const x=p.p[i], y=p.p[i+1]; if (x<x0) x0=x; if (x>x1) x1=x; if (y<y0) y0=y; if (y>y1) y1=y; } B.push([x0,y0,x1,y1]); }
+  for (const t of g.texts) B.push([t.x,t.y,t.x,t.y]);
+  if (!B.length) return null;
+  const q=(a,f)=>a[Math.min(a.length-1,Math.max(0,Math.floor(f*(a.length-1))))];
+  const cx=B.map(b=>(b[0]+b[2])/2).sort((a,b)=>a-b), cy=B.map(b=>(b[1]+b[3])/2).sort((a,b)=>a-b);
+  let x0=q(cx,0.01), y0=q(cy,0.01), x1=q(cx,0.99), y1=q(cy,0.99); const mx=(x0+x1)/2, my=(y0+y1)/2;
+  const d=B.map(b=>Math.max(0,b[0]-mx,mx-b[2])+Math.max(0,b[1]-my,my-b[3])), order=B.map((b,i)=>i).sort((i,j)=>d[i]-d[j]); // nearest first: one pass spreads far
+  const inc=new Uint8Array(B.length); let n=0;
+  for (let pass=0, grew=true; grew && pass<50; pass++){ grew=false;
+    for (const i of order){ if (inc[i]) continue; const b=B[i], m=Math.max(x1-x0,y1-y0)*0.6;
+      if (b[2]<x0-m || b[0]>x1+m || b[3]<y0-m || b[1]>y1+m) continue;
+      inc[i]=1; n++; grew=true; if (b[0]<x0) x0=b[0]; if (b[2]>x1) x1=b[2]; if (b[1]<y0) y0=b[1]; if (b[3]>y1) y1=b[3]; } }
+  x0=y0=Infinity; x1=y1=-Infinity; // the frame: exactly the entities kept
+  for (let i=0;i<B.length;i++) if (inc[i]){ const b=B[i]; if (b[0]<x0) x0=b[0]; if (b[2]>x1) x1=b[2]; if (b[1]<y0) y0=b[1]; if (b[3]>y1) y1=b[3]; }
+  if (!(x1>=x0)) return null;
+  if (x1-x0<1e-9){ x0-=0.5; x1+=0.5; } if (y1-y0<1e-9){ y0-=0.5; y1+=0.5; }
+  return {x0,y0,x1,y1,outliers:B.length-n};
+}
+async function dxfRender(g,ext){
+  const pad=24, w=ext.x1-ext.x0, h=ext.y1-ext.y0, k=(DXF_SIDE-2*pad)/Math.max(w,h);
+  const W=Math.max(64,Math.round(w*k)+2*pad), H=Math.max(64,Math.round(h*k)+2*pad);
+  const c=mkCanvas(W,H), x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,W,H);
+  const X=(v)=>pad+(v-ext.x0)*k, Y=(v)=>H-pad-(v-ext.y0)*k; // DXF y points up
+  x.lineWidth=1.1; x.lineJoin='round'; x.lineCap='round';
+  let ink=null; x.beginPath();
+  for (const p of g.paths){ const col=inkOf(p.ink); if (col!==ink){ x.stroke(); x.beginPath(); x.strokeStyle=ink=col; }
+    x.moveTo(X(p.p[0]),Y(p.p[1])); for (let i=2;i<p.p.length;i+=2) x.lineTo(X(p.p[i]),Y(p.p[i+1])); if (p.c) x.closePath(); }
+  x.stroke();
+  const HA=['left','center','right'], VA=['alphabetic','bottom','middle','top'], font=(px)=>`${px.toFixed(1)}px Arial, Helvetica, sans-serif`;
+  for (const t of g.texts){ let px=Math.min(t.h*k,160), sx=1;
+    if (t.w){ x.font=font(Math.max(px,1)); const have=x.measureText(t.s).width, want=t.w*k; // Aligned: the height follows the width; Fit: only the width
+      if (have>0 && want>0){ if (t.fit===3) px=Math.min(Math.max(px,1)*want/have,160); else sx=Math.max(0.2,Math.min(5,want/have)); } }
+    if (px<3.5) continue;
+    x.save(); x.translate(X(t.x),Y(t.y)); x.rotate(-t.rot); if (sx!==1) x.scale(sx,1); x.fillStyle=inkOf(t.ink); x.font=font(px);
+    x.textAlign=HA[t.ha]||'left'; const lines=t.s.split('\n'), lh=px*1.35;
+    x.textBaseline=t.ml?'top':(VA[t.va]||'alphabetic');
+    const dy=t.ml?(t.va===2?-lh*lines.length/2:t.va===1?-lh*lines.length:0):0;
+    lines.forEach((s,i)=>x.fillText(s,0,dy+i*lh)); x.restore(); }
+  let blob=c.convertToBlob?await c.convertToBlob({type:'image/png'}):await new Promise((res,rej)=>c.toBlob(b=>b?res(b):rej(new FileError('fRead')),'image/png'));
+  if (blob.size>3.5*1024*1024) blob=await toJpeg(c,0.9); // a very dense drawing: JPEG is smaller
+  return { type:blob.type, data:await blobB64(blob), url:URL.createObjectURL(blob), w:W, h:H };
+}
+const fmtN=(v)=>{ const a=Math.abs(v); const s=a>=1000?Math.round(v):a>=10?+v.toFixed(1):+v.toFixed(3); return String(s).replace(/\B(?=(\d{3})+(?!\d))/g,' '); };
+function dxfSummary(name,dxf,g,ext){
+  const hd=dxf.header||{}, u=hd.$INSUNITS, ver=DXF_VER[hd.$ACADVER]||hd.$ACADVER;
+  const top=(o,n)=>Object.entries(o).sort((a,b)=>b[1]-a[1]).slice(0,n).map(([k,v])=>`${k} ${v}`).join(', ');
+  const nEnt=Object.values(g.counts).reduce((a,b)=>a+b,0), L=[];
+  L.push(`CAD drawing "${name}" (ASCII DXF${ver?', AutoCAD '+ver:''}), parsed in the browser. The image "${name}" is a rendering of its model space: +Y of the drawing points up, scale and orientation are the drawing's own.`);
+  L.push(u&&DXF_UNITS[u]?`Units: ${DXF_UNITS[u]} ($INSUNITS = ${u}).`:`Units: not set in the file${u!=null?` ($INSUNITS = ${u})`:''} — judge them from the sizes and dimension values.`);
+  L.push(`Extents of the drawn entities: X ${fmtN(ext.x0)} … ${fmtN(ext.x1)}, Y ${fmtN(ext.y0)} … ${fmtN(ext.y1)} (size ${fmtN(ext.x1-ext.x0)} × ${fmtN(ext.y1-ext.y0)}).`+(ext.outliers?` ${ext.outliers} far-away object(s) outside this area are not shown.`:''));
+  L.push(`Entities in model space: ${nEnt} — ${top(g.counts,30)}.`);
+  L.push(`Layers (entities): ${top(g.layerCount,80)}.`+(g.hidden.length?` Hidden or frozen layers (not drawn): ${g.hidden.slice(0,40).join(', ')}.`:''));
+  const ins=Object.keys(g.inserts).length; if (ins) L.push(`Blocks (times inserted): ${top(g.inserts,80)}.`);
+  const named=Object.keys(dxf.blocks||{}).filter(n=>!/^\*/.test(n)); if (named.length) L.push(`Block definitions: ${named.slice(0,120).join(', ')}${named.length>120?', …':''}.`);
+  if (g.simplified) L.push('The drawing is very large or deeply nested: part of it was left out of the rendering.');
+  L.push('', `Texts (TEXT / MTEXT${g.texts.some(t=>t.dim)?' / dimension values':''}) with their position (x, y), in drawing order:`);
+  for (const t of g.texts) L.push(`${JSON.stringify(t.s)} (${fmtN(t.x)}, ${fmtN(t.y)})${t.dim?' [dimension]':''}`);
+  if (!g.texts.length) L.push('(none)');
+  return capText(L.join('\n'),`the drawing has more texts than fit into ${TEXT_CAP} characters`);
+}
+async function prepDxf(f,name){
+  if (f.size>DXF_IN_MAX) throw new FileError('fBig');
+  const b=new Uint8Array(await f.arrayBuffer());
+  if (new TextDecoder('latin1').decode(b.subarray(0,18))==='AutoCAD Binary DXF') throw new FileError('dxfBin');
+  const text=dxfDecode(b), DxfParser=await loadLib('dxf');
+  let dxf; try { dxf=dxfParser(DxfParser).parseSync(text); } catch(e){ throw new FileError('fRead'); }
+  if (!dxf) throw new FileError('fRead');
+  const g=dxfGeometry(dxf), ext=dxfExtents(g);
+  if (!ext || (!g.paths.length && !g.texts.length)) throw new FileError('dxfEmpty');
+  const image=await dxfRender(g,ext), sum=dxfSummary(name,dxf,g,ext);
+  return { kind:'text', text:sum.text, cut:sum.cut, image };
+}
+
+/* ---- one attached file → {id, kind, name, data | text, type, size, src, pages?, sheets?, cut?, image?}; name: unique among the attached files */
+async function prepDoc(f,type,name){
+  if (type==='dwg') throw new FileError('fDwg');
+  if (type==='doc') throw new FileError('fDoc');
+  name=name||fileName(f.name);
+  const p=type==='pdf'?prepPdf(f):type==='sheet'?prepSheet(f,name):(type==='csv'||type==='tsv')?prepDelimited(f,type,name):type==='docx'?prepDocx(f,name):type==='txt'?prepTxt(f):type==='dxf'?prepDxf(f,name):Promise.reject(new FileError('fType'));
+  let d; try { d=await p; } catch(e){ throw e instanceof FileError?e:new FileError('fRead'); }
+  return { ...d, id:++ED.phSeq, name, type, size:f.size, src:fileSrc(f) };
+}
+const fmtSize=(n)=>n>=1048576?(n/1048576).toFixed(n>=10485760?0:1).replace('.',LANG==='ru'?',':'.')+(LANG==='ru'?' МБ':' MB'):Math.max(1,Math.round(n/1024))+(LANG==='ru'?' КБ':' KB');
+const ruN=(n,a,b,c)=>{ const m=n%10, h=n%100; return n+' '+(m===1&&h!==11?a:m>=2&&m<=4&&(h<12||h>14)?b:c); };
+function docMeta(d){
+  const e=T[LANG].ed, ru=LANG==='ru', bits=[];
+  if (d.pages) bits.push(ru?`${d.pages} стр.`:`${d.pages} səh.`);
+  if (d.sheets) bits.push(ru?ruN(d.sheets,'лист','листа','листов'):`${d.sheets} vərəq`);
+  bits.push(fmtSize(d.size)); if (d.cut) bits.push(e.fCut);
+  return bits.join(' · ');
+}
+function docChip(d,i){
+  const e=T[LANG].ed, busy=!!ED.busy;
+  const pic=d.image?`<a class="dthumb" href="${esc(d.image.url)}" target="_blank" rel="noopener" title="${esc(e.fOpen)}"><img src="${esc(d.image.url)}" alt="${esc(e.fOpen)}: ${esc(d.name)}" width="44" height="44"></a>`:`<span class="di" aria-hidden="true">${FILE_ICON[d.type]||'📎'}</span>`;
+  return `<li class="doc">${pic}<span class="dt"><span class="dn" title="${esc(d.name)}">${esc(d.name)}</span><span class="dm">${esc(docMeta(d))}</span></span><button type="button" class="ph-x" id="ed-phx-${d.id}" data-doc="${d.id}" aria-label="${esc(e.fRemove)}: ${esc(d.name)}" ${busy?'disabled':''}>×</button></li>`;
+}
+const FILES_CSS=`.ph-list li.doc{width:auto;min-width:150px;max-width:min(100%,264px);display:flex;align-items:center;gap:8px;padding:0 34px 0 10px;box-sizing:border-box}
+.ph-list li.doc .di{font-size:24px;line-height:1;flex:none}
+.ph-list li.doc .dthumb{flex:none;display:block;width:44px;height:44px;border-radius:6px;overflow:hidden;border:1px solid var(--line);background:#fff}
+.ph-list li.doc .dthumb img{width:100%;height:100%;object-fit:contain}
+.ph-list li.doc .dt{display:flex;flex-direction:column;min-width:0;gap:2px}
+.ph-list li.doc .dn{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph-list li.doc .dm{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph-list li.doc .ph-x{top:50%;margin-top:-13px}
+.vers p.vf{font-size:12px;margin-top:1px}`;
 
 /* ------------------------------------------------------------------ boot */
 function resize(){ const w=stage.clientWidth,h=stage.clientHeight; renderer.setSize(w,h); gfxSize(); labelR.setSize(w,h); camera.aspect=w/h;
