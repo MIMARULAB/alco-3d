@@ -185,6 +185,22 @@ h3.sub{font-family:var(--f-display);font-weight:600;font-size:16px;margin:16px 0
 .sy-mark::before{content:"";display:block;width:100%;height:100%;box-sizing:border-box;border-radius:50%;border:3px solid var(--rec);background:color-mix(in srgb,var(--rec) 16%,transparent);animation:sypulse 1.1s ease-in-out infinite}
 @keyframes sypulse{50%{transform:scale(1.5);opacity:.55}}
 @media (prefers-reduced-motion:reduce){.sy-mark::before{animation:none}}
+.sy-tip dl.sy-wc{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;margin:6px 0 0}
+.sy-tip .sy-wc dt{color:var(--muted)}.sy-tip .sy-wc dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.sy-wh{display:flex;align-items:center;gap:8px;min-width:min(280px,calc(100vw - 58px))}.sy-wh i{flex:none;width:22px;height:8px;border-radius:4px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 45%,transparent)}.sy-wh b{flex:1;min-width:0}
+.sy-ws,.sy-wm{display:none}.sy-wl{margin:6px 0 0;color:var(--muted)}
+.sy-end,.sy-no{width:0;height:0;pointer-events:none}.sy-end b,.sy-no b{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;font-size:11px;font-weight:600;line-height:1.2;color:var(--ink);background:var(--panel-solid);border:1px solid var(--line);border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.sy-end b{top:-16px;padding:2px 8px}.sy-end::before{content:"";position:absolute;width:9px;height:9px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--panel-solid);border:2px solid var(--ink);box-sizing:border-box}
+.sy-no b{min-width:15px;padding:0 3px;font-size:10px;text-align:center;box-sizing:border-box}
+.sy-wh button{flex:none;border:0;background:transparent;color:var(--muted);font-size:18px;line-height:1;width:30px;height:30px;margin:-6px -8px -6px 0;cursor:pointer;border-radius:8px}
+.sy-wn{margin:6px 0 0;color:var(--warn)}.sy-wb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:6px 0 0;color:var(--muted)}
+.sy-wb button{flex:none;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:3px 10px;font-size:12px;cursor:pointer}.sy-wb button b{margin-right:5px}.sy-wb span{flex:none}
+.sy-gl{max-height:264px;overflow-y:auto;margin:0 0 8px}#sy-gclear[hidden]{display:none}
+.sy-g{display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;border:0;border-top:1px solid var(--line);background:transparent;color:var(--ink);padding:5px 4px;font-size:12.5px;line-height:1.3;text-align:left;cursor:pointer}
+.sy-g:first-child{border-top:0}.sy-g:hover{background:var(--chip)}.sy-g[aria-pressed="true"]{background:var(--chip);box-shadow:inset 3px 0 0 var(--bronze)}
+.sy-g i{flex:none;width:22px;height:8px;border-radius:4px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 45%,transparent)}.sy-g span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sy-g b{font-weight:600}
+.sy-g small{flex:none;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+body.syswire .lbl{pointer-events:none;padding:0;border:0;background:transparent;box-shadow:none}body.syswire .lbl .t{display:none}body.syswire .lbl .n{opacity:.82;min-width:16px;height:16px;font-size:10px}
 .sy-tip{position:fixed;left:50%;transform:translateX(-50%);top:calc(14px + env(safe-area-inset-top,0px));max-width:min(440px,calc(100vw - 32px));padding:9px 13px;font-size:12.5px;line-height:1.4;z-index:4;border-radius:12px}
 .sy-tip b{font-weight:600}.sy-tip small{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
 .sy-top{display:flex;align-items:center;gap:8px;margin:0 0 6px}
@@ -296,7 +312,7 @@ textarea.sy-ta{min-height:54px;resize:vertical;line-height:1.4;width:100%}
 .sy-n .sy-vf{padding:2px 0 10px}
 #sy-q{width:100%;margin:0 0 6px}
 .sy-lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:3px 12px;font-size:12px;line-height:1.3}
-.sy-lg i{display:inline-block;width:18px;height:4px;border-radius:2px;vertical-align:3px;margin-right:6px}
+.sy-lg i{display:inline-block;width:18px;height:4px;border-radius:2px;vertical-align:3px;margin-right:6px}.sy-lg i.dash{background:repeating-linear-gradient(90deg,var(--muted) 0 3px,transparent 3px 6px)}
 #panel.collapsed .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-right:26px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent)}
 #panel.collapsed .tabs::-webkit-scrollbar{display:none}
 #panel.collapsed .tabs button{flex:none}
@@ -308,6 +324,15 @@ textarea.sy-ta{min-height:54px;resize:vertical;line-height:1.4;width:100%}
 #sy-doc .sy-tw{max-height:none}
 #sy-doc .sy-t td{white-space:normal;max-width:none}
 #sy-doc .sy-pre{position:static;margin:8px 0}
+/* on a phone the card of a trace is its head and one line, and opens on a press: the plan under it is the point */
+@media (max-width:760px),(max-height:500px){
+  .sy-ws{display:block;margin:4px 0 0;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sy-wm{display:block;transition:transform .2s}.sy-tip.more .sy-wm{transform:rotate(180deg)}
+  .sy-tip:not(.more) .sy-wd{display:none}
+  .sy-tip.dock{overflow-y:auto;box-sizing:border-box}.sy-tip.dock .sy-wh{min-width:0}
+  .sy-wb{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+}
+@media (max-height:500px){body.syswire .brand{display:none}}
 /* a phone on its side: wide enough for the desktop layout, too low for it. The bars move clear of the view tools and stay left of the panel (barsFit), and the panel can be put away */
 @media (max-height:500px) and (min-width:761px){
   .brand{padding:8px 12px}.brand p{display:none}
@@ -332,6 +357,9 @@ textarea.sy-ta{min-height:54px;resize:vertical;line-height:1.4;width:100%}
   .sy-vf label.c input{width:24px;height:24px}
   body .tools button{width:44px;height:44px}
   body.sysover .lbl{pointer-events:none}
+  .sy-g{min-height:44px}
+  .sy-wh button{width:44px;height:44px;margin:-10px -12px -10px 0}
+  .sy-wb button{min-width:44px;min-height:44px}
 }
 
 @media print{html,body{height:auto;overflow:visible;background:#fff}body>*:not(#sy-doc){display:none!important}#sy-doc{position:static;padding:0;overflow:visible;font-size:10.5px;--ink:#222;--muted:#555;--line:#bbb;--panel-solid:#fff;--chip:#f2f2f2;--bronze:#6b4f2a;--warn:#7A5200;--green:#2F4A3C;background:#fff;color:#222}.sy-dh{display:none}#sy-doc .sy-tw{overflow:visible;border:0}#sy-doc .sy-t th,#sy-doc .sy-t td{position:static}#sy-doc h2{break-after:avoid}}
@@ -2018,8 +2046,8 @@ function fitV(v){ const k=fitK(); if (k!==1) v.p=v.t.clone().add(v.p.clone().sub
 function floorView(key){
   const lv=key==='B'?0:LV[key];
   if (key==='B') return fitV({ p:W2(37,19,43), t:W2(16.2,4.6,12.4) });
-  if (state.plan) return fitV({ p:W2(16.2,lv+36,12.6), t:W2(16.2,lv,12.4) });
-  return fitV({ p:W2(25.5,lv+21,31), t:W2(16.2,lv+.4,12.2) });
+  if (state.plan) return sysRoomy(key,fitV({ p:W2(16.2,lv+36,12.6), t:W2(16.2,lv,12.4) }));
+  return sysRoomy(key,fitV({ p:W2(25.5,lv+21,31), t:W2(16.2,lv+.4,12.2) }));
 }
 function applyVisibility(){
   const f=state.floor, idx=ORDER.indexOf(f);
@@ -2125,7 +2153,7 @@ $('#tab-sys').addEventListener('click',()=>sysOpen());
 $('#tab-docs').addEventListener('click',()=>{ state.tab='docs'; state.room=null; renderPanel(); openSheet(); });
 $('#sheet').addEventListener('click',()=>$('#panel').classList.toggle('collapsed'));
 $('#t-reset').addEventListener('click',()=>{ state.plan=false; $('#t-plan').setAttribute('aria-pressed','false'); setFloor(state.floor); });
-$('#t-plan').addEventListener('click',(e)=>{ state.plan=!state.plan; e.currentTarget.setAttribute('aria-pressed',state.plan); if (state.floor==='B') { state.floor='I'; applyVisibility(); renderFloors(); renderPanel(); } const v=floorView(state.floor); flyTo(v.p,v.t); });
+$('#t-plan').addEventListener('click',(e)=>{ state.plan=!state.plan; e.currentTarget.setAttribute('aria-pressed',state.plan); sysVis(); if (state.floor==='B') { state.floor='I'; applyVisibility(); renderFloors(); renderPanel(); } const v=floorView(state.floor); flyTo(v.p,v.t); });
 $('#t-cut').addEventListener('click',(e)=>{ state.cut=!state.cut; e.currentTarget.setAttribute('aria-pressed',state.cut); applyVisibility(); });
 $('#t-eve').addEventListener('click',()=>eveSet(!EVE.on));
 $('#t-lbl').addEventListener('click',(e)=>{ state.labels=!state.labels; e.currentTarget.setAttribute('aria-pressed',state.labels); applyVisibility(); });
@@ -3570,6 +3598,104 @@ function spotsFor(state, plan, f, roomId, at, o = {}) {
   else if (at === 'grid') out.push(...gridSpots(g, o.n, o.spacing || 2.4));
   const spots = out.filter(Boolean);
   return at === 'door' && o.n ? spots.slice(0, o.n) : spots;
+}
+// ---------------------------------------------------------------- wires
+const WIRE_TIE = 0.02; // a route that passes a device twice: the pass this much further away still counts, and the shorter way wins
+const WIRE_GAP = 0.5; // from here on a jump between the end of a route and the foot of the backbone is a gap in the design, not a branch
+const WIRE_SOURCES = ['rack', 'patch'];
+const wireKey = (p) => `${Math.round(p[0] * 100)}|${Math.round(p[1] * 100)}|${Math.round(p[2] * 100)}`;
+const wireGap = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+/** The point of segment a-b closest in plan to (x, z), and how far it is in plan. */
+function wireFoot(x, z, a, b) {
+  const dx = b[0] - a[0], dz = b[2] - a[2], L2 = dx * dx + dz * dz, t = L2 ? Math.max(0, Math.min(1, ((x - a[0]) * dx + (z - a[2]) * dz) / L2)) : 0, p = [r3(a[0] + dx * t), r3(a[1] + (b[1] - a[1]) * t), r3(a[2] + dz * t)];
+  return { p, d: Math.hypot(x - p[0], z - p[2]) };
+}
+const wireOn = (p, a, b) => { const ux = b[0] - a[0], uz = b[2] - a[2], k = (p[0] - a[0]) * ux + (p[2] - a[2]) * uz, L2 = ux * ux + uz * uz; if (Math.abs(p[1] - a[1]) > 0.01 || k <= 0 || k >= L2) return false; const c = (p[0] - a[0]) * uz - (p[2] - a[2]) * ux; return c * c < 0.0009 * L2; };
+/**
+ * The way from a start along runs to the point nearest each end. A run is one route, in the order it was laid: a daisy chain connects only at its devices, so two passes of a run that touch are no junction and
+ * the way to a device keeps the order of the cable. Runs meet where the end of one lies on another (a tree, a branch off a straight run); pieces that do not touch, and the start itself, join by their closest points.
+ * runs: [[p…]…]; ends: [{ x, z, lo, hi }], lo..hi the height band of the floor of the device.
+ */
+function wireWays(start, runs, ends) {
+  const lines = runs.flatMap((pts, r) => pts.slice(1).map((b, i) => ({ a: pts[i], b, r, cuts: [] }))), joints = [];
+  const feet = ends.map((e) => {
+    const on = lines.filter((l) => l.a[1] >= e.lo && l.a[1] < e.hi), list = (on.length ? on : lines).map((l) => ({ ...wireFoot(e.x, e.z, l.a, l.b), l })), min = Math.min(...list.map((f) => f.d)), near = list.filter((f) => f.d <= min + WIRE_TIE);
+    for (const f of near) f.l.cuts.push(f);
+    return near;
+  });
+  runs.forEach((pts, r) => { for (const p of [pts[0], pts[pts.length - 1]]) for (const l of lines) if (l.r !== r && (wireKey(p) === wireKey(l.a) || wireKey(p) === wireKey(l.b) || wireOn(p, l.a, l.b))) { const cut = { p }; l.cuts.push(cut); joints.push([p === pts[0] ? 'head' : 'tail', r, cut]); } });
+  const nodes = [], make = (p) => { const n = { p, to: [], d: Infinity, from: null }; nodes.push(n); return n; }, link = (a, b) => { if (a === b) return; const w = wireGap(a.p, b.p); a.to.push([b, w]); b.to.push([a, w]); };
+  const tips = runs.map(() => ({})); let at = null;
+  for (const l of lines) {
+    if (!tips[l.r].head) at = tips[l.r].head = make(l.a);
+    for (const c of l.cuts.sort((u, v) => wireGap(l.a, u.p) - wireGap(l.a, v.p))) { if (wireKey(c.p) !== wireKey(at.p)) { const n = make(c.p); link(at, n); at = n; } c.n = at; }
+    const n = make(l.b); link(at, n); at = tips[l.r].tail = n;
+  }
+  for (const [tip, r, cut] of joints) link(tips[r][tip], cut.n);
+  const first = make(start), seen = new Set([first]), grow = (list) => { while (list.length) for (const [m] of list.pop().to) if (!seen.has(m)) { seen.add(m); list.push(m); } };
+  grow([first]);
+  for (;;) {
+    let pair = null, gap = Infinity;
+    for (const b of nodes) if (!seen.has(b)) for (const a of seen) { const d = wireGap(a.p, b.p); if (d < gap) { gap = d; pair = [a, b]; } }
+    if (!pair) break;
+    link(...pair); seen.add(pair[1]); grow([pair[1]]);
+  }
+  first.d = 0; const open = new Set([first]);
+  while (open.size) { let a = null; for (const n of open) if (!a || n.d < a.d) a = n; open.delete(a); for (const [b, w] of a.to) if (a.d + w < b.d) { b.d = a.d + w; b.from = a; open.add(b); } }
+  return feet.map((near) => { const way = []; let n = near.map((f) => f.n).reduce((a, b) => (b.d < a.d ? b : a)); for (; n; n = n.from) way.push(n.p); return wireSpurs(way.reverse()); });
+}
+/** A chain goes out to a device and comes back along the same line. The way without those stretches, to draw; way.spur is how much cable they hold. */
+function wireSpurs(list) {
+  const way = []; let spur = 0;
+  for (const q of list) {
+    while (way.length > 1) {
+      const a = way[way.length - 2], b = way[way.length - 1], ux = b[0] - a[0], uz = b[2] - a[2], vx = q[0] - b[0], vz = q[2] - b[2], L = Math.hypot(ux, uz), M = Math.hypot(vx, vz);
+      if (Math.abs(a[1] - b[1]) > 0.01 || Math.abs(b[1] - q[1]) > 0.01 || !L || !M || ux * vx + uz * vz >= 0 || Math.abs(ux * vz - uz * vx) > 0.01 * Math.max(L, M)) break;
+      spur += 2 * Math.min(L, M); way.pop();
+      if (M < L) break;
+    }
+    if (!way.length || wireKey(way[way.length - 1]) !== wireKey(q)) way.push(q);
+  }
+  way.spur = spur;
+  return way;
+}
+/**
+ * The wire of every powered or connected device, for the page to draw: from its panel or rack along the routes of its circuit (the low-voltage tree of its floor) to the nearest
+ * point, a short branch in plan, then the drop to the device. A device on a circuit gets exactly one. Derived, never saved, and no quantity reads it: the length of a
+ * line stays what the calculations say. Returns [{ id, t, f, d, group, from, path: [[x, y, z]…] (y above the zero level of the building), own, leap, len, direct }]: group is the circuit id, or
+ * lv:<room> for a low-voltage bundle; path[own] is where the part on the floor itself begins (before it, the backbone from the rack); direct = no route drawn, a plain line; path[leap - 1] to path[leap]
+ * is a gap no route covers, the page leaves it out (0: none); len is the cable up to the device, the spurs of its chain included, so it can be longer than the drawn path.
+ */
+function deviceWires(sys) {
+  const { elements, routes, circuits } = sys, out = [], by = new Map(circuits.map((c) => [c.id, []])), lv = [], ok = (e) => fin(e.x) && fin(e.z) && Object.hasOwn(ELEMENT_TYPES, e.t) && fin(FLOOR_LEVEL[e.f]);
+  const at = (e) => [e.x, FLOOR_LEVEL[e.f] + (fin(e.h) ? e.h : elementHeight(e.t, e.f)), e.z], run = (t, f) => FLOOR_LEVEL[f] + routeHeight(t, f), band = (e) => ({ x: e.x, z: e.z, lo: FLOOR_LEVEL[e.f], hi: FLOOR_LEVEL[FLOORS[FLOORS.indexOf(e.f) + 1]] ?? Infinity });
+  const runOf = (r) => { const y = FLOOR_LEVEL[r.f] + (fin(r.h) ? r.h : routeHeight(r.t, r.f)); return fin(y) && Array.isArray(r.pts) ? r.pts.filter((p) => fin(p?.[0]) && fin(p?.[1])).map((p) => [p[0], y, p[1]]) : []; }, runsOf = (list) => list.map(runOf).filter((pts) => pts.length > 1);
+  const end = (e, group, from, way, o = {}) => {
+    const y = way[way.length - 1][1], path = [...way, [e.x, y, e.z], at(e)].filter((p, i, a) => !i || wireKey(p) !== wireKey(a[i - 1]));
+    const index = (i) => (i ? path.findIndex((p) => wireKey(p) === wireKey(way[i])) : 0);
+    out.push({ id: e.id, t: e.t, f: e.f, d: group.startsWith('lv:') ? 'lv' : 'el', group, from, path, len: r2(path.reduce((L, p, i) => L + (i ? wireGap(path[i - 1], p) : 0), o.spur ?? way.spur ?? 0)), direct: !!o.direct, own: index(o.own), leap: index(o.leap) });
+  };
+  const plain = (a, e, t, riser) => { const ya = run(t, a.f), r = a.f !== e.f ? riser ?? [a.x, a.z] : null; return [at(a), [a.x, ya, a.z], ...(r ? [[r[0], ya, r[1]], [r[0], run(t, e.f), r[1]]] : [])]; }; // no route drawn: under the ceilings, and through the riser between floors
+  for (const e of elements) { if (!ok(e)) continue; if (by.has(e.circuit)) by.get(e.circuit).push(e); else if (e.d === 'lv' && !WIRE_SOURCES.includes(e.t)) lv.push(e); }
+  const riser = routes.find((r) => r.t === 'el_riser')?.pts?.[0];
+  for (const c of circuits) {
+    const list = by.get(c.id), panel = elements.find((e) => e.id === c.panel && e.t === 'panel' && ok(e)), runs = runsOf(routes.filter((r) => r.circuit === c.id)); if (!list.length) continue;
+    if (!panel && !runs.length) continue;
+    if (!runs.length) { for (const e of list) end(e, c.id, panel.id, plain(panel, e, 'cable', riser), { direct: true }); continue; }
+    const ways = wireWays(panel ? at(panel) : runs[0][0], runs, list.map(band));
+    list.forEach((e, i) => end(e, c.id, panel?.id ?? null, ways[i]));
+  }
+  const rack = elements.find((e) => e.t === 'rack' && ok(e)); if (!rack || !lv.length) return out;
+  const trunk = routes.find((r) => r.t === 'lv_backbone')?.pts?.[0], ofFloor = (f) => routes.filter((r) => r.f === f && (r.t === 'lv_cable' || r.t === 'lv_tray')), floors = [...new Set(lv.map((e) => e.f))].sort((a, b) => (b === rack.f) - (a === rack.f));
+  let up = null, gap = 0; // the way from the rack to the foot of the backbone, for the floors above, and where in it a cable is missing
+  for (const f of floors) {
+    const list = lv.filter((e) => e.f === f), runs = runsOf(ofFloor(f)), mine = f === rack.f, hubY = runs.length ? runs[0][0][1] : run('lv_cable', f), group = (e) => `lv:${e.room ?? e.f}`;
+    const foot = mine && trunk && floors.length > 1 ? { x: trunk[0], z: trunk[1], lo: FLOOR_LEVEL[f], hi: Infinity } : null, ways = runs.length ? wireWays(mine ? at(rack) : [trunk?.[0] ?? rack.x, hubY, trunk?.[1] ?? rack.z], runs, [...list.map(band), ...(foot ? [foot] : [])]) : list.map(() => (mine ? plain(rack, rack, 'lv_cable') : [[trunk?.[0] ?? rack.x, hubY, trunk?.[1] ?? rack.z]]));
+    if (foot) { const to = ways[list.length] ?? plain(rack, rack, 'lv_cable'), hub = [trunk[0], hubY, trunk[1]]; up = [...to, hub]; gap = wireGap(to[to.length - 1], hub) > WIRE_GAP ? to.length : 0; }
+    const before = mine ? [] : up ?? plain(rack, { f, x: rack.x, z: rack.z }, 'lv_cable', trunk);
+    list.forEach((e, i) => end(e, group(e), rack.id, [...before, ...ways[i]], { own: before.length, leap: mine ? 0 : gap, direct: !runs.length, spur: ways[i].spur ?? 0 }));
+  }
+  return out;
 }
 
 // Norm table of the engineering layer: the ONLY place calc.js and checks.js read a norm value from.
@@ -6863,13 +6989,15 @@ function promptStatus(state, plan) {
   };
 }
 
-return {FLOORS,FLOOR_LEVEL,CEILING,OPEN_ROOMS,GLASS_SOLID,DISCIPLINES,ELEMENT_TYPES,ROUTE_TYPES,CIRCUIT_KINDS,CIRCUIT_PHASES,RISER_KINDS,RISER_LABEL,RISER_ROUTE,RISER_MARK,EARTHING,HEAT_SOURCES,VERIFY_STATUS,STAGE_STATUS,STAGES,PLACE_MODES,ITEM_FOOT,ITEM_WALK,ITEM_TOP,ITEM_LIGHT,ITEM_FIXTURE,ITEM_FITTED,WALL_NAMES,ESCAPE_ROUTES,CIRCULATION,TX,fin,r1,r2,r3,sumBy,systemsOf,projectOf,risersOf,stagesOf,elementKw,elementKind,elementLm,elementHeight,routeHeight,onCeiling,elementSize,LOAD_LINES,spansFloor,pointInPoly,segDist,ringDist,ringArea,polyLen,ringLen,segCross,crossPoint,inDoorway,wallCrossings,compassOf,facing,facingDir,routeBody,routeLen,outsideDir,roomGeom,inRoom,roomAt,nearestRoom,itemCovers,itemFoot,panelFreeDepth,openingClash,stairFeet,footless,stairFront,inCore,shaftRect,inRect,wallNear,floorWalls,wallGap,doorSwept,heaterOff,spotsFor,NORM_NOTE,NORMS,normCheck,normOf,normValue,normsList,normSnapshot,CALC_VERSION,PRELIM_LABEL,SIGN_NOTE,pickBreaker,dropPct,phaseCurrent,arcOf,groupFactor,ambientFactor,loads,ESCAPE_TYPES,lighting,lightsNeeded,nominalBtu,freonRow,matchAc,cooling,electricHeat,ahuCoil,ahuPower,heating,ventilation,lowVoltage,takeoff,allFixtures,water,loopOhm,protection,pickDuct,ductRun,shaftBody,ducts,freonLines,peakFlow,pickPipe,manningQ,pipes,FINISH_NAMES,facadeMaterials,markTable,archSchedules,passages,naturalVent,DETAILS,detailSet,schedule,missingInputs,designNotes,SECTIONS,isSection,sectionInputs,hashText,sectionHash,sectionKeys,sectionStatus,verifyStatus,calcAll,SEVERITIES,streetFacade,CHECKS,runChecks,AUTO_DISCIPLINES,floorGrid,routeOn,autoScope,autoPlanSize,autoPlanSteps,autoPlan,REPORT_GROUPS,RESULT_LABELS,buildReport,reportText,promptStatus};
+return {FLOORS,FLOOR_LEVEL,CEILING,OPEN_ROOMS,GLASS_SOLID,DISCIPLINES,ELEMENT_TYPES,ROUTE_TYPES,CIRCUIT_KINDS,CIRCUIT_PHASES,RISER_KINDS,RISER_LABEL,RISER_ROUTE,RISER_MARK,EARTHING,HEAT_SOURCES,VERIFY_STATUS,STAGE_STATUS,STAGES,PLACE_MODES,ITEM_FOOT,ITEM_WALK,ITEM_TOP,ITEM_LIGHT,ITEM_FIXTURE,ITEM_FITTED,WALL_NAMES,ESCAPE_ROUTES,CIRCULATION,TX,fin,r1,r2,r3,sumBy,systemsOf,projectOf,risersOf,stagesOf,elementKw,elementKind,elementLm,elementHeight,routeHeight,onCeiling,elementSize,LOAD_LINES,spansFloor,pointInPoly,segDist,ringDist,ringArea,polyLen,ringLen,segCross,crossPoint,inDoorway,wallCrossings,compassOf,facing,facingDir,routeBody,routeLen,outsideDir,roomGeom,inRoom,roomAt,nearestRoom,itemCovers,itemFoot,panelFreeDepth,openingClash,stairFeet,footless,stairFront,inCore,shaftRect,inRect,wallNear,floorWalls,wallGap,doorSwept,heaterOff,spotsFor,deviceWires,NORM_NOTE,NORMS,normCheck,normOf,normValue,normsList,normSnapshot,CALC_VERSION,PRELIM_LABEL,SIGN_NOTE,pickBreaker,dropPct,phaseCurrent,arcOf,groupFactor,ambientFactor,loads,ESCAPE_TYPES,lighting,lightsNeeded,nominalBtu,freonRow,matchAc,cooling,electricHeat,ahuCoil,ahuPower,heating,ventilation,lowVoltage,takeoff,allFixtures,water,loopOhm,protection,pickDuct,ductRun,shaftBody,ducts,freonLines,peakFlow,pickPipe,manningQ,pipes,FINISH_NAMES,facadeMaterials,markTable,archSchedules,passages,naturalVent,DETAILS,detailSet,schedule,missingInputs,designNotes,SECTIONS,isSection,sectionInputs,hashText,sectionHash,sectionKeys,sectionStatus,verifyStatus,calcAll,SEVERITIES,streetFacade,CHECKS,runChecks,AUTO_DISCIPLINES,floorGrid,routeOn,autoScope,autoPlanSize,autoPlanSteps,autoPlan,REPORT_GROUPS,RESULT_LABELS,buildReport,reportText,promptStatus};
 })();
 /* ------------------------------------------------------------------ engineering layer: overlays, panel, automatic design, review (part_systems.js)
    Overlays: per floor one merged line mesh (routes), one instanced mesh of symbols and one of small boxes, plus one line mesh for all risers. The four disciplines
    share these buffers and a uniform mask switches them, so a toggle rebuilds nothing. Lines and symbols are sized in screen pixels and drawn twice: solid where
    visible, faint behind walls. They write no depth and nothing here casts or receives shadows, so the shadow map and the AO pass stay as they are.
-   Calculations run once per design state, never per frame. Contract: api/SYSTEMS.md. */
+   Calculations run once per design state, never per frame. Contract: api/SYSTEMS.md.
+   Wires: Elektrik and Zəif axın draw one wire to each device (ENG.deviceWires), a colour per group, side by side where they share a run, into a mesh of their own per floor that the
+   building view leaves out. Tracing draws the chosen wires once more on top, into SYS.hi, and turns the rest down with uA; nothing else is rebuilt. */
 window.__alcoUp=1;
 T.az.tabSys='Sistemlər'; T.ru.tabSys='Инженерия';
 T.az.sys={ title:'Mühəndis sistemləri', dn:{el:'Elektrik',lv:'Zəif axın',hvac:'HVAC',pl:'Su'}, home:'Ümumi', arch:'Memarlıq', verify:'Yoxlama', norms:'Normalar', wide:'Geniş', narrow:'Dar', furn:'Mebel', pre:'ilkin',
@@ -6883,6 +7011,7 @@ T.az.sys={ title:'Mühəndis sistemləri', dn:{el:'Elektrik',lv:'Zəif axın',hv
   vTitle:'Mütəxəssis yoxlaması', vLead:'Hər bölməni mütəxəssis yoxlayır: adını və qeydini yazır, sonra təsdiq edir və ya rədd edir. Yoxlamadan sonra dəyişən bölmə ayrıca işarələnir və yenidən yoxlanmalıdır.', vChanged:'Yoxlamadan sonra dəyişib və ya rədd edilib', vAll:'Bütün bölmələr', vName:'Mütəxəssisin adı və soyadı', vNote:'Qeyd', vOk:'Təsdiq et', vNo:'Rədd et', vReset:'Qeydi sil', vSee:'Bölməyə bax: düsturlar, cədvəllər, normalar', vShort:'Ad ən azı 3 hərf olmalıdır.', vSaved:'Yoxlama qeydə alındı.', vNot:'Qeyd saxlanmadı. Yenidən cəhd edin.', sec:'bölmə', fAll:'Hamısı', fOpen:'Baxılmamış',
   nTitle:'Norma cədvəli', nSearch:'Axtar: ad, açar, standart', nValue:'Dəyər', nConfirm:'Mütəxəssis bu dəyəri təsdiq edir', nBy:'Təsdiq edən mütəxəssis', nSave:'Saxla', nBad:'Dəyər bu sətrin formatına uyğun deyil.', nJson:'Dəyəri oxumaq olmadı.', nNone:'Dəyişiklik yoxdur.', nTable:'Cədvəl dəyəri', nSaved:'Norma yeniləndi.', nCount:'{a} / {b} təsdiqlənib', nFound:'Tapılmadı.',
   passH:'Keçidlər və təbii havalandırma', passRooms:'Yoxlanan otaq', passNarrow:'Normadan dar yer', ventOk:'Təbii havalandırma çatır', passSee:'Keçidlərə bax', ventSee:'Təbii havalandırmaya bax', chat:{'project.floor_finish':'Döşəmələr üzrə qərarım: ….','project.balconies':'Binada balkon: ….','project.allocated_kw':'Ayrılmış elektrik gücü … kW-dır.','project.voltage':'Gərginlik … V-dur.','project.phases':'Giriş … fazalıdır.','project.entry':'Elektrik girişi … mərtəbədə, … otağının yanındadır.','project.earthing':'Torpaqlama sistemi: ….','project.ze':'Ölçülmüş Ze …-dən …-ə qədər Ω-dur.','project.heat_source':'İstilik mənbəyi: ….','project.risers':'Stoyaklar bu yerlərdədir: …','project.design':'Hesabat temperaturları: yay … °C, qış … °C.','rooms.people':'… otağında … nəfər işləyir.','rooms.equipment':'… otağında bu avadanlıq olacaq: …'},
+  wGroups:'Qruplar', wAll:'Hamısını göstər', wClose:'Bağla', wNone:'Bu mərtəbədə qrup yoxdur.', wPick:'Mərtəbə seçin: naqillər mərtəbədə görünür.', wHere:'bu mərtəbədə', wMore:'Ətraflı', wHidden:'divarın arxasında', wOut:(n)=>`digər mərtəbələrə, cihaz: ${n}`, wCurve:(c)=>`${c} tipi`, wSwitch:'Bu, qrupun xəttidir. Açarın hansı çıraqları yandırdığı burada göstərilmir.', wRoom:'Otaq', wGroup:'Qrup', wBreaker:'Avtomat', wCable:'Kabel', wLen:'Uzunluq', wLenTo:'lövhədən bu cihaza', wLenRack:'şkafdan bu cihaza', wLenAll:'Bütün xətt', wPanel:'Lövhə', wRack:'Şkaf', wFeeds:'Nəyi qidalandırır', wDevs:'Cihaz sayı', wGroupsN:'Qrup sayı', wDirect:'Marşrut çəkilməyib: xətt düz göstərilir.', wM:'m', wA:'A', wTap:'Rozetkaya, açara və ya çırağa basın: naqil lövhədən işıqlanacaq.', wTapS:'Rozetkaya, açara və ya çırağa basın: naqil lövhədən işıqlanacaq. İki barmaqla böyüdün: xətlər aydın görünəcək.', wNear:'Yaxında:', wFloorOf:'Mərtəbə', wFeedBy:'Qidalanma',
   opV:(k,s,n,x)=>`Yoxlama qeydi: ${k}, ${s}, ${n}.${x?` Qeyd: ${x}.`:''}`, opR:(k)=>`Yoxlama qeydi silindi: ${k}.`, opN:(k,v,c,b,x)=>`Norma: ${k}${v!==null?`: yeni dəyər ${v}`:''}${c?`, təsdiq edən ${b}`:''}${x?`. Qeyd: ${x}`:''}.`, opS:(n,s)=>`${n}-ci mərhələnin statusu: ${s}.` };
 T.ru.sys={ title:'Инженерные системы', dn:{el:'Электрика',lv:'Слаботочка',hvac:'ОВиК',pl:'Вода'}, home:'Сводка', arch:'Архитектура', verify:'Проверка', norms:'Нормы', wide:'Шире', narrow:'Уже', furn:'Мебель', pre:'предв.',
   noData:'По этой системе данных пока нет.', noHeadH:'Модель с сервера не прочитана', noHeadP:'Сервер не ответил, поэтому на экране встроенная базовая модель, а не последняя сохранённая версия. Инженерные данные на сервере могут быть, здесь они не видны. Обновите страницу или загляните позже.', emptyH:'Инженерных данных пока нет', emptyP:'Это нормальный старт. Программа сама разводит электрику, слаботочные системы, ОВиК и воду по планам: сначала вы видите предпросмотр, затем сохраняете его одной версией. Данные проекта (выделенная мощность, электрический ввод, стояки, число людей) добавляются позже, и программа пересчитывает всё заново.',
@@ -6895,16 +7024,17 @@ T.ru.sys={ title:'Инженерные системы', dn:{el:'Электрик
   vTitle:'Проверка специалистом', vLead:'Каждый раздел проверяет специалист: пишет имя и заметку, затем подтверждает или отклоняет. Раздел, изменившийся после проверки, выделяется отдельно и проверяется заново.', vChanged:'Изменено после проверки или отклонено', vAll:'Все разделы', vName:'Имя и фамилия специалиста', vNote:'Заметка', vOk:'Подтвердить', vNo:'Отклонить', vReset:'Убрать запись', vSee:'Открыть раздел: формулы, таблицы, нормы', vShort:'Имя: не меньше 3 букв.', vSaved:'Проверка записана.', vNot:'Запись не сохранилась. Попробуйте ещё раз.', sec:'разделов', fAll:'Все', fOpen:'Не просмотрено',
   nTitle:'Таблица норм', nSearch:'Поиск: название, ключ, стандарт', nValue:'Значение', nConfirm:'Специалист подтверждает это значение', nBy:'Подтвердил специалист', nSave:'Сохранить', nBad:'Значение не подходит под формат этой строки.', nJson:'Не удалось прочитать значение.', nNone:'Изменений нет.', nTable:'Значение таблицы', nSaved:'Норма обновлена.', nCount:'{a} из {b} подтверждено', nFound:'Ничего не найдено.',
   passH:'Проходы и естественная вентиляция', passRooms:'Проверено помещений', passNarrow:'Мест уже нормы', ventOk:'Вентиляции окнами хватает', passSee:'Открыть проходы', ventSee:'Открыть естественную вентиляцию', chat:{'project.floor_finish':'Моё решение по полам: ….','project.balconies':'Балконы в здании: ….','project.allocated_kw':'Выделенная электрическая мощность … кВт.','project.voltage':'Напряжение … В.','project.phases':'Ввод: фаз ….','project.entry':'Электрический ввод на этаже …, у помещения ….','project.earthing':'Система заземления: ….','project.ze':'Измеренное Ze от … до … Ом.','project.heat_source':'Источник тепла: ….','project.risers':'Стояки расположены здесь: …','project.design':'Расчётные температуры: лето … °C, зима … °C.','rooms.people':'В помещении … работает … человек.','rooms.equipment':'В помещении … будет оборудование: …'},
+  wGroups:'Группы', wAll:'Показать все', wClose:'Закрыть', wNone:'На этом этаже групп нет.', wPick:'Выберите этаж: провода показываются на этаже.', wHere:'на этом этаже', wMore:'Подробнее', wHidden:'за стеной', wOut:(n)=>`на другие этажи, приборов: ${n}`, wCurve:(c)=>`тип ${c}`, wSwitch:'Это линия группы. Какие светильники включает этот выключатель, здесь не показано.', wRoom:'Помещение', wGroup:'Группа', wBreaker:'Автомат', wCable:'Кабель', wLen:'Длина', wLenTo:'от щита до этого прибора', wLenRack:'от шкафа до этого прибора', wLenAll:'Вся линия', wPanel:'Щит', wRack:'Шкаф', wFeeds:'Что питает', wDevs:'Приборов', wGroupsN:'Групп', wDirect:'Трасса не начерчена: линия показана напрямую.', wM:'м', wA:'А', wTap:'Нажмите на розетку, выключатель или светильник: провод подсветится от щита.', wTapS:'Нажмите на розетку, выключатель или светильник: провод подсветится от щита. Увеличьте двумя пальцами: линии станут видны отчётливо.', wNear:'Рядом:', wFloorOf:'Этаж', wFeedBy:'Питание от',
   opV:(k,s,n,x)=>`Запись о проверке: ${k}, ${s}, ${n}.${x?` Заметка: ${x}.`:''}`, opR:(k)=>`Запись о проверке удалена: ${k}.`, opN:(k,v,c,b,x)=>`Норма: ${k}${v!==null?`: новое значение ${v}`:''}${c?`, подтвердил ${b}`:''}${x?`. Заметка: ${x}`:''}.`, opS:(n,s)=>`Статус этапа ${n}: ${s}.` };
 
 const EPLAN={ floors:{"Z":{"outline":[[5.53,8.78],[5.73,14.83],[9.47,15.02],[9.58,15.06],[9.64,15.2],[9.6,18.04],[18.89,18.19],[19.0,18.24],[19.05,18.33],[19.07,19.02],[24.54,18.66],[24.63,13.84],[24.74,13.69],[25.04,13.67],[25.06,12.07],[24.93,11.92],[24.94,11.32],[24.98,11.21],[25.1,11.13],[25.17,6.27],[7.44,6.58],[7.31,8.61],[7.26,8.72],[7.13,8.78]],"stair":[15.03,6.82,18.35,10.23],"core":[16.18,8.15,17.2,10.23],"lbsegs":[{"a":[19.98,10.57],"b":[18.35,10.54],"t":0.4},{"a":[14.8,9.37],"b":[14.8,7.08],"t":0.45},{"a":[14.8,9.6],"b":[14.8,11.31],"t":0.45},{"a":[24.49,10.58],"b":[22.22,10.54],"t":0.4},{"a":[24.34,12.75],"b":[24.33,13.15],"t":0.18},{"a":[9.75,12.44],"b":[9.74,12.76],"t":0.51},{"a":[12.02,12.86],"b":[15.11,12.91],"t":0.45},{"a":[11.62,12.88],"b":[10.9,12.86],"t":0.4},{"a":[11.62,12.78],"b":[12.03,12.78],"t":0.6}],"extThickness":0.4},"I":{"outline":[[5.81,3.81],[6.03,15.99],[8.64,15.99],[8.73,16.02],[8.81,16.14],[8.81,16.51],[8.74,16.63],[8.62,16.67],[8.7,16.8],[8.7,17.27],[8.62,17.42],[8.73,17.45],[8.79,17.54],[8.82,17.96],[10.3,17.94],[10.41,18.03],[10.43,18.18],[10.38,18.29],[10.26,18.34],[14.27,18.29],[14.39,18.44],[14.37,19.42],[18.97,19.42],[18.99,19.08],[19.13,18.96],[24.48,18.61],[24.58,12.93],[24.69,12.78],[24.98,12.76],[25.07,6.39],[12.01,6.61],[11.91,6.56],[11.86,6.45],[11.85,3.7]],"stair":[14.8,6.95,18.59,10.24],"core":[16.04,8.05,17.34,10.24],"lbsegs":[{"a":[9.33,6.86],"b":[8.84,6.86],"t":0.43},{"a":[9.08,6.65],"b":[9.08,7.07],"t":0.49},{"a":[11.59,7.21],"b":[11.59,10.24],"t":0.46},{"a":[14.57,9.8],"b":[14.57,7.19],"t":0.46},{"a":[8.02,12.43],"b":[8.41,12.43],"t":0.55},{"a":[8.28,12.15],"b":[8.28,12.5],"t":0.5},{"a":[8.53,12.71],"b":[8.81,12.71],"t":0.42},{"a":[14.34,12.71],"b":[13.9,12.71],"t":0.42},{"a":[14.12,12.92],"b":[14.12,12.5],"t":0.43},{"a":[18.59,12.97],"b":[19.0,12.97],"t":0.4},{"a":[18.79,13.17],"b":[18.79,12.77],"t":0.41},{"a":[14.15,14.03],"b":[14.15,13.14],"t":0.1},{"a":[12.58,17.66],"b":[12.45,16.97],"t":0.2},{"a":[14.24,14.43],"b":[14.24,14.03],"t":0.2}],"extThickness":0.4},"II":{"outline":[[5.83,3.8],[6.05,17.11],[7.38,18.33],[13.99,18.28],[14.08,18.33],[14.13,18.42],[14.17,19.28],[24.8,19.09],[24.9,13.82],[24.98,13.67],[25.21,13.63],[25.21,10.65],[25.27,10.54],[25.36,10.49],[26.02,10.47],[26.01,7.43],[25.36,7.42],[25.26,7.36],[25.22,7.25],[25.26,7.52],[25.24,7.73],[25.12,7.82],[24.9,7.8],[24.81,7.66],[24.8,6.8],[24.07,6.79],[23.97,6.68],[23.96,6.42],[23.86,6.58],[23.74,6.6],[23.66,6.57],[23.58,6.41],[23.39,6.48],[23.25,6.43],[23.14,6.48],[23.0,6.43],[22.95,6.56],[22.82,6.62],[22.69,6.57],[22.62,6.43],[22.44,6.49],[22.3,6.44],[22.29,6.73],[22.14,6.84],[18.77,6.9],[18.61,6.8],[18.58,6.5],[12.01,6.61],[11.92,6.56],[11.87,6.45],[11.86,3.7]],"stair":[14.8,6.96,18.59,10.23],"core":[16.04,8.05,17.34,10.23],"lbsegs":[{"a":[9.33,6.86],"b":[8.85,6.86],"t":0.42},{"a":[9.09,7.06],"b":[9.09,6.65],"t":0.48},{"a":[18.57,17.31],"b":[18.57,18.22],"t":0.44},{"a":[18.45,18.22],"b":[18.46,18.58],"t":0.67},{"a":[14.78,18.28],"b":[14.78,18.65],"t":0.05},{"a":[11.59,7.21],"b":[11.59,10.24],"t":0.46},{"a":[14.57,9.8],"b":[14.57,7.19],"t":0.46},{"a":[8.28,12.15],"b":[8.28,12.5],"t":0.5},{"a":[8.03,12.43],"b":[8.31,12.43],"t":0.56},{"a":[8.53,12.71],"b":[8.8,12.71],"t":0.42},{"a":[13.91,12.71],"b":[14.34,12.71],"t":0.42},{"a":[14.12,12.5],"b":[14.12,12.92],"t":0.44}],"extThickness":0.4},"III":{"outline":[[5.84,3.81],[6.06,17.09],[7.39,18.32],[13.99,18.27],[14.08,18.32],[14.13,18.41],[14.16,19.27],[24.79,19.08],[24.88,13.81],[24.96,13.67],[25.19,13.62],[25.2,10.65],[25.25,10.54],[25.34,10.49],[26.0,10.47],[25.99,7.43],[25.34,7.42],[25.24,7.36],[25.2,7.25],[25.24,7.52],[25.22,7.73],[25.1,7.83],[24.89,7.81],[24.79,7.67],[24.78,6.8],[24.06,6.8],[23.95,6.69],[23.94,6.43],[23.89,6.55],[23.75,6.61],[23.63,6.56],[23.56,6.42],[23.38,6.48],[23.24,6.43],[23.12,6.48],[22.99,6.44],[22.93,6.57],[22.8,6.62],[22.68,6.58],[22.6,6.44],[22.42,6.5],[22.28,6.45],[22.27,6.73],[22.12,6.84],[18.77,6.9],[18.61,6.81],[18.57,6.51],[11.91,6.62],[11.82,6.57],[11.77,6.46],[11.76,3.71]],"stair":[14.8,6.95,18.59,10.23],"core":[16.04,8.05,17.33,10.23],"lbsegs":[{"a":[11.49,7.24],"b":[11.49,10.23],"t":0.66},{"a":[14.57,9.8],"b":[14.57,7.2],"t":0.46},{"a":[18.57,17.3],"b":[18.57,18.21],"t":0.45},{"a":[18.45,18.21],"b":[18.46,18.57],"t":0.68},{"a":[14.78,18.64],"b":[14.77,18.27],"t":0.05},{"a":[8.29,12.15],"b":[8.29,12.5],"t":0.5},{"a":[8.03,12.42],"b":[8.32,12.42],"t":0.55},{"a":[8.54,12.71],"b":[8.8,12.71],"t":0.42},{"a":[13.9,12.71],"b":[14.34,12.71],"t":0.42},{"a":[14.12,12.5],"b":[14.12,12.92],"t":0.43}],"extThickness":0.4},"M":{"outline":[[5.84,3.81],[6.06,17.09],[7.39,18.32],[13.99,18.27],[14.08,18.32],[14.13,18.41],[14.16,19.27],[24.79,19.08],[24.88,13.81],[24.96,13.67],[25.19,13.62],[25.2,10.65],[25.25,10.54],[25.34,10.49],[26.0,10.47],[25.99,7.43],[25.34,7.42],[25.24,7.36],[25.2,7.25],[25.24,7.52],[25.22,7.73],[25.1,7.83],[24.89,7.81],[24.79,7.67],[24.78,6.8],[24.06,6.8],[23.95,6.69],[23.94,6.43],[23.89,6.55],[23.75,6.61],[23.63,6.56],[23.56,6.42],[23.38,6.48],[23.24,6.43],[23.12,6.48],[22.99,6.44],[22.93,6.57],[22.8,6.62],[22.68,6.58],[22.6,6.44],[22.42,6.5],[22.28,6.45],[22.27,6.73],[22.12,6.84],[18.77,6.9],[18.61,6.81],[18.57,6.51],[11.91,6.62],[11.82,6.57],[11.77,6.46],[11.76,3.71]],"stair":[14.8,6.95,18.59,10.23],"core":[16.04,8.05,17.34,10.23],"glass":[[7.25,4.55],[11.0,4.5],[11.0,6.6],[18.75,6.6],[18.75,7.3],[24.3,7.3],[24.3,18.0],[14.2,18.0],[14.2,17.3],[8.0,17.3],[7.25,16.4]],"lbsegs":[],"extThickness":0.3}}, rooms:(window.__PLAN__||{}).rooms||[] };
 const SD=['el','lv','hvac','pl'], SDI={el:0,lv:1,hvac:2,pl:3};
-const SYS={ ready:false, on:{el:false,lv:false,hvac:false,pl:false}, noFurn:false, G:{}, sig:{}, rise:null, riseSig:'', page:'home', wide:false, open:new Set(), secs:{}, dFor:null, d:null, rep:{}, auto:{f:'all',d:'all'}, busy:'', msg:'', err:false, pv:null, last:null, sure:false,
+const SYS={ ready:false, on:{el:false,lv:false,hvac:false,pl:false}, noFurn:false, G:{}, sig:{}, rise:null, w:null, wFor:null, trace:null, hi:null, ends:[], prim:'el', card:false, wHint:false, pFor:null, prot:null, riseSig:'', page:'home', wide:false, open:new Set(), secs:{}, dFor:null, d:null, rep:{}, auto:{f:'all',d:'all'}, busy:'', msg:'', err:false, pv:null, last:null, sure:false,
   tools:[], vopen:null, vf:{}, vfilter:'all', nopen:null, nq:'', ng:'all', nf:{}, more:{}, stale:false, reviewer:'', mark:null, cells:null, mats:null, atlas:null };
 try { SYS.reviewer=localStorage.getItem('alco3d-reviewer')||''; } catch(e){}
-const SU={ uRes:{value:new THREE.Vector2(1,1)}, uMask:{value:new THREE.Vector4(0,0,0,0)}, uAtlas:{value:null}, uMajor:{value:0}, uSz:{value:new THREE.Vector2(15,30)} };
+const SU={ uRes:{value:new THREE.Vector2(1,1)}, uMask:{value:new THREE.Vector4(0,0,0,0)}, uAtlas:{value:null}, uMajor:{value:0}, uSz:{value:new THREE.Vector2(15,30)}, uFlat:{value:0}, uTop:{value:3}, uLane:{value:4}, uWeak:{value:new THREE.Vector4(1,1,1,1)}, uCap:{value:1e3}, uThin:{value:1} };
 const sysState=()=>SYS.pv?SYS.pv.state:STATE;
-function sysSize(w,h){ SU.uRes.value.set(w,h); SU.uSz.value.set(w<760?11:15,w<760?26:30); }
+function sysSize(w,h){ const s=w<760||h<500; SU.uRes.value.set(w,h); SU.uSz.value.set(s?11:15,s?26:30); SU.uLane.value=s?3:4; }
 
 /* ---- overlays */
 const SYS_OFF='gl_Position=vec4(2.,2.,2.,1.); return;', SYS_OUT='#include <tonemapping_fragment>\n#include <colorspace_fragment>\n';
@@ -6921,28 +7051,44 @@ void main(){
 const SYS_LINE_FS=`uniform float uA; varying vec3 vC; varying float vE;
 void main(){ float e=abs(vE); gl_FragColor=vec4(mix(vC*1.5,vC*.62,smoothstep(.55,.9,e)),uA*(1.-smoothstep(.86,1.04,e)));
 ${SYS_OUT}}`;
-const SYS_SYM_VS=`attribute vec3 iP, iC, iT; attribute vec2 iS; uniform vec2 uRes, uSz; uniform vec4 uMask; uniform float uMajor; varying vec2 vU; varying vec3 vC;
+// a wire takes its side step in plan: uLane pixels per lane, at most 11 cm per lane, so that a bundle stays a ribbon of the same width at any zoom and keeps to the corridor from far away; the outer lanes of the widest ribbons sit up to 90 cm off the true line. In plan view wires and their devices lie on the plane of the wall tops
+const SYS_WIRE_VS=SYS_LINE_VS.replace('void main(){',`attribute vec4 aO; uniform float uFlat, uTop, uLane, uLift; uniform vec4 uWeak; varying float vW, vY;
+vec4 wireAt(vec3 p,vec2 o){ p.y=mix(p.y,uTop,uFlat); vec4 v=modelViewMatrix*vec4(p,1.); return v+modelViewMatrix*vec4(o.x,0.,o.y,0.)*min(uLane*max(-v.z,.1)/(projectionMatrix[1][1]*uRes.y*.5),.11); }
+void main(){`).replace('vec4 a=modelViewMatrix*vec4(position,1.), b=modelViewMatrix*vec4(aB,1.);','vec4 a=wireAt(position,aO.xy), b=wireAt(aB,aO.zw);').replace('vC=aC;','vC=aC; vW=uWeak[int(aM.x+.5)]*(1.+uLift*uFlat); vY=abs(position.y-aB.y)>.01?mix(position.y,aB.y,aS.x):0.;');
+const SYS_WIRE_FS=`uniform float uA, uDash; varying vec3 vC; varying float vE, vW, vY;
+void main(){ if (uDash>0.&&fract(vY*uDash)>.55) discard; float e=abs(vE); gl_FragColor=vec4(mix(vC*1.05,vC*.3,smoothstep(.6,.76,e)),uA*vW*(1.-smoothstep(.9,1.06,e)));
+${SYS_OUT}}`;
+// a traced wire has a dark edge: the pale hues disappear on oak without one
+const SYS_HI_FS=SYS_WIRE_FS.replace('vC*1.05','vC*1.3').replace('vC*.3','vec3(.03)'), SYS_HI_PX=3.8;
+// with the wires on a riser is a thin mark up to the ceiling of the open floor, not the heaviest thing on it
+const SYS_RISE_VS=SYS_LINE_VS.replace('uniform vec2 uRes;','uniform vec2 uRes; uniform float uCap, uThin;').replace('vec4 a=modelViewMatrix*vec4(position,1.), b=modelViewMatrix*vec4(aB,1.);','vec4 a=modelViewMatrix*vec4(position.x,min(position.y,uCap),position.z,1.), b=modelViewMatrix*vec4(aB.x,min(aB.y,uCap),aB.z,1.);').replace('min(aM.z*pm,26.))*.5+.7','min(aM.z*pm,26.))*.5*uThin+.7');
+const SYS_SYM_VS=`attribute vec3 iP, iC, iT; attribute vec2 iS; uniform vec2 uRes, uSz; uniform vec4 uMask, uWeak; uniform float uMajor, uFlat, uTop, uGhost, uLift; varying vec2 vU; varying vec3 vC; varying float vG;
 void main(){
   if (uMask[int(iT.z+.5)]<.5||iS.y<uMajor){ ${SYS_OFF} }
-  vec4 mv=modelViewMatrix*vec4(iP,1.); if (mv.z>-.1){ ${SYS_OFF} }
+  vec3 wp=iP; vG=1.; if (iT.z<1.5){ wp.y=mix(wp.y,uTop,uFlat); vG=(uGhost+uLift*uFlat)*uWeak[int(iT.z+.5)]; }
+  vec4 mv=modelViewMatrix*vec4(wp,1.); if (mv.z>-.1){ ${SYS_OFF} }
   mv.xyz+=normalize(-mv.xyz)*.2; vec4 c=projectionMatrix*mv; float pm=projectionMatrix[1][1]*uRes.y*.5/c.w, s=clamp(iS.x*pm,uSz.x,uSz.y);
   c.xy+=position.xy*s/uRes*2.*c.w; gl_Position=c; vU=vec2((iT.x+.5+position.x*.98)/8.,1.-(iT.y+.5-position.y*.98)/8.); vC=iC;
 }`;
-const SYS_SYM_FS=`uniform sampler2D uAtlas; uniform float uA; varying vec2 vU; varying vec3 vC;
-void main(){ vec4 t=texture2D(uAtlas,vU); if (t.b<.03) discard; vec3 c=mix(vec3(1.4),vC*1.5,smoothstep(.35,.7,t.g)); gl_FragColor=vec4(mix(c,vec3(1.5),t.r),uA*t.b);
+const SYS_SYM_FS=`uniform sampler2D uAtlas; uniform float uA; varying vec2 vU; varying vec3 vC; varying float vG;
+void main(){ vec4 t=texture2D(uAtlas,vU); if (t.b<.03) discard; float p=dot(vC,vec3(.3,.6,.1)); vec3 c=mix(p>.5?vec3(.12):vec3(1.4),vC*1.5,smoothstep(.35,.7,t.g)); gl_FragColor=vec4(mix(c,p>.42?vec3(.03):vec3(1.5),t.r),uA*vG*t.b);
 ${SYS_OUT}}`;
-const SYS_BOX_VS=`attribute vec3 iP, iZ, iC; attribute vec2 iD; uniform vec4 uMask; varying vec3 vC;
+const SYS_BOX_VS=`attribute vec3 iP, iZ, iC; attribute vec2 iD; uniform vec4 uMask; uniform float uFlat, uTop; varying vec3 vC;
 void main(){
   if (uMask[int(iD.x+.5)]<.5){ ${SYS_OFF} }
-  float c=cos(iD.y), s=sin(iD.y); vec3 p=position*iZ; p=vec3(c*p.x+s*p.z,p.y,c*p.z-s*p.x)+iP; vec3 n=vec3(c*normal.x+s*normal.z,normal.y,c*normal.z-s*normal.x);
+  float c=cos(iD.y), s=sin(iD.y); vec3 p=position*iZ, wp=iP; if (iD.x<1.5) wp.y=mix(wp.y,uTop,uFlat); p=vec3(c*p.x+s*p.z,p.y,c*p.z-s*p.x)+wp; vec3 n=vec3(c*normal.x+s*normal.z,normal.y,c*normal.z-s*normal.x);
   vC=iC*(.62+.5*max(dot(n,vec3(.27,.8,.53)),0.)); gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);
 }`;
-const SYS_BOX_FS=`varying vec3 vC;\nvoid main(){ gl_FragColor=vec4(vC,.55);\n${SYS_OUT}}`;
+const SYS_BOX_FS=`uniform float uA; varying vec3 vC;\nvoid main(){ gl_FragColor=vec4(vC,.55*uA);\n${SYS_OUT}}`;
+const SYS_GHOST={ wire:.3, drop:.5, sym:.8 }; // behind a wall: much fainter, a drop dashed, so that a device on the inside of the near wall does not read as one on the street side. In plan view nothing is behind a wall but a high parapet, and uLift brings it back
 function sysMats(){
   if (SYS.mats) return SYS.mats;
-  const mk=(vs,fs,a,func,extra)=>new THREE.ShaderMaterial({ vertexShader:vs, fragmentShader:fs, uniforms:{ uRes:SU.uRes, uMask:SU.uMask, uAtlas:SU.uAtlas, uMajor:SU.uMajor, uSz:SU.uSz, uA:{value:a} }, transparent:true, depthWrite:false, depthFunc:func, ...extra });
-  return SYS.mats={ line:mk(SYS_LINE_VS,SYS_LINE_FS,1,THREE.LessEqualDepth), lineG:mk(SYS_LINE_VS,SYS_LINE_FS,.3,THREE.GreaterDepth), sym:mk(SYS_SYM_VS,SYS_SYM_FS,1,THREE.LessEqualDepth), symG:mk(SYS_SYM_VS,SYS_SYM_FS,.4,THREE.GreaterDepth),
-    box:new THREE.ShaderMaterial({ vertexShader:SYS_BOX_VS, fragmentShader:SYS_BOX_FS, uniforms:{ uMask:SU.uMask }, transparent:true, depthWrite:false }) };
+  const mk=(vs,fs,a,func,extra)=>new THREE.ShaderMaterial({ vertexShader:vs, fragmentShader:fs, uniforms:{ uRes:SU.uRes, uMask:SU.uMask, uAtlas:SU.uAtlas, uMajor:SU.uMajor, uSz:SU.uSz, uFlat:SU.uFlat, uTop:SU.uTop, uLane:SU.uLane, uWeak:SU.uWeak, uCap:SU.uCap, uThin:SU.uThin, uGhost:{value:1}, uLift:{value:0}, uDash:{value:0}, uA:{value:a} }, transparent:true, depthWrite:false, depthFunc:func, ...extra });
+  const M3=SYS.mats={ line:mk(SYS_LINE_VS,SYS_LINE_FS,1,THREE.LessEqualDepth), lineG:mk(SYS_LINE_VS,SYS_LINE_FS,.3,THREE.GreaterDepth), sym:mk(SYS_SYM_VS,SYS_SYM_FS,1,THREE.LessEqualDepth), symG:mk(SYS_SYM_VS,SYS_SYM_FS,.4,THREE.GreaterDepth),
+    wire:mk(SYS_WIRE_VS,SYS_WIRE_FS,1,THREE.LessEqualDepth), wireG:mk(SYS_WIRE_VS,SYS_WIRE_FS,SYS_GHOST.wire,THREE.GreaterDepth), wireD:mk(SYS_WIRE_VS,SYS_WIRE_FS,SYS_GHOST.drop,THREE.GreaterDepth), wireHi:mk(SYS_WIRE_VS,SYS_HI_FS,1,THREE.LessEqualDepth), wireHiG:mk(SYS_WIRE_VS,SYS_HI_FS,.55,THREE.GreaterDepth), wireFar:mk(SYS_WIRE_VS,SYS_HI_FS,.3,THREE.LessEqualDepth), symHi:mk(SYS_SYM_VS,SYS_SYM_FS,1,THREE.AlwaysDepth),
+    rise:mk(SYS_RISE_VS,SYS_LINE_FS,1,THREE.LessEqualDepth), riseG:mk(SYS_RISE_VS,SYS_LINE_FS,.3,THREE.GreaterDepth),
+    box:new THREE.ShaderMaterial({ vertexShader:SYS_BOX_VS, fragmentShader:SYS_BOX_FS, uniforms:{ uMask:SU.uMask, uFlat:SU.uFlat, uTop:SU.uTop, uA:{value:1} }, transparent:true, depthWrite:false }) };
+  M3.symG.uniforms.uGhost.value=SYS_GHOST.sym; M3.symG.uniforms.uLift.value=1.2; M3.wireG.uniforms.uLift.value=1.5; M3.wireD.uniforms.uLift.value=.5; M3.wireD.uniforms.uDash.value=M3.wireHiG.uniforms.uDash.value=9; return M3;
 }
 const SYS_RMARK=ENG.RISER_MARK, SYS_RKIND=ENG.RISER_ROUTE;
 function sysAtlas(){ // 8×8 cells of masks: B = the symbol with its halo, G = its fill, R = the mark. Colours come per instance
@@ -6955,13 +7101,17 @@ function sysAtlas(){ // 8×8 cells of masks: B = the symbol with its halo, G = i
   const tx=new THREE.CanvasTexture(c); tx.anisotropy=4; tx.minFilter=THREE.LinearMipmapLinearFilter; SU.uAtlas.value=tx; return SYS.atlas=tx;
 }
 const SYS_W={ cable:[1.5,.02], tray:[3,.2], el_riser:[3.5,.1], lv_cable:[1.4,.015], lv_tray:[3,.15], lv_backbone:[3.5,.1], hvac_riser:[4,.14], riser_heat:[3.5,.08], freon:[1.8,.03], cond:[1.4,.025], duct_sup:[5,.25], duct_ext:[4.5,.2], heat_pipe:[2,.03], cold:[2,.03], hot:[2,.03], sewer:[3,.11], riser_cold:[3.5,.05], riser_hot:[3.5,.05], riser_sewer:[4,.11] };
+// one colour per group: the core hues first, the deeper tones only on a floor with more groups. A neighbour in the list is a neighbour in a bundle, so the list keeps close hues apart. Trays stay out of it
+const SYS_WC={ el:['#E01E37','#0FA958','#F77F00','#D6249F','#86C400','#7B1E3A','#FFCC00','#00897B','#FF7DB0','#6B3E1E','#1F1F24','#6B7A00','#FF8A65','#F4F1EA','#4CE6A8','#174F1D','#7D0495','#0D5259','#06E0F9','#9A9A9A'],
+  lv:['#1E6BFF','#00B8D4','#8A3FFC','#14338F','#5FB6FF','#C07BFF','#0A7E9E','#4B3FD0','#7AD7F0','#6D1FB8'] };
+const SYS_GREY='#9B948A', SYS_TRUNK=new Set(['tray','lv_tray']);
 const SYS_V={ panel:.8, ac_in:.3, ac_out:.7, ahu:1.6, heat_src:.9, pump:.3, heater:.55, rack:2, wc:.4, water_heater:.8, basin:.15, sink:.15, urinal:.6, floor_drain:.02, cctv:.12, fan:.25, light_ceil:.04, light_line:.05, light_spot:.03, light_emerg:.04, wifi_ap:.04, grille_sup:.03, grille_ext:.03 };
 const SYS_MAJOR=new Set(['panel','rack','ac_out','ahu','heat_src','water_heater','meter']), sysCols={};
 const sysCol=(hex)=>{ if (!sysCols[hex]){ const c=new THREE.Color(hex); sysCols[hex]=[c.r,c.g,c.b]; } return sysCols[hex]; };
 const sysNum=(v)=>typeof v==='number'&&isFinite(v);
 function sysSegs(r,out){ // one route as flat segments: [ax,ay,az, bx,by,bz, r,g,b, discipline, px, metres]
   const cat=ENG.ROUTE_TYPES[r.t]; if (!cat||!Array.isArray(r.pts)||!r.pts.length) return;
-  const [wp,w0]=SYS_W[r.t]||[2,.03], c=sysCol(cat.color), di=SDI[cat.d], ms=/^(\d+)x\d/.exec(r.size||''), wm=(ms&&/duct|tray/.test(r.t)?+ms[1]/1000:w0)*(r.par||1), h=sysNum(r.h)?r.h:0, pts=r.pts;
+  const [wp,w0]=SYS_W[r.t]||[2,.03], c=sysCol(SYS_TRUNK.has(r.t)?SYS_GREY:r.t==='cable'&&r.role?ENG.ROUTE_TYPES.el_riser.color:cat.color), di=SDI[cat.d], ms=/^(\d+)x\d/.exec(r.size||''), wm=(ms&&/duct|tray/.test(r.t)?+ms[1]/1000:w0)*(r.par||1), h=sysNum(r.h)?r.h:0, pts=r.pts;
   const sl=(r.t==='sewer'||r.t==='cond')&&sysNum(r.h0)&&sysNum(r.h1); let tot=0, run=0; if (sl) for (let i=1;i<pts.length;i++) tot+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
   const add=(a,ya,b,yb)=>out.push([a[0],ya,a[1],b[0],yb,b[1],c[0],c[1],c[2],di,wp,wm]), y=(s)=>sl?r.h0+(r.h1-r.h0)*(tot?s/tot:0):h;
   if (!sl&&sysNum(r.h0)&&r.h0!==h) add(pts[0],r.h0,pts[0],h);
@@ -6972,21 +7122,22 @@ function sysLineGeo(segs){
   const n=segs.length, P=new Float32Array(n*12), B=new Float32Array(n*12), C=new Float32Array(n*12), Z=new Float32Array(n*12), S=new Float32Array(n*8), I=n*4>65535?new Uint32Array(n*6):new Uint16Array(n*6);
   segs.forEach((s,i)=>{ for (let v=0;v<4;v++){ const k=i*4+v, j=k*3; P.set(s.slice(0,3),j); B.set(s.slice(3,6),j); C.set(s.slice(6,9),j); Z.set(s.slice(9,12),j); S[k*2]=v>>1; S[k*2+1]=v&1?1:-1; }
     I.set([i*4,i*4+2,i*4+1,i*4+1,i*4+2,i*4+3],i*6); });
-  const g=new THREE.BufferGeometry(), at=(name,a,k)=>g.setAttribute(name,new THREE.BufferAttribute(a,k)); at('position',P,3); at('aB',B,3); at('aC',C,3); at('aM',Z,3); at('aS',S,2); g.setIndex(new THREE.BufferAttribute(I,1)); return g;
+  const g=new THREE.BufferGeometry(), at=(name,a,k)=>g.setAttribute(name,new THREE.BufferAttribute(a,k)); at('position',P,3); at('aB',B,3); at('aC',C,3); at('aM',Z,3); at('aS',S,2); g.setIndex(new THREE.BufferAttribute(I,1));
+  if (n&&segs[0].length>12){ const O=new Float32Array(n*16); segs.forEach((s,i)=>{ for (let v=0;v<4;v++) O.set(s.slice(12,16),(i*4+v)*4); }); at('aO',O,4); } return g;
 }
 function sysInst(base,attrs,n){ const g=new THREE.InstancedBufferGeometry(); g.index=base.index; for (const k of Object.keys(base.attributes)) g.setAttribute(k,base.attributes[k]); for (const [k,a,s] of attrs) g.setAttribute(k,new THREE.InstancedBufferAttribute(a,s)); g.instanceCount=n; return g; }
 function sysMesh(group,geo,mat,order){ const m=new THREE.Mesh(geo,mat); m.frustumCulled=false; m.renderOrder=order; m.matrixAutoUpdate=false; group.add(m); return m; }
 function sysBox(group,list){ // real size and place: seen from close by
   const n=list.length; if (!n) return; const P=new Float32Array(n*3), Z=new Float32Array(n*3), C=new Float32Array(n*3), D2=new Float32Array(n*2);
   list.forEach((e,i)=>{ const cat=ENG.ELEMENT_TYPES[e.t], [w,d]=cat.size, v=SYS_V[e.t]||(cat.mount==='wall'?.1:.05), h=sysNum(e.h)?e.h:0, y=cat.mount==='floor'||e.t==='heater'?h+v/2:cat.mount==='ceil'?h-v/2-.003:h;
-    P.set([e.x,y,e.z],i*3); Z.set([w,v,d],i*3); C.set(sysCol(ENG.DISCIPLINES[cat.d].color),i*3); D2.set([SDI[cat.d],(+e.r||0)*DEG],i*2); });
+    P.set([e.x,y,e.z],i*3); Z.set([w,v,d],i*3); C.set(sysCol(sysTint(e)),i*3); D2.set([SDI[cat.d],(+e.r||0)*DEG],i*2); });
   const base=new THREE.BoxGeometry(1,1,1), g=sysInst(base,[['iP',P,3],['iZ',Z,3],['iC',C,3],['iD',D2,2]],n); sysMesh(group,g,sysMats().box,19); base.dispose();
 }
-function sysSym(group,list){ // list: [x,y,z, cell type, discipline, colour hex, major]
+function sysSym(group,list,mats){ // list: [x,y,z, cell type, discipline, colour hex, major]
   const n=list.length; if (!n) return; const P=new Float32Array(n*3), C=new Float32Array(n*3), Q=new Float32Array(n*3), Z=new Float32Array(n*2); sysAtlas();
   list.forEach((s,i)=>{ const cell=SYS.cells[s[3]]||[0,0]; P.set([s[0],s[1],s[2]],i*3); C.set(sysCol(s[5]),i*3); Q.set([cell[0],cell[1],SDI[s[4]]],i*3); Z.set([.42,s[6]?1:0],i*2); });
   const base=new THREE.BufferGeometry(); base.setAttribute('position',new THREE.BufferAttribute(new Float32Array([-.5,-.5,0,.5,-.5,0,.5,.5,0,-.5,.5,0]),3)); base.setIndex([0,1,2,0,2,3]);
-  const at=[['iP',P,3],['iC',C,3],['iT',Q,3],['iS',Z,2]], M2=sysMats(); sysMesh(group,sysInst(base,at,n),M2.sym,31); sysMesh(group,sysInst(base,at,n),M2.symG,30); base.dispose();
+  const at=[['iP',P,3],['iC',C,3],['iT',Q,3],['iS',Z,2]], M2=sysMats(); if (mats) mats.forEach((m,k)=>sysMesh(group,sysInst(base,at,n),m,44+k)); else { sysMesh(group,sysInst(base,at,n),M2.sym,31); sysMesh(group,sysInst(base,at,n),M2.symG,30); } base.dispose();
 }
 function sysRisers(st){ // every vertical run, drawn or given by the owner: { d, t, x, z, a, b (floor order), id }
   const out=[], ri=(f)=>ORDER.indexOf(f);
@@ -7002,36 +7153,167 @@ function sysShaft(group,segs,r,H){ // the shaft takes up floor: its body at the 
 }
 function sysDrop(group){ for (const m of [...group.children]){ group.remove(m); m.geometry.dispose(); } }
 function sysBuild(){ if (EVE.on) eveSync(); // only the floors whose content changed
-  if (!SYS.ready) return; const st=sysState(), { elements, routes }=ENG.systemsOf(st), risers=sysRisers(st);
+  if (!SYS.ready) return; const st=sysState(), { elements, routes }=ENG.systemsOf(st), risers=sysRisers(st), W=sysWires(); sysTraceEnd();
   for (const k of ORDER){
-    const O=SYS.G[k], i=ORDER.indexOf(k), els=elements.filter(e=>e.f===k&&ENG.ELEMENT_TYPES[e.t]&&sysNum(e.x)&&sysNum(e.z)), rts=routes.filter(r=>r.f===k&&ENG.ROUTE_TYPES[r.t]&&!ENG.ROUTE_TYPES[r.t].riser), mk=risers.filter(r=>r.a<=i&&i<=r.b);
-    const sig=JSON.stringify([els,rts,mk]); if (sig===SYS.sig[k]) continue; SYS.sig[k]=sig; sysDrop(O.g);
+    const O=SYS.G[k], i=ORDER.indexOf(k), els=elements.filter(e=>e.f===k&&ENG.ELEMENT_TYPES[e.t]&&sysNum(e.x)&&sysNum(e.z)), rts=routes.filter(r=>r.f===k&&ENG.ROUTE_TYPES[r.t]&&!ENG.ROUTE_TYPES[r.t].riser&&!sysInWires(r,W)), mk=risers.filter(r=>r.a<=i&&i<=r.b);
+    const sig=JSON.stringify([els,rts,mk,els.map(e=>W.by.get(e.id)?.color)]); if (sig===SYS.sig[k]) continue; SYS.sig[k]=sig; sysDrop(O.g);
     const segs=[]; for (const r of rts) sysSegs(r,segs); for (const r of mk) sysShaft(O.g,segs,r,ENG.CEILING[k]||3); segs.sort((a,b)=>b[10]-a[10]); // thick first, so thin lines stay visible on top
     if (segs.length){ const g=sysLineGeo(segs), M2=sysMats(); sysMesh(O.g,g,M2.line,21); sysMesh(O.g,g,M2.lineG,20); }
     sysBox(O.g,els);
-    const sy=els.map(e=>[e.x,sysNum(e.h)?e.h:0,e.z,e.t,ENG.ELEMENT_TYPES[e.t].d,ENG.DISCIPLINES[ENG.ELEMENT_TYPES[e.t].d].color,SYS_MAJOR.has(e.t)]);
+    const sy=els.map(e=>[e.x,sysNum(e.h)?e.h:0,e.z,e.t,ENG.ELEMENT_TYPES[e.t].d,sysTint(e),SYS_MAJOR.has(e.t)]);
+    for (const e of els) if (W.by.has(e.id)&&ENG.ELEMENT_TYPES[e.t].d!=='el'&&ENG.ELEMENT_TYPES[e.t].d!=='lv') sy.push([e.x,sysNum(e.h)?e.h:0,e.z,e.t,'el',W.by.get(e.id).color,false]); // a fan or a pump on a circuit: the wire ends on a symbol with the other discipline off too
     for (const r of mk) sy.push([r.x,1.2,r.z,r.t,r.d,ENG.ROUTE_TYPES[r.t].color,true]);
     sysSym(O.g,sy);
   }
   const sig=JSON.stringify(risers); if (sig!==SYS.riseSig){ SYS.riseSig=sig; sysDrop(SYS.rise); const segs=[];
     for (const r of risers){ const c=sysCol(ENG.ROUTE_TYPES[r.t].color), [wp,wm]=SYS_W[r.t]||[3.5,.1], y0=LV[ORDER[r.a]], y1=LV[ORDER[r.b]]+(ENG.CEILING[ORDER[r.b]]||3); segs.push([r.x,y0,r.z,r.x,y1,r.z,c[0],c[1],c[2],SDI[r.d],wp,wm]); }
-    if (segs.length){ const g=sysLineGeo(segs), M2=sysMats(); sysMesh(SYS.rise,g,M2.line,23); sysMesh(SYS.rise,g,M2.lineG,22); } }
-  sysVis();
+    if (segs.length){ const g=sysLineGeo(segs), M2=sysMats(); sysMesh(SYS.rise,g,M2.rise,23); sysMesh(SYS.rise,g,M2.riseG,22); } }
+  sysWireMesh(W,routes); sysVis();
 }
 function sysVis(){
   if (!SYS.ready) return; const f=state.floor, on=SYS.on, any=SD.some(d=>on[d]); SU.uMask.value.set(+on.el,+on.lv,+on.hvac,+on.pl); SU.uMajor.value=f==='B'?.5:0;
-  for (const k of ORDER) SYS.G[k].g.visible=any&&(f==='B'||k===f);
-  document.body.classList.toggle('sysover',any); SYS.rise.visible=any; GF.dirty=true;
+  const wired=f!=='B'&&(on.el||on.lv); SU.uFlat.value=state.plan?1:0; SU.uTop.value=(ENG.CEILING[f]||3)+.06; SU.uCap.value=wired?LV[f]+(ENG.CEILING[f]||3):1e3; SU.uThin.value=wired?.35:1; sysTraceSync();
+  for (const k of ORDER){ SYS.G[k].g.visible=any&&(f==='B'||k===f); SYS.G[k].w.visible=any&&k===f; }
+  document.body.classList.toggle('sysover',any); document.body.classList.toggle('syswire',on.el||on.lv); SYS.rise.visible=any&&!(state.plan&&(on.el||on.lv)); sysDim(); sysHint(); GF.dirty=true; // in plan view a riser is its mark, not a slanted line across the wires
+  if (SYS.wHint&&f!=='B'){ SYS.wHint=false; if (on.el||on.lv) sysWireTip(); } // the word on how to read the wires, once a floor shows them
+}
+function sysHint(){ const h=document.getElementById('hint'); if (h) h.textContent=SYS.on.el||SYS.on.lv?T[LANG].hint.split(' · ').slice(0,-1).join(' · '):T[LANG].hint; } // under the wires a room label takes no press
+function sysWireTip(){ if (SYS.trace) return; const B=state.floor==='B'; SYS.wHint=B; sysTip(esc(T[LANG].sys[B?'wPick':sysSmall()?'wTapS':'wTap']),9000); }
+/** What a fresh design shows first: Elektrik alone when it has it, with the word on how to read the wires. All four at once are a tangle, and the rest is one press away. */
+function sysFirst(ds){ if (ds.includes('el')){ for (const d of SD) SYS.on[d]=d==='el'; SYS.prim='el'; } else for (const d of ds) SYS.on[d]=true; }
+/* ---- wires */
+const sysIsSource=(e)=>e.t==='panel'||e.t==='rack'||e.t==='patch';
+const sysTint=(e)=>{ const d=ENG.ELEMENT_TYPES[e.t].d; return (d==='el'||d==='lv')&&SYS.w&&SYS.w.by.get(e.id)?.color||ENG.DISCIPLINES[d].color; };
+const sysDevY=(e)=>state.plan&&(e.d==='el'||e.d==='lv'||SYS.on.el&&SYS.w.by.has(e.id))?SU.uTop.value:+e.h||0;
+const sysInWires=(r,W)=>SYS_TRUNK.has(r.t)||r.t==='cable'&&W.groups.has(r.circuit)||r.t==='lv_cable'&&(r.serves||[]).some(id=>W.by.has(id));
+/** Wires of this design state, once per state: { list, by (device id), els (device id to element), groups (id to { id, d, f, from, list, edges, ord, lanes, color }) }. The groups of a floor stand in the order they leave the source; on each edge those that share it sit side by side in that order, centred on the true line (lanes: edge to place, left of the way out). */
+function sysWires(){
+  const st=sysState(); if (SYS.wFor===st) return SYS.w;
+  const sys=ENG.systemsOf(st), list=ENG.deviceWires(sys), by=new Map(list.map(w=>[w.id,w])), groups=new Map(), shared=new Map(), els=new Map(sys.elements.map(e=>[e.id,e])), word=(a,b)=>a.id.localeCompare(b.id,'en',{numeric:true});
+  for (const w of list){ let g=groups.get(w.group); if (!g) groups.set(w.group,g={ id:w.group, d:w.d, f:w.f, from:w.from, list:[], edges:new Map(), ord:0, lanes:new Map(), color:'' }); g.list.push(w);
+    for (let i=w.own+1;i<w.path.length;i++){ const a=w.path[i-1], b=w.path[i]; if (Math.hypot(a[0]-b[0],a[2]-b[2])>=.001) g.edges.set(sysEdge(a,b),sysKey(a)<sysKey(b)?1:-1); } }
+  for (const d of ['el','lv']) for (const f of ORDER){
+    const gs=[...groups.values()].filter(g=>g.d===d&&g.f===f); if (!gs.length) continue;
+    const mid=(g)=>{ let x=0,z=0; for (const w of g.list){ const e=w.path[w.path.length-1]; x+=e[0]; z+=e[2]; } return [x/g.list.length,z/g.list.length]; }, o=gs[0].list[0].path[gs[0].list[0].own], all=gs.map(mid), cx=all.reduce((a,p)=>a+p[0],0)/all.length, cz=all.reduce((a,p)=>a+p[1],0)/all.length, a0=Math.atan2(o[2]-cz,cx-o[0]);
+    const turn=(g)=>{ const [x,z]=mid(g); let a=Math.atan2(o[2]-z,x-o[0])-a0; while (a>Math.PI) a-=2*Math.PI; while (a<-Math.PI) a+=2*Math.PI; return a; };
+    gs.sort((a,b)=>turn(a)-turn(b)||word(a,b)); gs.forEach((g,i)=>{ g.ord=i-(gs.length-1)/2; g.color=SYS_WC[d][i%SYS_WC[d].length]; for (const w of g.list) w.color=g.color; });
+  }
+  for (const g of groups.values()) for (const [k,s] of g.edges) (shared.get(k)||shared.set(k,[]).get(k)).push([g,s]);
+  for (const [k,on] of shared){ on.sort((a,b)=>a[0].ord*a[1]-b[0].ord*b[1]); on.forEach(([g,s],i)=>g.lanes.set(k,(i-(on.length-1)/2)*s)); }
+  SYS.wFor=st; return SYS.w={ list, by, els, groups };
+}
+const sysKey=(p)=>`${Math.round(p[0]*100)}|${Math.round(p[1]*100)}|${Math.round(p[2]*100)}|`, sysEdge=(a,b)=>{ const u=sysKey(a), v=sysKey(b); return u<v?u+v:v+u; };
+/** A wire as line segments with their side steps: [ax,ay,az, bx,by,bz, r,g,b, discipline, px, metres, side at a (x,z), side at b (x,z)]. It leaves the true line only where it runs with others. A stretch a group shares between its wires comes once: seen keeps where it ended, and a wire that goes on from there closes the gap. */
+function sysWireSegs(w,g,e,px,from,out,seen){
+  const P=w.path, n=P.length, c=sysCol(g.color), di=SDI[g.d], last=P[n-1][0]===P[n-2][0]&&P[n-1][2]===P[n-2][2]?n-2:n-1, dir=[], lan=[], Z=[0,0]; let ix=0, iz=0;
+  if (e&&ENG.ELEMENT_TYPES[e.t].mount==='wall'&&sysNum(e.r)){ const [nx,nz]=ENG.facingDir(e.r); ix=nx*.035; iz=nz*.035; } // the drop runs on the face of the wall, a little into the room
+  for (let i=from;i<last;i++){ const dx=P[i+1][0]-P[i][0], dz=P[i+1][2]-P[i][2], L=Math.hypot(dx,dz); dir[i]=L>.001?[dx/L,dz/L,L]:null; lan[i]=dir[i]&&g.lanes.get(sysEdge(P[i],P[i+1]))||0; }
+  const joint=(i)=>{ const p=dir[i-1], q=dir[i], la=lan[i-1]||0, lb=lan[i]||0; if (p&&q){ const ax=p[1], az=-p[0], bx=q[1], bz=-q[0], det=ax*bz-az*bx; if (Math.abs(det)>.8){ const j=[(la*bz-lb*az)/det,(ax*lb-bx*la)/det]; return [j,j]; } return [[ax*la,az*la],[bx*lb,bz*lb]]; } const u=p||q; if (!u) return [Z,Z]; const j=[u[1]*(p?la:lb),-u[0]*(p?la:lb)]; return [j,j]; };
+  const add=(a,oa,b,ob)=>{ out.push([a[0],a[1],a[2],b[0],b[1],b[2],c[0],c[1],c[2],di,px,.012,oa[0],oa[1],ob[0],ob[1]]); }, gap=(p,u,v)=>{ const k=sysKey(p)+u+v; if (Math.hypot(u[0]-v[0],u[1]-v[1])>.05&&!seen.has(k)){ seen.set(k,v); add(p,u,p,v); } };
+  let i0=from, at=Z; while (i0<last&&!dir[i0]) i0++; // straight out of the panel, then a short fan to the lane
+  for (let i=from;i<i0;i++){ const k=sysKey(P[i])+sysKey(P[i+1]); if (!seen.has(k)){ seen.set(k,Z); add(P[i],Z,P[i+1],Z); } }
+  for (let i=i0;i<last;i++){ const a=P[i], b=P[i+1], k=sysKey(a)+sysKey(b), o0=i===i0?Z:joint(i)[1], o1=joint(i+1)[0]; if (i>i0) gap(a,at,o0);
+    if (seen.has(k)){ at=seen.get(k); continue; } seen.set(k,o1); at=o1;
+    if (i===i0&&lan[i]&&dir[i][2]>.12){ const t=Math.min(.35,dir[i][2]/2), m=[a[0]+dir[i][0]*t,a[1],a[2]+dir[i][1]*t], om=[dir[i][1]*lan[i],-dir[i][0]*lan[i]]; add(a,Z,m,om); add(m,om,b,o1); } else add(a,o0,b,o1); }
+  const top=[P[last][0]+ix,P[last][1],P[last][2]+iz], end=[P[n-1][0]+ix,P[n-1][1],P[n-1][2]+iz];
+  add(P[last],at,top,Z); if (last<n-1){ add(top,Z,end,Z); out[out.length-1].drop=true; }
+}
+/** What no wire walks of a route: the stretch past the last device of a chain, a cable that reaches none. It stays on the plan, in the colour of its group. */
+function sysRest(r,W){
+  const y=LV[r.f]+(sysNum(r.h)?r.h:ENG.routeHeight(r.t,r.f)), wires=r.t==='cable'?W.groups.get(r.circuit).list:W.list.filter(w=>w.d==='lv'&&w.f===r.f), ed=new Map(), out=[], pts=r.pts.filter(p=>p&&sysNum(p[0])&&sysNum(p[1]));
+  for (const w of wires) for (let i=w.own+1;i<w.path.length;i++){ const a=w.path[i-1], b=w.path[i]; if (Math.abs(a[1]-y)<.01&&Math.abs(b[1]-y)<.01) ed.set(sysEdge(a,b),[a,b]); }
+  for (let i=1;i<pts.length;i++){ const p=pts[i-1], q=pts[i], ux=q[0]-p[0], uz=q[1]-p[1], L=Math.hypot(ux,uz); if (L<.001) continue; const on=(u)=>[((u[0]-p[0])*ux+(u[2]-p[1])*uz)/L,Math.abs((u[0]-p[0])*uz-(u[2]-p[1])*ux)/L], cov=[];
+    for (const [a,b] of ed.values()){ const [ta,da]=on(a), [tb,db]=on(b); if (da<.03&&db<.03) cov.push([Math.min(ta,tb),Math.max(ta,tb)]); }
+    let at=0; for (const [t0,t1] of [...cov.sort((a,b)=>a[0]-b[0]),[L,L]]){ if (t0-at>.05) out.push([[p[0]+ux*at/L,y,p[1]+uz*at/L],[p[0]+ux*Math.min(t0,L)/L,y,p[1]+uz*Math.min(t0,L)/L]]); at=Math.max(at,t1); } }
+  return out;
+}
+function sysWireMesh(W,routes){
+  const B={}, D={}; for (const k of ORDER){ sysDrop(SYS.G[k].w); B[k]=[]; D[k]=[]; }
+  const M2=sysMats(), floor=(y)=>{ let f=ORDER[0]; for (const k of ORDER) if (y>=LV[k]-.01) f=k; return f; };
+  for (const g of W.groups.values()){ const seen=new Map(), segs=[]; for (const w of g.list) sysWireSegs(w,g,W.els.get(w.id),1.5,w.own,segs,seen);
+    for (const s of segs){ if (Math.abs(s[1]-s[4])>3.6) continue; const k=floor(Math.min(s[1],s[4])), y=LV[k]; s[1]-=y; s[4]-=y; (s.drop?D:B)[k].push(s); } }
+  for (const r of routes) if (r.t!=='tray'&&r.t!=='lv_tray'&&sysInWires(r,W)&&Array.isArray(r.pts)){ const c=sysCol(r.t==='cable'?W.groups.get(r.circuit).color:W.by.get(r.serves.find(id=>W.by.has(id))).color), di=r.t==='cable'?0:1, y=LV[r.f]; for (const [a,b] of sysRest(r,W)) B[r.f].push([a[0],a[1]-y,a[2],b[0],b[1]-y,b[2],c[0],c[1],c[2],di,1.5,.012,0,0,0,0]); }
+  for (const k of ORDER){ const O=SYS.G[k], tr=[]; for (const r of routes) if (r.f===k&&SYS_TRUNK.has(r.t)) sysSegs(r,tr);
+    if (tr.length){ const g=sysLineGeo(tr); sysMesh(O.w,g,M2.line,20); sysMesh(O.w,g,M2.lineG,19); }
+    if (B[k].length){ const g=sysLineGeo(B[k]); sysMesh(O.w,g,M2.wire,26); sysMesh(O.w,g,M2.wireG,25); }
+    if (D[k].length){ const g=sysLineGeo(D[k]); sysMesh(O.w,g,M2.wire,28); sysMesh(O.w,g,M2.wireD,27); } }
+}
+/** Trace: the chosen wires drawn once more, thick and on top, what they end on lit, the rest turned down. t: { d, f, plan, wires, source } */
+function sysDim(){ const m=SYS.mats; if (!m) return; const k=SYS.trace?.16:1, on=SYS.on, wired=on.el||on.lv, both=on.el&&on.lv&&!SYS.trace, set=(o,v)=>{ o.uniforms.uA.value=v; }; set(m.line,k); set(m.lineG,.3*k); set(m.rise,k); set(m.riseG,.3*k); set(m.sym,SYS.trace?.3:1); set(m.symG,SYS.trace?.12:.4); set(m.wire,k); set(m.wireG,SYS_GHOST.wire*k); set(m.wireD,SYS_GHOST.drop*k); set(m.box,wired?k*.45:k);
+  SU.uWeak.value.set(both&&SYS.prim!=='el'?.3:1,both&&SYS.prim!=='lv'?.3:1,1,1); GF.dirty=true; } // two wiring systems at once: the one pressed last is the one to read
+const sysOnFloor=(f)=>{ const lo=LV[f]-.01, hi=LV[ORDER[ORDER.indexOf(f)+1]]??Infinity; return (y)=>y>=lo&&y<hi; };
+function sysTraceDraw(){
+  const t=SYS.trace; sysDrop(SYS.hi); sysEndsOff(); SYS.hi.visible=!!t; if (!t) return;
+  const W=SYS.w, f=state.floor, lv=LV[f], here=sysOnFloor(f), M2=sysMats(), seen={}, segs=[], far=[], sy=[]; SYS.hi.position.y=lv;
+  for (const w of t.wires){ const g=W.groups.get(w.group), e=W.els.get(w.id), c=sysCol(g.color), list=[], di=SDI[g.d], met=seen[g.id]||(seen[g.id]=new Map());
+    for (let i=1;i<=w.own;i++){ const a=w.path[i-1], b=w.path[i], k=sysKey(a)+sysKey(b); if (i!==w.leap&&!met.has(k)){ met.set(k,[0,0]); list.push([a[0],a[1],a[2],b[0],b[1],b[2],c[0],c[1],c[2],di,SYS_HI_PX,.012,0,0,0,0]); } }
+    sysWireSegs(w,g,e,SYS_HI_PX,w.own,list,met);
+    for (const s of list){ const on=here(s[1])&&here(s[4]); if (!on&&state.plan) continue; if (!on) s[10]=1.5; s[1]-=lv; s[4]-=lv; (on?segs:far).push(s); } // what runs on another floor is a thin line behind the floors of the building, in plan a label
+    if (e&&here(LV[e.f]+.1)) sy.push([e.x,LV[e.f]-lv+(sysNum(e.h)?e.h:0),e.z,e.t,g.d,g.color,false]); }
+  for (const r of t.feed||[]){ const list=[]; sysSegs(r,list); for (const s of list){ s[10]=SYS_HI_PX; s.push(0,0,0,0); segs.push(s); } }
+  for (const e of t.source) if (here(LV[e.f]+.1)) sy.push([e.x,LV[e.f]-lv+(sysNum(e.h)?e.h:0),e.z,e.t,e.d,ENG.DISCIPLINES[e.d].color,true]);
+  if (segs.length){ const g=sysLineGeo(segs); sysMesh(SYS.hi,g,M2.wireHi,42); sysMesh(SYS.hi,g,M2.wireHiG,41); } if (far.length) sysMesh(SYS.hi,sysLineGeo(far),M2.wireFar,40); if (sy.length) sysSym(SYS.hi,sy,[M2.symHi]); sysEndsOn(t); GF.dirty=true;
+}
+function sysEndsOff(){ for (const o of SYS.ends){ o.parent.remove(o); o.element.remove(); } SYS.ends=[]; }
+function sysEnd(x,y,z,cls,text){ const el=document.createElement('div'), b=document.createElement('b'); el.className=cls; b.textContent=text; el.appendChild(b); const o=new CSS2DObject(el); o.position.set(x,y,z); root.add(o); SYS.ends.push(o); }
+/** The words a trace puts on the plan: where a wire leaves the floor and where to, and which device each number on the card is. */
+function sysEndsOn(t){
+  const f=state.floor, lv=LV[f], here=sysOnFloor(f), on=(p)=>here(p[1]), at=new Map(), src=t.source[0];
+  for (const w of t.wires) for (let i=1;i<w.path.length;i++){ const a=w.path[i-1], b=w.path[i]; if (on(a)===on(b)) continue; const p=on(a)?a:b, k=sysKey(p); if (!at.has(k)) at.set(k,{ p, up:(on(a)?b:a)[1]>p[1], n:0 }); at.get(k).n++; }
+  for (const { p, up, n } of at.values()) sysEnd(p[0],state.plan?lv+SU.uTop.value:p[1],p[2],'sy-end',`${up?'↑':'↓'} ${src&&src.f!==f?`${sysFloorName(src.f)} · ${sysName(src)}`:T[LANG].sys.wOut(n)}`);
+  (t.near||[]).forEach((e,i)=>sysEnd(e.x,LV[e.f]+sysDevY(e),e.z,'sy-no',i+1));
+}
+function sysGroupMark(){ const pick=SYS.trace&&SYS.trace.group, c=document.getElementById('sy-gclear'); for (const b of document.querySelectorAll('.sy-g')) b.setAttribute('aria-pressed',b.dataset.v===pick); if (c) c.hidden=!pick; } // the list keeps its scroll
+function sysTraceSet(t,html){ const e=t.at, c=renderer.domElement.getBoundingClientRect(); SYS.trace={ ...t, f:state.floor, plan:state.plan, lang:LANG, px:e?c.left+(W2(e.x,LV[e.f]+sysDevY(e),e.z).project(camera).x+1)/2*c.width:0 }; if (sysSmall()) $('#panel').classList.add('collapsed'); sysTraceDraw(); sysDim(); sysTip(html,0); document.getElementById('sy-tip').classList.toggle('more',SYS.card); sysDock(); sysGroupMark(); }
+function sysTraceEnd(){ if (!SYS.trace) return; SYS.trace=null; sysDrop(SYS.hi); sysEndsOff(); SYS.hi.visible=false; sysDim(); sysMark(); const el=document.getElementById('sy-tip'); if (el) el.hidden=true; sysDock(); sysGroupMark(); }
+function sysTraceSync(){ const t=SYS.trace; if (!t) return; if (t.f!==state.floor||!SYS.on[t.d]) sysTraceEnd(); else if (t.plan!==state.plan){ t.plan=state.plan; sysTraceDraw(); if (t.at) sysMark(t.at.f,t.at.x,sysDevY(t.at),t.at.z); } }
+/** On a phone the card of a trace stays clear of what it is about: upright under the plan, on its side beside it, away from the device. Plan, walls and the bars stay free, and the card opens upward. */
+function sysDock(){
+  const el=document.getElementById('sy-tip'), t=SYS.trace; if (!el) return; const on=!!t&&sysSmall(); el.classList.toggle('dock',on); el.style.cssText=''; if (!on) return;
+  const H=innerHeight, W=innerWidth, box=(q)=>document.querySelector(q).getBoundingClientRect(), pan=box('#panel'), bar=box('#sysbar'), fl=box('#floors'), set=(o)=>Object.assign(el.style,{ top:'auto', transform:'none', maxWidth:'none', ...o });
+  if (H>500){ const top=box('#panel .tabs').top-6; set({ left:'16px', right:'16px', bottom:`${H-top}px`, maxHeight:`${top-bar.bottom-8}px` }); return; } // over the handle of the folded panel, its tabs stay free
+  const w=Math.min(290,W*.46); if (W<=760){ set({ width:`${w}px`, boxSizing:'border-box', top:`${pan.top}px`, left:`${pan.right-w}px`, maxHeight:`${H-pan.top-8}px` }); return; } // a small phone on its side: the bars stand left, the plan right under the folded panel, and the card over that panel
+  const open=pan.height>100, edge=open?pan.left-8:pan.right, side=t.px<W/2&&edge-w>box('.tools').right+80, over=(r)=>r.height?H-r.top+8:8, bot=side?(edge-w<fl.right?over(fl):8):over(bar);
+  set({ width:`${w}px`, boxSizing:'border-box', ...(side?{ left:`${edge-w}px` }:{ left:`${box('.tools').right+6}px` }), bottom:`${bot}px`, maxHeight:`${H-bot-8}px` });
+}
+function sysProt(){ const st=sysState(); if (SYS.pFor!==st){ SYS.pFor=st; SYS.prot=new Map(); try { SYS.prot=new Map(ENG.protection(st,EPLAN).rows.map(r=>[r.id,r])); } catch(err){ console.warn('protection',err); } } return SYS.prot; }
+const sysRoom=(id)=>{ const r=ROOMS.find(x=>x.id===id); return r?L(r.name):id||'–'; };
+const sysFloorName=(f)=>T[LANG].floors[f]||f;
+const sysRows=(rows)=>`<dl class="sy-wc">${rows.filter(Boolean).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`;
+const sysName=(e)=>{ const n=e.label||L(ENG.ELEMENT_TYPES[e.t]), two=n.split(' / '); return two.length===2?two[LANG==='ru'?0:1]:n; }; // a stored label can hold both languages, 'ГРЩ / BPL'
+const sysCard=(c,t,sum,body,foot='')=>`<div class="sy-wh"><i style="background:${c}"></i><b>${esc(t)}</b><button class="sy-wm" data-w="more" aria-expanded="${SYS.card}" aria-label="${esc(T[LANG].sys.wMore)}" title="${esc(T[LANG].sys.wMore)}">▾</button><button data-w="end" aria-label="${esc(T[LANG].sys.wClose)}" title="${esc(T[LANG].sys.wClose)}">×</button></div><p class="sy-ws">${esc(sum)}</p><div class="sy-wd">${body}</div>${foot}`;
+function sysGroupWords(g){ const e=T[LANG].sys, c=ENG.systemsOf(sysState()).circuits.find(x=>x.id===g.id), rooms=[...new Set(g.list.map(w=>SYS.w.els.get(w.id)?.room).filter(Boolean))].map(sysRoom); return { name:g.d==='lv'?(rooms[0]||g.f):g.id, kind:g.d==='lv'?e.dn.lv:SYS_WORD[LANG][c?c.kind:'other'], rooms }; }
+function sysLineRows(g){ const e=T[LANG].sys, r=g.d==='el'?sysProt().get(g.id):null, src=SYS.w.els.get(g.from), at=src?`${sysName(src)} · ${sysFloorName(src.f)}`:'–', cat6=g.d==='lv'?'Cat6A':null;
+  return [r?[e.wBreaker,`${r.breaker} ${e.wA} · ${e.wCurve(r.curve)} · ${r.phase||'–'}`]:null,r?[e.wCable,sT(r.cable)]:cat6?[e.wCable,cat6]:null,r?[e.wLenAll,`${sN(r.len)} ${e.wM}`]:null,[g.d==='el'?e.wPanel:e.wRack,at]]; }
+function sysTraceDev(e,near=[]){
+  if (!e) return; const W=sysWires(), t=T[LANG].sys, cat=ENG.ELEMENT_TYPES[e.t];
+  if (sysIsSource(e)){ const wires=W.list.filter(w=>e.d==='el'?w.from===e.id:w.d==='lv'), gs=new Set(wires.map(w=>w.group)), src=e.t==='panel'&&e.feed?W.els.get(e.feed):null, c=ENG.DISCIPLINES[e.d].color, on=wires.filter(w=>w.f===state.floor).length, feed=ENG.systemsOf(sysState()).routes.filter(r=>r.t==='cable'&&r.role&&r.f===state.floor&&(r.serves||[]).includes(e.id)), name=`${cat.code} · ${L(cat)}${e.label?` · ${sysName(e)}`:''}`;
+    if (!SYS.on[e.d]){ SYS.on[e.d]=true; SYS.prim=e.d; sysVis(); renderSysBar(); }
+    sysTraceSet({ d:e.d, wires, source:[e], at:e, feed },sysCard(c,name,`${sysFloorName(e.f)} · ${t.wGroupsN} ${gs.size} · ${t.wDevs} ${wires.length}`,sysRows([[t.wFloorOf,sysFloorName(e.f)],[t.wRoom,sysRoom(e.room)],[t.wGroupsN,gs.size],[t.wDevs,on<wires.length?`${wires.length} · ${t.wHere}: ${on}`:wires.length],src?[t.wFeedBy,`${sysName(src)} · ${sysFloorName(src.f)}`]:null]))); sysMark(e.f,e.x,sysDevY(e),e.z); return; }
+  const w=W.by.get(e.id), g=W.groups.get(w.group), words=sysGroupWords(g), src=W.els.get(g.from), line=sysProt().get(g.id)?.len, len=sN(Math.min(Math.round(w.len*10)/10,line??Infinity)), one=g.list.length===1, rows=sysLineRows(g), next=near.slice(0,3), others=next.map((n,i)=>`<button data-w="${esc(n.id)}" style="border-color:${sysTint(n)}"><b>${i+1}</b>${esc(L(ENG.ELEMENT_TYPES[n.t]))}</button>`).join('');
+  sysTraceSet({ d:w.d, wires:[w], source:src?[src]:[], at:e, near:next },sysCard(g.color,`${cat.code} · ${L(cat)}`,`${g.d==='lv'?sysRoom(e.room):`${sysRoom(e.room)} · ${words.name}`} · ${len} ${t.wM}`,sysRows([[t.wRoom,sysRoom(e.room)],[t.wGroup,`${words.name} · ${words.kind}`],...rows.slice(0,2),[t.wLen,`${len} ${t.wM} · ${w.d==='el'?t.wLenTo:t.wLenRack}`],...rows.slice(2).filter(r=>r&&!(one&&r[0]===t.wLenAll))])+(e.t==='switch'?`<p class="sy-wl">${esc(t.wSwitch)}</p>`:'')+(w.direct?`<p class="sy-wn">${esc(t.wDirect)}</p>`:''),others?`<p class="sy-wb"><span>${esc(t.wNear)}</span>${others}</p>`:''));
+  sysMark(e.f,e.x,sysDevY(e),e.z);
+}
+function sysTraceGroup(id){
+  const W=sysWires(), g=W.groups.get(id), t=T[LANG].sys; if (!g) return; if (SYS.trace&&SYS.trace.group===id){ sysTraceEnd(); return; }
+  if (!SYS.on[g.d]){ SYS.on[g.d]=true; SYS.prim=g.d; sysVis(); renderSysBar(); } if (g.f!==state.floor) setFloor(g.f);
+  const w=sysGroupWords(g), src=W.els.get(g.from); sysMark();
+  sysTraceSet({ d:g.d, group:id, wires:g.list, source:src?[src]:[] },sysCard(g.color,`${w.name} · ${w.kind}`,`${w.rooms.join(', ')||'–'} · ${t.wDevs} ${g.list.length}`,sysRows([[t.wFeeds,w.rooms.join(', ')||'–'],[t.wDevs,g.list.length],...sysLineRows(g)])));
+}
+function sysGroupsHtml(d){ const e=T[LANG].sys, W=sysWires(), f=state.floor, list=[...W.groups.values()].filter(g=>g.d===d&&(f==='B'||g.f===f)).sort((a,b)=>ORDER.indexOf(a.f)-ORDER.indexOf(b.f)||a.id.localeCompare(b.id,'en',{numeric:true})), pick=SYS.trace&&SYS.trace.group; if (!W.groups.size) return '';
+  return `<h3 class="sy-h">${esc(e.wGroups)}<small>${list.length}</small></h3>`+(f==='B'?`<p class="sy-pl">${esc(e.wPick)}</p>`:'')+(list.length?`<div class="sy-gl">`+list.map(g=>{ const w=sysGroupWords(g); return `<button class="sy-g" data-a="wire" data-v="${esc(g.id)}" aria-pressed="${pick===g.id}"><i style="background:${g.color}"></i><span><b>${esc(w.name)}</b> ${esc(d==='lv'?(f==='B'?g.f:''):`${w.kind}: ${w.rooms.slice(0,2).join(', ')}${w.rooms.length>2?` +${w.rooms.length-2}`:''}`)}</span><small>${g.list.length}</small></button>`; }).join('')+`</div>`:`<p class="sy-pl">${esc(e.wNone)}</p>`)+`<div class="btnrow" id="sy-gclear"${pick?'':' hidden'}><button class="btn" data-a="wclear">${esc(e.wAll)}</button></div>`;
 }
 function sysBoot(){
   SYS.root=new THREE.Group(); root.add(SYS.root); SYS.rise=new THREE.Group(); SYS.root.add(SYS.rise);
-  for (const k of ORDER){ const g=new THREE.Group(); g.position.y=LV[k]; g.visible=false; SYS.root.add(g); SYS.G[k]={g}; }
+  for (const k of ORDER){ const g=new THREE.Group(), w=new THREE.Group(); g.position.y=w.position.y=LV[k]; g.visible=w.visible=false; SYS.root.add(g,w); SYS.G[k]={g,w}; }
+  SYS.hi=new THREE.Group(); SYS.hi.visible=false; SYS.root.add(SYS.hi);
   SYS.ready=true; sysSize(stage.clientWidth,stage.clientHeight); sysBuild();
   const pb=$('#pbody'); pb.addEventListener('click',sysClick); pb.addEventListener('input',sysInput); pb.addEventListener('change',sysSelect); pb.addEventListener('toggle',sysToggleSec,true); pb.addEventListener('focusout',()=>{ if (SYS.stale) setTimeout(renderSys,0); });
   $('#sysbar').addEventListener('click',sysBarClick); let dn=null;
   renderer.domElement.addEventListener('pointerdown',(ev)=>{ dn=[ev.clientX,ev.clientY]; });
   renderer.domElement.addEventListener('pointerup',(ev)=>{ if (dn&&Math.hypot(ev.clientX-dn[0],ev.clientY-dn[1])<6) sysPick(ev); dn=null; });
-  document.addEventListener('keydown',(ev)=>{ if (ev.key==='Escape'&&document.getElementById('sy-doc')) sysDocClose(); });
+  document.addEventListener('keydown',(ev)=>{ if (ev.key!=='Escape') return; if (document.getElementById('sy-doc')) sysDocClose(); else if (SYS.trace) sysTraceEnd(); });
+  document.addEventListener('click',(ev)=>{ const b=ev.target.closest&&ev.target.closest('#sy-tip [data-w]'), t=SYS.trace; if (!b) return; if (b.dataset.w==='end') sysTraceEnd(); else if (b.dataset.w==='more'){ SYS.card=!SYS.card; $('#sy-tip').classList.toggle('more',SYS.card); b.setAttribute('aria-expanded',SYS.card); sysDock(); } else { const e=SYS.w.els.get(b.dataset.w); sysTraceDev(e,t?[t.at,...(t.near||[])].filter(x=>x&&x!==e):[]); } });
   renderSysBar(); sysLayout();
 }
 /** The bars live in what the panel leaves free, measured, not guessed: the safe area, the wide panel and the language all change that width. A bar too long scrolls and fades at its end. */
@@ -7041,7 +7323,7 @@ function barsFit(){ const W=innerWidth, pan=$('#panel').getBoundingClientRect(),
     const r=el.getBoundingClientRect(), under=pan.bottom>r.top-2&&pan.top<r.bottom, left=tools.right+8, right=under?pan.left-12:W-tools.left, room=Math.max(0,right-left), want=Math.min(room,el.scrollWidth);
     el.style.maxWidth=room+'px'; el.style.transform='none'; el.style.left=(innerHeight<=500?left:left+(room-want)/2)+'px'; barEnd(el); } }
 const barEnd=(el)=>el.classList.toggle('more',el.scrollLeft+el.clientWidth<el.scrollWidth-2);
-function sysLayout(){ const pan=$('#panel'), tabs=pan.querySelector('.tabs'), fit=()=>requestAnimationFrame(barsFit), sheet=(on)=>pan.classList.toggle('collapsed',on);
+function sysLayout(){ let low=innerHeight<=500; const pan=$('#panel'), tabs=pan.querySelector('.tabs'), fit=()=>requestAnimationFrame(()=>{ barsFit(); sysDock(); if (low!==innerHeight<=500){ low=!low; if (SYS.on.el||SYS.on.lv){ const v=floorView(state.floor); flyTo(v.p,v.t); } } }), sheet=(on)=>pan.classList.toggle('collapsed',on);
   if (window.ResizeObserver){ const ro=new ResizeObserver(fit); for (const el of [pan,$('#floors'),$('#sysbar')]) if (el) ro.observe(el); } addEventListener('resize',fit); fit();
   for (const el of [$('#floors'),$('#sysbar')]) if (el) el.addEventListener('scroll',()=>barEnd(el),{passive:true});
   tabs.addEventListener('click',(ev)=>{ const b=ev.target.closest('[role="tab"]'); if (b&&b.getAttribute('aria-selected')==='true'&&sysSmall()){ const was=pan.classList.contains('collapsed'); setTimeout(()=>sheet(!was),0); } },true); // the tab that is open folds the panel on a phone
@@ -7053,7 +7335,7 @@ function sysChanged(){ // a new design state arrived
   sysBuild(); SYS.dFor=null; renderSysBar();
 }
 function renderSysBar(){
-  const bar=document.getElementById('sysbar'); if (!bar) return; const e=T[LANG].sys, sys=SYS.ready?ENG.systemsOf(sysState()):{elements:[],routes:[]}, any=SD.some(d=>SYS.on[d]);
+  if (SYS.trace&&SYS.trace.lang!==LANG) sysTraceEnd(); sysHint(); const bar=document.getElementById('sysbar'); if (!bar) return; const e=T[LANG].sys, sys=SYS.ready?ENG.systemsOf(sysState()):{elements:[],routes:[]}, any=SD.some(d=>SYS.on[d]);
   bar.setAttribute('aria-label',e.title);
   bar.innerHTML=SD.map(d=>`<button data-d="${d}" aria-pressed="${SYS.on[d]}"${[...sys.elements,...sys.routes].some(x=>x.d===d)?'':' class="none"'} style="--c:${ENG.DISCIPLINES[d].color}"><i></i>${esc(e.dn[d])}</button>`).join('')+
     (any||SYS.noFurn?`<button data-furn="1" aria-pressed="${!SYS.noFurn}" style="--c:var(--muted)"><i></i>${esc(e.furn)}</button><span class="pre" title="${esc(L(ENG.PRELIM_LABEL))}">${esc(e.pre)}</span>`:''); // hidden furniture keeps the button that brings it back
@@ -7062,19 +7344,22 @@ function sysBarClick(ev){
   const b=ev.target.closest('button'); if (!b) return;
   if (b.dataset.furn){ SYS.noFurn=!SYS.noFurn; applyVisibility(); renderSysBar(); return; }
   const d=b.dataset.d, sys=ENG.systemsOf(sysState()), has=[...sys.elements,...sys.routes].some(x=>x.d===d);
-  SYS.on[d]=!SYS.on[d]; sysVis(); renderSysBar();
+  const wired=SYS.on.el||SYS.on.lv; SYS.on[d]=!SYS.on[d]; if (SYS.on[d]&&(d==='el'||d==='lv')) SYS.prim=d; sysVis(); renderSysBar();
+  if (wired!==(SYS.on.el||SYS.on.lv)&&innerHeight<=500&&state.floor!=='B'){ const v=floorView(state.floor); flyTo(v.p,v.t); } // on its side the brand gives way to the wires, and the view goes back with them
+  if (SYS.on[d]&&has&&(d==='el'||d==='lv')) sysWireTip();
   if (SYS.on[d]&&!has){ sysTip(esc(T[LANG].sys.noData)); if (!sys.elements.length&&!sys.routes.length) sysOpen('home'); }
 }
 function sysTip(html,ms=5000){
   let el=document.getElementById('sy-tip'); if (!el){ el=document.createElement('div'); el.id='sy-tip'; el.className='sy-tip card'; el.setAttribute('role','status'); document.body.appendChild(el); }
-  el.innerHTML=html; el.hidden=false; clearTimeout(SYS.tipT); if (ms) SYS.tipT=setTimeout(()=>{ el.hidden=true; },ms);
+  el.innerHTML=html; el.hidden=false; sysDock(); clearTimeout(SYS.tipT); if (ms) SYS.tipT=setTimeout(()=>{ el.hidden=true; },ms);
 }
 function sysPick(ev){ // what is this symbol? nearest one in screen space
   if (!SD.some(d=>SYS.on[d])||state.floor==='B') return;
-  const r=renderer.domElement.getBoundingClientRect(), px=ev.clientX-r.left, py=ev.clientY-r.top, f=state.floor, near=[]; // at the default zoom several symbols sit under one finger: name them all
-  for (const e of ENG.systemsOf(sysState()).elements){ if (e.f!==f||!SYS.on[e.d]) continue; const v=W2(e.x,LV[f]+(+e.h||0),e.z).project(camera); if (v.z>1) continue; const dx=(v.x+1)/2*r.width-px, dy=(1-v.y)/2*r.height-py, q=dx*dx+dy*dy; if (q<256) near.push([q,e]); }
-  if (!near.length) return; near.sort((a,b)=>a[0]-b[0]); const best=near[0][1], cat=ENG.ELEMENT_TYPES[best.t], more=near.slice(1,5).map(([,e])=>`${ENG.ELEMENT_TYPES[e.t].code} ${e.id}`);
-  sysTip(`<b>${esc(cat.code)} · ${esc(L(cat))}</b>${best.label?` · ${esc(best.label)}`:''}<br><small>${esc(best.id)} · ${esc(best.room||best.f)} · h ${esc(sN(best.h))} m${best.circuit?` · ${esc(best.circuit)}`:''}${more.length?`<br>+ ${esc(more.join(', '))}${near.length>5?' …':''}`:''}</small>`,7000);
+  const r=renderer.domElement.getBoundingClientRect(), px=ev.clientX-r.left, py=ev.clientY-r.top, f=state.floor, near=[], W=SYS.w, reach=ev.pointerType==='touch'?28:17; // at the default zoom several symbols sit under one finger: name them all
+  for (const e of ENG.systemsOf(sysState()).elements){ const w=W.by.get(e.id); if (e.f!==f||!(SYS.on[e.d]||w&&SYS.on[w.d])) continue; const v=W2(e.x,LV[f]+sysDevY(e),e.z).project(camera); if (v.z>1) continue; const dx=(v.x+1)/2*r.width-px, dy=(1-v.y)/2*r.height-py, q=dx*dx+dy*dy; if (q<reach*reach) near.push([q,e]); }
+  if (!near.length){ if (SYS.trace) sysTraceEnd(); return; } near.sort((a,b)=>a[0]-b[0]); const best=near[0][1], cat=ENG.ELEMENT_TYPES[best.t], more=near.slice(1,5).map(([,e])=>`${ENG.ELEMENT_TYPES[e.t].code} ${e.id}`), wired=(e)=>SYS.on[W.by.get(e.id)?.d]||sysIsSource(e); // a fan with only HVAC on keeps its plain tip: its wire is on a system that is off
+  if (wired(best)){ sysTraceDev(best,near.slice(1,5).map(([,e])=>e).filter(wired)); return; }
+  sysTraceEnd(); sysTip(`<b>${esc(cat.code)} · ${esc(L(cat))}</b>${best.label?` · ${esc(best.label)}`:''}<br><small>${esc(best.id)} · ${esc(best.room||best.f)} · h ${esc(sN(best.h))} m${best.circuit?` · ${esc(best.circuit)}`:''}${more.length?`<br>+ ${esc(more.join(', '))}${near.length>5?' …':''}`:''}</small>`,7000);
 }
 function sysMark(f,x,y,z){
   if (SYS.mark){ SYS.mark.parent.remove(SYS.mark); SYS.mark.element.remove(); SYS.mark=null; } if (x==null) return;
@@ -7099,6 +7384,20 @@ const sysSmall=()=>window.matchMedia('(max-width:760px),(max-height:500px)').mat
 function sysFreeShift(){ // how far left of the camera's aim the free part of the screen has its middle. resize() has already moved the aim to (w-pw)/2
   const c=renderer.domElement.getBoundingClientRect(), w=c.width, pw=w>760?Math.min(392,w*.3):0, aim=(w-pw)/2, pan=$('#panel'), p=pan.getBoundingClientRect(), tools=document.querySelector('.tools').getBoundingClientRect(), left=sysSmall()?tools.left:tools.right+8, open=p.left>c.left+120&&!pan.classList.contains('collapsed')&&w>760, right=open?p.left-c.left:w, mid=(left+right)/2;
   return aim-Math.max(left+40,Math.min(right-40,mid));
+}
+/** The largest part of the screen that no bar or panel lies over, for a model of the shape w : d. */
+function sysFree(w,d){
+  const c=renderer.domElement.getBoundingClientRect(), ob=['.brand','.lang','.tools','#panel','#sysbar','#floors'].map(q=>document.querySelector(q)).filter(e=>e&&getComputedStyle(e).display!=='none').map(e=>e.getBoundingClientRect()), pad=6, xs=[0,c.width,...ob.flatMap(r=>[r.left-pad,r.right+pad])], ys=[0,c.height,...ob.flatMap(r=>[r.top-pad,r.bottom+pad])]; let best=[0,0,c.width,c.height], top=0;
+  for (const x0 of xs) for (const x1 of xs) if (x1>x0) for (const y0 of ys) for (const y1 of ys) if (y1>y0&&!ob.some(r=>r.left<x1&&r.right>x0&&r.top<y1&&r.bottom>y0)){ const k=Math.min((x1-x0)/w,(y1-y0)/d); if (k>top){ top=k; best=[x0,y0,x1,y1]; } }
+  return best;
+}
+/** A phone on its side with the wires on: the bars take a third of the height, so the floor goes into the part they leave free. Everything off, the view is the one it always was. */
+function sysRoomy(key,v){
+  if (!SYS.ready||innerHeight>500||!(SYS.on.el||SYS.on.lv)) return v;
+  const c=renderer.domElement.getBoundingClientRect(), H=c.height, o=EPLAN.floors[key].outline, xs=o.map(p=>p[0]), zs=o.map(p=>p[1]), x0=Math.min(...xs), x1=Math.max(...xs), z0=Math.min(...zs), z1=Math.max(...zs), R=sysFree(state.plan?x1-x0:1.5,state.plan?z1-z0:1), aim=(c.width-(c.width>760?Math.min(392,c.width*.3):0))/2, mx=(R[0]+R[2])/2-aim, my=(R[1]+R[3])/2-H/2, tan=Math.tan(camera.fov*Math.PI/360), dir=v.p.clone().sub(v.t);
+  if (state.plan){ const mpp=1.1*Math.max((x1-x0)/(R[2]-R[0]),(z1-z0)/(R[3]-R[1])), t=W2((x0+x1)/2-mx*mpp,v.t.y,(z0+z1)/2-my*mpp); return { p:t.clone().add(dir.setLength(mpp*H/(2*tan))), t }; }
+  dir.multiplyScalar(H/(R[3]-R[1])); const mpp=2*dir.length()*tan/H, back=dir.clone().negate().normalize(), right=new THREE.Vector3().crossVectors(back,new THREE.Vector3(0,1,0)).normalize(), up=new THREE.Vector3().crossVectors(right,back).normalize(), t=v.t.clone().addScaledVector(right,-mx*mpp).addScaledVector(up,my*mpp);
+  return { p:t.clone().add(dir), t };
 }
 function sysLocate(q){
   const p=sysWhere(q), e=T[LANG].sys; if (!p){ sysTip(esc(LANG==='ru'?'На плане нет места для этого пункта: это данные проекта.':'Bu bənd plana bağlı deyil: layihə məlumatıdır.')); return; }
@@ -7157,8 +7456,8 @@ function kpi(D,d){ const c=D.calc, e=T[LANG].sys;
 }
 function legendHtml(d){ const e=T[LANG].sys, col=ENG.DISCIPLINES[d].color;
   return `<details class="sy-s" data-leg="1"><summary><span>${esc(e.legend)}</span></summary><div class="sy-b"><div class="sy-lg">`+
-    Object.entries(ENG.ROUTE_TYPES).filter(([,x])=>x.d===d).map(([,x])=>`<span><i style="background:${x.color}"></i>${esc(L(x))}</span>`).join('')+
-    Object.entries(ENG.ELEMENT_TYPES).filter(([,x])=>x.d===d).map(([,x])=>`<span><code style="background:${col}">${esc(x.code)}</code>${esc(L(x))}</span>`).join('')+`</div></div></details>`;
+    Object.entries(ENG.ROUTE_TYPES).filter(([,x])=>x.d===d).map(([k,x])=>`<span><i style="background:${SYS_TRUNK.has(k)?SYS_GREY:k==='cable'||k==='lv_cable'?`linear-gradient(90deg,${SYS_WC[d].slice(0,4).join(',')})`:x.color}"></i>${esc(L(x))}</span>`).join('')+
+    Object.entries(ENG.ELEMENT_TYPES).filter(([,x])=>x.d===d).map(([,x])=>`<span><code style="background:${col}">${esc(x.code)}</code>${esc(L(x))}</span>`).join('')+(d==='el'||d==='lv'?`<span><i class="dash"></i>${esc(e.wHidden)}</span>`:'')+`</div></div></details>`;
 }
 function inputsHtml(D,d){ const e=T[LANG].sys, list=D.missing.filter(m=>!d||m.d===d); if (!list.length) return d?'':`<p class="sy-pl">${esc(e.inputsOk)}</p>`;
   return `<h3 class="sy-h">${esc(e.inputs)}<small>${list.length}</small></h3><ul class="sy-list">`+list.map(m=>`<li class="sy-m ${esc(m.sev)}"><span>${esc(L(m))}</span>${API&&e.chat[m.key]?`<button class="sy-ask" data-a="chat" data-v="${esc(m.key)}">${esc(e.ask)}</button>`:''}</li>`).join('')+`</ul>`;
@@ -7227,7 +7526,7 @@ const floorNote=()=>state.floor==='B'?'':`<p class="sy-pl">${esc(sF(T[LANG].sys.
 const toolsHtml=(d)=>{ const li=SYS.tools.filter(t=>!t.d||t.d===d); return li.length?`<div class="btnrow" style="margin-top:12px">${li.map(t=>`<button class="btn" data-a="tool" data-v="${esc(t.id)}">${esc(L(t.label))}</button>`).join('')}</div>`:''; };
 function secHtml(s){ const e=T[LANG].sys, op=SYS.open.has(s.key); return `<details class="sy-s ${esc(s.status)}" data-sec="${esc(s.key)}"${op?' open':''}><summary><span>${esc(s.title)}</span><em class="sy-st ${esc(s.status)}">${esc(e.st[s.status])}</em></summary><div class="sy-b">${op?secBody(s):''}</div></details>`; }
 function pageDisc(D,d){ const e=T[LANG].sys, g=sysRep(d).groups[0];
-  return tiles(kpi(D,d))+legendHtml(d)+inputsHtml(D,d)+issuesHtml(D,d)+autoHtml()+`<h3 class="sy-h">${esc(e.sections)}<small>${g.verified} / ${g.total}</small></h3>${floorNote()}`+g.sections.map(secHtml).join('')+takeoffHtml(D,d)+toolsHtml(d)+
+  return tiles(kpi(D,d))+(d==='el'||d==='lv'?sysGroupsHtml(d):'')+legendHtml(d)+inputsHtml(D,d)+issuesHtml(D,d)+autoHtml()+`<h3 class="sy-h">${esc(e.sections)}<small>${g.verified} / ${g.total}</small></h3>${floorNote()}`+g.sections.map(secHtml).join('')+takeoffHtml(D,d)+toolsHtml(d)+
     `<div class="btnrow" style="margin-top:12px"><button class="btn" data-a="doc" data-v="${d}">${esc(e.report)}</button></div>`;
 }
 function pageArch(D){ const e=T[LANG].sys, secs=[...sysRep('arch').groups[0].sections,...sysRep('all').groups[0].sections]; return `<h3 class="sy-h">${esc(e.sections)}</h3>${floorNote()}`+secs.map(secHtml).join('')+toolsHtml('arch')+`<div class="btnrow" style="margin-top:12px"><button class="btn" data-a="doc" data-v="arch">${esc(e.report)}</button></div><p class="note">${esc(e.geo)}</p>`; }
@@ -7273,7 +7572,7 @@ function renderSys(){
   pb.scrollTop=scroll; $('#panel').classList.toggle('wide',SYS.wide); if (fk){ const n=pb.querySelector(fk); if (n) n.focus({preventScroll:true}); }
   const nav=pb.querySelector('.sy-nav'), act=nav&&nav.querySelector('[aria-current="true"]'); if (act&&nav.scrollWidth>nav.clientWidth) nav.scrollLeft=act.offsetLeft-nav.offsetLeft-nav.clientWidth/2+act.offsetWidth/2;
 }
-function sysOpen(page){ state.tab='sys'; state.room=null; if (page) SYS.page=page; renderPanel(); openSheet(); if (!SD.some(d=>SYS.on[d])){ const s=ENG.systemsOf(sysState()); for (const d of SD) if ([...s.elements,...s.routes].some(x=>x.d===d)) SYS.on[d]=true; sysVis(); renderSysBar(); } }
+function sysOpen(page){ state.tab='sys'; state.room=null; if (page) SYS.page=page; renderPanel(); openSheet(); if (!SD.some(d=>SYS.on[d])){ const s=ENG.systemsOf(sysState()); sysFirst(SD.filter(d=>[...s.elements,...s.routes].some(x=>x.d===d))); sysVis(); renderSysBar(); if (SYS.on.el) sysWireTip(); } }
 function sysToggleSec(ev){ const el=ev.target; if (!el.matches||!el.matches('details[data-sec]')) return; const k=el.dataset.sec;
   if (el.open){ SYS.open.add(k); const b=el.querySelector('.sy-b'); if (b&&!b.firstChild&&SYS.secs[k]) b.innerHTML=secBody(SYS.secs[k]); } else SYS.open.delete(k); }
 function sysClick(ev){
@@ -7281,6 +7580,8 @@ function sysClick(ev){
   if (a==='page'){ SYS.page=v; if (SD.includes(v)){ SYS.auto.d=v; if (!SYS.on[v]){ SYS.on[v]=true; sysVis(); renderSysBar(); } } SYS.msg=''; SYS.err=false; $('#pbody').scrollTop=0; renderSys(); }
   else if (a==='wide'){ SYS.wide=!SYS.wide; renderSys(); }
   else if (a==='more'){ SYS.more[v]=true; renderSys(); }
+  else if (a==='wire') sysTraceGroup(v);
+  else if (a==='wclear') sysTraceEnd();
   else if (a==='iss'){ const i=D&&D.checks.issues.find(x=>x.key===v); if (!i) return; if (/^section_/.test(i.code)){ SYS.page='verify'; if (i.code!=='section_draft') SYS.vopen=i.ids[0]; $('#pbody').scrollTop=0; renderSys(); } else sysLocate(i); }
   else if (a==='loc') sysLocate({ ids:[v], room:v });
   else if (a==='chat'){ state.tab='edit'; ED.text=e.chat[v]||''; renderPanel(); openSheet(); setTimeout(()=>{ focusId(ED.authed?'ed-text':'ed-pin'); const t=document.getElementById('ed-text'), i=ED.text.indexOf('…'); if (ED.authed&&t&&i>=0) t.setSelectionRange(i,i+1); },40); }
@@ -7358,7 +7659,7 @@ function sysPreview(){
   if (SYS.busy||ED.busy) return; const sc=sysScope(), t0=performance.now(), it=ENG.autoPlanSteps(STATE,EPLAN,sc); let n=0; SYS.busy='plan'; SYS.prog=[0,ENG.autoPlanSize(sc)]; SYS.msg=''; SYS.err=false; SYS.last=null; SYS.split=false; renderSys();
   const end=()=>{ SYS.busy=''; SYS.prog=null; renderSys(); const c=document.querySelector('#pbody .sy-a .btnrow'), bar=document.querySelector('#pbody .sy-pre'), pb=$('#pbody'); if (c&&bar) pb.scrollTop+=c.getBoundingClientRect().top-bar.getBoundingClientRect().bottom-8; }; // the next step, clear of the sticky bar
   const step=()=>{ // a floor of a discipline at a time: a phone takes seconds over a building, and the page has to stay alive and show how far it got
-    try { const t=performance.now(); for (;;){ const r=it.next(); if (r.done){ const run=r.value; SYS.pv={ ...sc, run, state:sysMerge(STATE,run.op), base:VERSION, key:newKey(), ms:Math.round(performance.now()-t0) }; SYS.dFor=null; for (const d of run.op.d) SYS.on[d]=true; sysBuild(); renderSysBar(); if (sc.floors&&sc.floors[0]!==state.floor) setFloor(sc.floors[0]); end(); return; } n++; if (performance.now()-t>24) break; }
+    try { const t=performance.now(); for (;;){ const r=it.next(); if (r.done){ const run=r.value; SYS.pv={ ...sc, run, state:sysMerge(STATE,run.op), base:VERSION, key:newKey(), ms:Math.round(performance.now()-t0) }; SYS.dFor=null; sysFirst(run.op.d); sysBuild(); renderSysBar(); if (sc.floors&&sc.floors[0]!==state.floor) setFloor(sc.floors[0]); end(); if (SYS.on.el) sysWireTip(); return; } n++; if (performance.now()-t>24) break; }
       SYS.prog[0]=n; const st=document.querySelector('#pbody .sy-status'); if (st) st.textContent=runText(); setTimeout(step,0);
     } catch(err){ console.error('autoPlan',err); SYS.msg=err.az?L(err):`${T[LANG].sys.failed}: ${err.message||err}`; SYS.err=true; end(); } };
   setTimeout(step,40);
@@ -7412,7 +7713,7 @@ async function sysAfterEdit(again){ // the answer asked for automatic design: th
   if (ED.result&&!ED.result.checksDone){ ED.result.checksDone=true; sysEditChecks(ED.result); }
   const list=ED.result&&ED.result.auto; if (!Array.isArray(list)||!list.length||ED.result.autoDone||(ED.result.autoFailed&&!again)){ renderEdit(); return; } ED.result.autoDone=true; ED.result.autoFailed=false; ED.err=''; const res=ED.result;
   setBusy('apply'); ED.mut++; renderEdit();
-  try { for (const a of list){ const r=await sysRunSave({ floors:a.floors||null, d:a.d||null }); ED.redo=[]; setDesignState(r.state,vid(r.version)); res.warnings=[...(res.warnings||[]),...(r.warnings||[])]; res.applied=[...(res.applied||[]),...(r.applied||[])]; for (const d of (r.applied||[]).length?(a.d||SD):[]) SYS.on[d]=true; sysVis(); renderSysBar(); }
+  try { for (const a of list){ const r=await sysRunSave({ floors:a.floors||null, d:a.d||null }); ED.redo=[]; setDesignState(r.state,vid(r.version)); res.warnings=[...(res.warnings||[]),...(r.warnings||[])]; res.applied=[...(res.applied||[]),...(r.applied||[])]; if ((r.applied||[]).length) sysFirst(a.d||SD); sysVis(); renderSysBar(); if (SYS.on.el) sysWireTip(); }
     await loadVersions(); ED.result=res; }
   catch(x){ ED.err=`${T[LANG].sys.autoLost} ${await sysFailText(x)}`; res.autoDone=false; res.autoFailed=true; if (x.status===401) dropAuth(ED.err); }
   setBusy(''); renderEdit(); if (ED.err) announce(ED.err);
