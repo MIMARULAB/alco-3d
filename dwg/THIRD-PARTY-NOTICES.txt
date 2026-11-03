@@ -1,0 +1,7 @@
+The files in dwg/fw/ are the DWG converter of the Documents tab, built from viewer-src/tools/dwgwasm/ (Program.cs, dwgconv.csproj, build.sh).
+
+They contain:
+- ACadSharp 3.8.35, MIT licence: https://github.com/DomCR/ACadSharp/blob/master/LICENSE
+- The .NET 10 runtime and base class libraries for WebAssembly, MIT licence: https://github.com/dotnet/runtime/blob/main/LICENSE.TXT
+
+The full licence texts are at the links above.
