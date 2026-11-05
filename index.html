@@ -2404,6 +2404,8 @@ function finStrip(x){ if ((typeof x==='string'?x:x?.type)!=='mans') return ''; l
   const c=ENG.mansardCeilingOf(st), p=ENG.stripProduct(st,rs[0]), len=rs.reduce((a,r)=>a+ENG.polyLen(r.pts),0), ru=LANG==='ru', n=(v)=>String(Math.round(v*100)/100).replace('.',ru?',':'.');
   const txt=ru?`Скрытая лента в нише по краю потолка: ${n(len)} м, ниша ${n(c.niche)} м на высоте ${n(c.soffit)} м${p.cct?`, ${p.cct} K`:''}${p.w_m==null?'; мощность и световой поток — после выбора ленты':''}. Предварительно.`:`Tavanın kənarındakı nişdə gizli lent: ${n(len)} m, niş ${n(c.niche)} m, ${n(c.soffit)} m hündürlükdə${p.cct?`, ${p.cct} K`:''}${p.w_m==null?'; güc və işıq axını lent seçiləndən sonra':''}. İlkin.`;
   return `<dt>${esc(T[LANG].fin.strip)}</dt><dd>${esc(txt)}</dd>`; }
+/** The owner's rule of 2026-11-05: a room whose lighting he set by hand or by chat keeps it through every design run; its card says so. */
+function ownerLit(id){ let st; try { st=sysState(); } catch(e){ return ''; } const k=st&&st.systems&&st.systems.owner&&st.systems.owner.rooms&&st.systems.owner.rooms[id]; if (!Array.isArray(k)||!k.includes('light')) return ''; return `<p class="owner-lit"><span class="pill">${esc(LANG==='ru'?'освещение задано вами':'işıqlandırma sizin tərəfinizdən verilib')}</span></p>`; }
 function renderPanel(){
   const pb=$('#pbody'); const t=T[LANG];
   $('#tab-rooms').setAttribute('aria-selected',state.tab==='rooms'); $('#tab-mat').setAttribute('aria-selected',state.tab==='mat'); $('#tab-edit').setAttribute('aria-selected',state.tab==='edit');
@@ -2422,7 +2424,7 @@ function renderPanel(){
     pb.innerHTML=`<div class="detail"><button class="back" id="back">${esc(t.back)}</button>
       <h3>${esc(L(r.name))}</h3>
       <div class="meta"><span class="pill">${esc(t.floors[r.f])}</span>${(typeof r.area==='number'&&r.area)?`<span class="pill">${r.area.toFixed(2).replace('.',',')} ${t.m2}</span>`:''}<span class="pill">№ ${esc(r.n)}</span></div>
-      <p>${esc(L(r.desc))}</p>
+      <p>${esc(L(r.desc))}</p>${ownerLit(r.id)}
       <dl class="fin">${finList(r)}</dl>
       ${typeof sysRoomPoints==='function'?sysRoomPoints(r.id):''}
       <div class="btnrow">${r.eye?`<button class="btn solid" id="eye">${esc(t.eye)}</button>`:''}<button class="btn" id="foc">${esc(t.focus)}</button></div></div>`;
@@ -4319,6 +4321,56 @@ function systemsOf(state) {
   return { elements: s.elements || [], routes: s.routes || [], circuits: s.circuits || [] };
 }
 const projectOf = (state) => (state && state.project) || {};
+/**
+ * What the owner set by hand or by chat (MASTER_PROMPT 2026-11-05, FIELD_NOTES 52): systems.owner = { rooms: { room: [kind] }, removed: [{ id, t, f, room, x, z }] }.
+ * A kind is 'light' for the luminaires and switches of a room (an escape light is its own kind, a safety device), else the element type; the wiring gear the design lays with its lines is nobody's kind.
+ * A design run keeps every element of a marked kind in a marked room as it stands (it only re-wires it), places none there, and none of a removed type within OWNER_REACH of a removed one.
+ * The program's own runs (auto_apply) mark nothing. A room is released by set_room with release true (the owner's request), or when it leaves the plan.
+ */
+const OWNER_FREE = ['jbox', 'panel', 'driver', 'ac_out', 'line_ac'], OWNER_REACH = 1.2, OWNER_MAX = 3000, OWNER_OUT = (f) => `@${f}`; // OWNER_OUT: the key of what stands in no room of a floor; the outdoor half and the line of an air conditioner follow their indoor unit (its kind is ac_in), as remove_element and the run's hookUp already keep them
+const ownerKind = (t) => { const c = ELEMENT_TYPES[t]; if (!c || OWNER_FREE.includes(t)) return null; return (c.kind === 'light' && !c.emergency) || SWITCH_TYPES.includes(t) ? 'light' : t; };
+const ownerOf = (state) => { const o = state?.systems?.owner; return { rooms: { ...(o?.rooms || {}) }, removed: [...(o?.removed || [])] }; };
+const ownerRoomOf = (e) => e.room ?? OWNER_OUT(e.f); // the room an element was placed in: the history, read without the plan, gives the same key
+/** Is this kind of this room the owner's? */
+const ownerHolds = (state, room, t) => { const k = ownerKind(t), r = state?.systems?.owner?.rooms; return !!(k && r && !String(room).startsWith('@') && Object.hasOwn(r, room) && r[room].includes(k)); }; // out of every room (a roof, the yard) only what he removed is kept away, by reach: one outdoor unit he moved does not freeze the whole roof, and what he moved or added there is manual and stays anyway
+/** A removed element of this type within reach on this floor and in this room: the design places nothing there. */
+const ownerRemovedNear = (state, t, f, room, x, z) => (state?.systems?.owner?.removed || []).some((q) => q.t === t && q.f === f && q.room === room && Math.hypot(q.x - x, q.z - z) < OWNER_REACH);
+/** Writes into state the marks of what changed in its elements against before, leaving out the ids in skip (what a program run did). Returns whether anything was marked. */
+function ownerNote(state, before, plan, skip = new Set()) {
+  const mem = ownerOf(state), was = new Map(systemsOf(before).elements.map((e) => [e.id, e])), seen = new Set(); let changed = false;
+  const mark = (e) => { const k = ownerKind(e.t); if (!k) return false; const r = ownerRoomOf(e), l = (mem.rooms[r] ??= []); if (!l.includes(k)) { l.push(k); changed = true; } return true; };
+  for (const e of systemsOf(state).elements) {
+    seen.add(e.id); if (skip.has(e.id)) continue;
+    const b = was.get(e.id);
+    if (!b) { if (mark(e)) { const i = mem.removed.findIndex((q) => q.id === e.id); if (i >= 0) { mem.removed.splice(i, 1); changed = true; } } } // brought back: no longer removed
+    else if (b.x !== e.x || b.z !== e.z || b.f !== e.f || b.t !== e.t) { mark(b); mark(e); }
+  }
+  for (const [id, b] of was) if (!seen.has(id) && !skip.has(id) && mark(b) && fin(b.x) && fin(b.z)) { mem.removed.push({ id, t: b.t, f: b.f, room: ownerRoomOf(b), x: b.x, z: b.z }); changed = true; }
+  const live = new Set((state.rooms || []).map((r) => r.id));
+  if (live.size) for (const r of Object.keys(mem.rooms)) if (!r.startsWith('@') && !live.has(r)) { delete mem.rooms[r]; mem.removed = mem.removed.filter((q) => q.room !== r); changed = true; } // a room that left the plan is released
+  if (!changed) return false;
+  if (mem.removed.length > OWNER_MAX) mem.removed = mem.removed.slice(-OWNER_MAX);
+  (state.systems ??= {}).owner = mem; return true;
+}
+/** The owner's marks of two states together, for a restore: an element that stands in the restored state is no longer removed. */
+function ownerMerge(target, head) {
+  const a = ownerOf(target), b = ownerOf(head), has = new Set(systemsOf(target).elements.map((e) => e.id)), rooms = { ...a.rooms }; let changed = false;
+  for (const [r, ks] of Object.entries(b.rooms)) for (const k of ks) { const l = (rooms[r] = [...(rooms[r] || [])]); if (!l.includes(k)) { l.push(k); changed = true; } }
+  const ids = new Set(a.removed.map((q) => q.id)), removed = a.removed.filter((q) => !has.has(q.id)); if (removed.length !== a.removed.length) changed = true;
+  for (const q of b.removed) if (!ids.has(q.id) && !has.has(q.id)) { removed.push(q); changed = true; }
+  if (!changed) return false;
+  (target.systems ??= {}).owner = { rooms, removed: removed.slice(-OWNER_MAX) }; return true;
+}
+/** systems.owner of a head from before it existed, from the saved history (rows in order: { kind, source, state }): what the owner's versions changed, carried through restores; the program's runs and rows of unknown source mark nothing. */
+const OWNER_SOURCES = ['chat', 'voice', 'hand'];
+/** One saved version on from the one before it (prev, already stepped); returns that version's state with the marks in it. */
+function ownerStep(prev, row) {
+  const st = row.state, mem = prev?.systems?.owner; if (mem) (st.systems ??= {}).owner = ownerOf(prev); else if (st.systems) delete st.systems.owner;
+  if (prev && row.kind === 'restore') ownerMerge(st, prev);
+  else if (prev && row.kind === 'edit' && OWNER_SOURCES.includes(row.source)) ownerNote(st, prev, null);
+  return st;
+}
+function ownerFromHistory(rows) { let prev = null; for (const row of rows) prev = ownerStep(prev, row); return ownerOf(prev); }
 /** What a fitting of this type is: project.products, the owner's choice, over the catalogue, which stays marked assumed. */
 const mansardCeilingOf = (state) => { const p = projectOf(state).mansard_ceiling; return { ...MANSARD_CEILING, ...p, given: !!p }; };
 /** What a strip is: its own values, else project.products.led_strip. W/m and lm/m stay null until given: nobody states a power from nothing (O21). */
@@ -9087,8 +9139,9 @@ const pick = (all, want) => (Array.isArray(want) && want.length ? all.filter((x)
  * to the building, not to a floor: a run keeps them or redraws them itself; clearing the whole building takes them too.
  */
 function autoScope(state, floors, ds, clearing = false) {
+  // what the owner set in a room stays as it stands (2026-11-05): a run only re-wires it, so it is not in scope
   const s = systemsOf(state), wide = (x) => x.f2 || BUILDING_ROLES.includes(x.role), fixed = clearing ? new Set() : fixedCircuits(s), inScope = (x) => x.auto && ds.includes(x.d) && floors.includes(x.sf ?? x.f) && !fixed.has(x.circuit) && (!wide(x) || (clearing && floors.length === FLOORS.length));
-  return { elements: s.elements.filter(inScope).map((e) => e.id), routes: s.routes.filter(inScope).map((r) => r.id), circuits: ds.includes('el') ? s.circuits.filter((c) => c.auto && !fixed.has(c.id) && floors.includes(c.f)).map((c) => c.id) : [] };
+  return { elements: s.elements.filter((e) => inScope(e) && !ownerHolds(state, e.room ?? OWNER_OUT(e.f), e.t)).map((e) => e.id), routes: s.routes.filter(inScope).map((r) => r.id), circuits: ds.includes('el') ? s.circuits.filter((c) => c.auto && !fixed.has(c.id) && floors.includes(c.f)).map((c) => c.id) : [] };
 }
 /** What the owner touched stays: a circuit edited by hand, or with a cable drawn by hand, keeps its members and its cable through a re-run. */
 const fixedCircuits = (s) => new Set(s.circuits.filter((c) => !c.auto || s.routes.some((r) => r.circuit === c.id && !r.auto)).map((c) => c.id));
@@ -9101,7 +9154,7 @@ function makeContext(state, plan, floors, ds) {
   const old = systemsOf(state), gone = autoScope(state, floors, ds), goneE = new Set(gone.elements), goneR = new Set(gone.routes), goneC = new Set(gone.circuits);
   const sys = { elements: old.elements.filter((e) => !goneE.has(e.id)), routes: old.routes.filter((r) => !goneR.has(r.id)), circuits: old.circuits.filter((c) => !goneC.has(c.id)) };
   const x = {
-    state: { ...state, systems: sys }, plan, floors, ds, sys, gone, goneC, N: (k) => normValue(state, k), grids: {}, walls: {}, gaps: {}, flags: [], added: { elements: [], routes: [], circuits: [] }, ids: {}, risers: {}, links: {}, oldPanels: {}, keptLoads: new Set(), ceil: {},
+    state: { ...state, systems: sys }, owner: { systems: { owner: state.systems?.owner } }, plan, floors, ds, sys, gone, goneC, N: (k) => normValue(state, k), grids: {}, walls: {}, gaps: {}, flags: [], added: { elements: [], routes: [], circuits: [] }, ids: {}, risers: {}, links: {}, oldPanels: {}, keptLoads: new Set(), ceil: {},
     prior: old.elements.filter((e) => goneE.has(e.id)), wasProposals: state.systems?.proposals, idsE: new Map(), idsR: new Map(), idsC: new Map(),
     oldLines: new Map(old.circuits.filter((c) => goneC.has(c.id)).map((c) => [c.id, { c, ids: old.elements.filter((e) => e.circuit === c.id).map((e) => e.id) }])), // the lines of the design before this run, with what was on each: a line whose devices are all still there stays as it was
     grid: (f) => { if (!x.grids[f]) { x.grids[f] = floorGrid(state, plan, f); x.laneSync(x.grids[f]); markBody(x, x.grids[f]); } return x.grids[f]; },
@@ -9201,7 +9254,7 @@ const shaftId = (x, t, f, room, body) => { const y = body && x.prior.find((q) =>
 function put(x, t, f, px, pz, o = {}) {
   const cat = ELEMENT_TYPES[t], gap = o.gap ?? 0.12, sf = o.sf ?? f, ceil = cat.mount === 'ceil' || (t === 'ac_in' && fin(o.h) && o.h >= CEILING[f] - 0.01);
   if (x.added.elements.length >= MAX_RUN_ELEMENTS) throw Object.assign(new Error(`Avtomatik layihə ${MAX_RUN_ELEMENTS} elementdən çox çıxır: normalara baxın (nöqtə sayı, addım) / Автоматический проект выходит за ${MAX_RUN_ELEMENTS} элементов: проверьте нормы (число точек, шаг)`), { az: `Avtomatik layihə ${MAX_RUN_ELEMENTS} elementdən çox çıxır: normalara baxın (iş yerinə nöqtə sayı, addım).`, ru: `Автоматический проект выходит за ${MAX_RUN_ELEMENTS} элементов: проверьте нормы (число точек на место, шаг).` });
-  const here = (qx, qz) => x.sys.elements.find((e) => e.t === t && e.f === f && ((Math.hypot(e.x - qx, e.z - qz) < gap && (e.room ?? roomAt(x.plan, f, e.x, e.z)) === roomAt(x.plan, f, qx, qz)) || (e.from && Math.hypot(e.from[0] - qx, e.from[1] - qz) < gap) || (o.ref && e.ref === o.ref && !e.auto))), first = here(px, pz); // a unit across the wall is another room's
+  const here = (qx, qz) => x.sys.elements.find((e) => e.t === t && e.f === f && ((Math.hypot(e.x - qx, e.z - qz) < gap && (e.room ?? roomAt(x.plan, f, e.x, e.z)) === roomAt(x.plan, f, qx, qz)) || (e.from && Math.hypot(e.from[0] - qx, e.from[1] - qz) < gap) || (o.ref && e.ref === o.ref && !e.auto) || (o.door && e.door === o.door && Math.hypot(e.x - qx, e.z - qz) < gap))), first = here(px, pz); // a unit across the wall is another room's
   if (first) { if (x.movedOut?.has(first)) x.flag(`${first.room ?? f}: ${cat.az} şaxtadan çıxarılan ${first.id} ilə eyni yerə düşür: biri kimi qalır.`, `${first.room ?? f}: ${cat.ru}: то же место занял ${first.id}, вынесенный из шахты: осталось одно устройство.`); return null; } // the spot it had before the shaft counts too: what an old design or the owner left there is this device
   const height = o.h ?? elementHeight(t, f), body = o.role === 'extract' || height > CEILING[f] ? null : shaftOn(x, f); // the extract fan stands on the head of the shaft on purpose, a unit on the roof above it
   const pier = pierSlot(x, t, f, px, pz, height, roomAt(x.plan, f, px, pz)); if (pier) { const k = `${t}|${f}|${r2(px)}|${r2(pz)}`, done = (x.onPier ??= new Set()); if (done.has(k)) return null; done.add(k); px = pier.x; pz = pier.z; o = { ...o, r: pier.r }; } // the same spot asked twice stays one device
@@ -9214,6 +9267,7 @@ function put(x, t, f, px, pz, o = {}) {
     if (q) { if (fin(q.r)) o = { ...o, r: q.r }; radFrom = [px, pz]; px = q.x; pz = q.z; if (here(px, pz)) return null; } else x.flag(`${cat.az}: radiatorun yanında divarda yer tapılmadı, radiatorun altında qalır; yerini mütəxəssis dəqiqləşdirir.`, `${cat.ru}: на стене рядом с радиатором нет места, осталась под радиатором; место уточняет специалист.`);
   }
   if (ceil) [px, pz] = ceilSlot(x, t, f, px, pz, body, o.busy);
+  const at = (o.tag !== undefined ? o.tag : roomAt(x.plan, f, px, pz)) ?? OWNER_OUT(f); if (!o.keepId && (ownerHolds(x.owner, at, t) || ownerRemovedNear(x.owner, t, f, at, px, pz))) return null; // the owner's room keeps what he left there, and what he removed does not come back (2026-11-05)
   const xr = r2(px), zr = r2(pz), room = roomAt(x.plan, f, px, pz), e = { id: o.keepId ?? takeId(x.idsE, elementKey(t, f, xr, zr)) ?? takeId(x.idsE, elementKey(t, f, r2(raw[0]), r2(raw[1]))) ?? shaftId(x, t, f, room, body) ?? x.nextEl(cat.d), d: cat.d, t, f, x: xr, z: zr, h: r3(height), auto: true };
   if (room) e.room = room;
   for (const k of ['r', 'ref', 'kw', 'lm', 'cool_kw', 'heat_kw', 'flow', 'size_l', 'label', 'role', 'feed', 'link', 'circuit', 'controls', 'rack', 'u', 'door', 'feeds', 'line']) if (o[k] !== undefined && o[k] !== null) e[k] = o[k];
@@ -9816,11 +9870,11 @@ function doorSet(x, f, o, pts) {
   const d = doorSide(x.state, x.plan, f, o), outer = (s, k) => (d.street ? streetOff(x.plan, f, d, s * (d.L / 2 + k)) : 0.16), inner = 0.16, frame = d.street ? doorDepth(x, d) : inner, rIn = dirOf(d.ix, d.iz), rOut = dirOf(-d.ix, -d.iz), head = d.head, top = Math.min(r2(head + 0.05), CEILING[f] - 0.05), high = Math.min(r2(head + 0.25), CEILING[f] - 0.05);
   const at = (end, along, off) => ({ x: r2(d.mx + d.ux * end * (d.L / 2 + along) + d.ix * off), z: r2(d.mz + d.uz * end * (d.L / 2 + along) + d.iz * off) }), fits = (p, room) => (room ? !!roomAt(x.plan, f, p.x, p.z) && !doorSwept(x.state.floors?.[f]?.openings, p.x, p.z) : !pointInPoly(p.x, p.z, x.plan.floors[f].outline)); // the polygons of a room can run past its door, so the side comes from the door, not from them
   const body = shaftOn(x, f), free = (p, r) => !body || !shaftTakes(x, f, body, 'reader', p.x, p.z, r), seat = [1, -1].flatMap((s) => [0.15, 0.4, 0.7, 1].map((k) => ({ s, k }))).find((q) => fits(at(q.s, q.k, -outer(q.s, q.k)), d.out) && free(at(q.s, q.k, -outer(q.s, q.k)), rOut)) ?? { s: 1, k: 0.15 }, end = seat.s, side = [end, -end].find((s) => fits(at(s, 0.15, inner), d.room)) ?? end, one = (t, p, o2) => put(x, t, f, p.x, p.z, { gap: 0.05, door: o.id, ...o2 }), outdoors = (e) => { if (e) { if (d.out) e.room = d.out; else delete e.room; } return e; }; // the lock side when the wall has room, further along or the far side of the frame when not: a reader never crosses to the protected side to get out of the shaft
-  const rd = outdoors(one('reader', at(end, seat.k, -outer(end, seat.k)), { r: rOut, h: ELEMENT_TYPES.reader.h })); // the polygons of a room can run past its door: the tag of what stands on the far side comes from the door
+  const rd = outdoors(one('reader', at(end, seat.k, -outer(end, seat.k)), { r: rOut, h: ELEMENT_TYPES.reader.h, tag: d.out ?? null })); // tag: the room it is filed under, which the owner's hold reads (r-elec-2, 2026-11-05: Z-in holds the reader he left, and a second one stood on it) // the polygons of a room can run past its door: the tag of what stands on the far side comes from the door
   one('lock', at(side, -0.05, frame), { r: rIn, h: top }); one('door_contact', at(side, -0.3, frame), { r: rIn, h: top }); one('exit_btn', at(side, 0.15, inner), { r: rIn, h: ELEMENT_TYPES.exit_btn.h });
   const ctl = one('ac_ctrl', [at(side, 0.45, inner), at(-side, 0.45, inner)].find((p) => roomAt(x.plan, f, p.x, p.z) === d.room && free(p, rIn)) ?? at(side, -d.L / 2, inner), { r: rIn, h: high }); if (ctl) pts.push(ctl); // over the door when the wall beside it is no wall of this room
   if (!d.street) return;
-  const ic = outdoors(one('intercom', at(end, 0.4, -outer(end, 0.4)), { r: rOut, h: ELEMENT_TYPES.intercom.h }));
+  const ic = outdoors(one('intercom', at(end, 0.4, -outer(end, 0.4)), { r: rOut, h: ELEMENT_TYPES.intercom.h, tag: d.out ?? null }));
   if (ic) { pts.push(ic); (x.anchors ??= new Map()).set(ic.id, doorAnchor(x, d)); }
   if (rd) x.flag(`${o.id}: oxuyucu və domofon küçədədir: qapının açıldığı tərəf modeldə yoxdur, qıfıl tərəfi fərz edilib; ilkin.`, `${o.id}: считыватель и домофон на улице: сторона открывания двери в модели не задана, сторона замка принята; предварительно.`);
 }
@@ -10324,10 +10378,28 @@ function keptLights(x, f, room, t, n) {
   const ctl = x.prior.find((e) => isSwitch(e) && e.f === f && e.room === room && Array.isArray(e.controls))?.controls ?? [], at = (e) => { const i = ctl.indexOf(e.id); return i < 0 ? Infinity : i; };
   return old.map((e, i) => ({ e, i })).sort((p, q) => at(p.e) - at(q.e) || p.i - q.i).map(({ e }) => ({ x: e.x, z: e.z })); // in the order the room's switch lists them, so a second run writes the switch as the first did; one that a duct or a pipe of this run now passes over slides off it in put (ceilSlot) and keeps its id
 }
+const WC_SPOTS = 2; // the owner, 2026-11-05: in each toilet cubicle or wet room at most two spots, and a switch of its own by its door
+/** A WC as the owner wants it (2026-11-05): each door of it is a cubicle with a switch of its own by that door working at most WC_SPOTS spots of that cubicle, however many the lumen method would want; a room the owner set keeps what he left (put). */
+/** The doors of a WC, one to a cubicle: the switch spot on the wall beside each, inside, and the middle of the cubicle behind it (cx, cz) that its spots are counted to. */
+function wcDoors(x, f, room) {
+  return roomOpenings(x.state, x.plan, f, room, ['door']).map((d) => { const L = Math.hypot(d.o.b[0] - d.o.a[0], d.o.b[1] - d.o.a[1]), sp = [1, -1].flatMap((s) => [0.12, 0.25, 0.4].map((k) => ({ x: r2(d.mx + d.ux * s * (L / 2 + k) + d.ix * 0.1), z: r2(d.mz + d.uz * s * (L / 2 + k) + d.iz * 0.1) }))).find((p) => roomAt(x.plan, f, p.x, p.z) === room); return sp && { ...sp, r: dirOf(d.ix, d.iz), cx: d.mx + d.ix * 0.9, cz: d.mz + d.iz * 0.9 }; }).filter(Boolean);
+}
+function wcLights(x, f, r, t, busy) {
+  const prod = productOf(x.state, t), real = prod.assumed ? {} : { lm: prod.lm, kw: r3(prod.w / 1000) }, doors = wcDoors(x, f, r.id), at = doors.length ? doors : switchFallback(x, f, r).map((sp) => ({ ...sp, cx: sp.x, cz: sp.z }));
+  const near = (p) => at.reduce((b, d, i) => (Math.hypot(d.cx - p.x, d.cz - p.z) < Math.hypot(at[b].cx - p.x, at[b].cz - p.z) ? i : b), 0), cands = gridIn(x, f, r.id, Math.max(8, 4 * at.length)), lamp = (e) => e.f === f && e.room === r.id && e.d === 'el' && elementLm(e) > 0 && !ELEMENT_TYPES[e.t].emergency;
+  at.forEach((d, i) => {
+    const mine = cands.filter((p) => near(p) === i).sort((p, q) => Math.hypot(p.x - d.x, p.z - d.z) - Math.hypot(q.x - d.x, q.z - d.z)), have = x.sys.elements.filter((e) => lamp(e) && near(e) === i).length;
+    const want = mine.length <= WC_SPOTS ? mine : [mine[Math.floor(mine.length * 0.25)], mine[Math.floor(mine.length * 0.75)]];
+    for (const sp of want.slice(0, Math.max(0, WC_SPOTS - have))) put(x, t, f, sp.x, sp.z, { gap: 0.05, busy, ...real });
+    const lamps = x.sys.elements.filter((e) => lamp(e) && near(e) === i).map((e) => e.id);
+    put(x, 'switch', f, d.x, d.z, { r: d.r, gap: 0.05, controls: lamps.length ? lamps : undefined });
+  });
+}
 function draftLights(x, f) {
   const N = x.N, types = N('light.type'), rows = lightingAtSlab(x), byRoom = new Map(rows.rows.map((r) => [r.room, r])), box = x.plan.floors[f]?.stair, lv = ceilingLevels(x.state, x.plan), busy = fittingBusy(x, f, lv);
   for (const r of x.rooms(f)) {
     const row = byRoom.get(r.id); if (!row) continue;
+    if (r.type === 'wc') { wcLights(x, f, r, lightOf(types, r.type), busy); continue; }
     const t = lightOf(types, r.type), prod = productOf(x.state, t), lm = prod.lm, n = Math.ceil(r3((row.need_lm - row.lm) / lm)), real = prod.assumed ? {} : { lm: prod.lm, kw: r3(prod.w / 1000) }, panels = t === 'light_ceil' && n > 0 ? deskGrid(x, f, r, n, busy, lv.get(r.id)?.level ?? row.height) : null;
     if (n > 0) {
       const kept = keptLights(x, f, r.id, t, n); let got = 0;
@@ -10375,10 +10447,12 @@ function ceilingFit(x, f, g, c, ci, start, panel, rs, boost, distOf, max) {
   const rest = [], rooms = [...c.rooms];
   for (;;) {
     const at = [x.sys.routes.length, x.added.routes.length, x.sys.elements.length, x.added.elements.length], pools = [x.idsR, x.idsE].map((m) => new Map([...m].map(([k, v]) => [k, [...v]]))); // a trial takes back the ids it used, so a second run lays the same lines under the same ids
+    const lanes = g.own && Object.fromEntries(Object.entries(g.own).map(([k, v]) => [k, v.slice()])), extra = g.extra?.slice(), crossed = x.crossed && new Set(x.crossed); // and the lanes its lines marked on the grid (KEEP-3, 2026-11-05): a trial that left them made the next line of the floor go round a line that is not there, so a second run, whose line fitted at once, laid it 0.2 m elsewhere
     if (!ceilingLine(x, f, g, c, ci, start, panel, rs, boost, distOf)) return { ok: false, rest };
     const len = sumBy(x.sys.routes.slice(at[0]).filter((r) => r.circuit === ci.id), (r) => routeLen(r).len);
     if (len <= max || rooms.length < 2) return { ok: true, rest };
     x.sys.routes.length = at[0]; x.added.routes.length = at[1]; x.sys.elements.length = at[2]; x.added.elements.length = at[3]; x.ceil[f] = undefined; x.idsR = pools[0]; x.idsE = pools[1];
+    if (lanes) g.own = lanes; else delete g.own; if (extra) g.extra = extra; else delete g.extra; if (crossed) x.crossed = crossed; else delete x.crossed;
     const room = rooms.pop(), off = c.els.filter((e) => (e.room ?? f) === room); rest.unshift({ kind: c.kind, emerg: c.emerg, els: off, kw: sumBy(off, elementKw), rooms: new Set([room]) });
     c.els = c.els.filter((e) => !off.includes(e)); c.kw -= rest[0].kw; c.rooms.delete(room); ci.label = [...c.rooms].join('+').slice(0, 60);
     const own = takeId(x.idsC, circuitKey(panel.id, c.kind, c.els.map((e) => e.id))); if (own) { ci.id = own; for (const e of c.els) { e.circuit = own; if (x.keptLoads.has(e)) x.links[e.id] = own; } } // a second run finds the line as the first one left it, and keeps its number
@@ -11113,7 +11187,7 @@ function toolCompare(d, a, b) {
   return said(true, [TX(`v${a} → v${b}: əlavə ${add}, silinən ${gone}, dəyişən ${d.changes.length - add - gone}`, `v${a} → v${b}: добавлено ${add}, удалено ${gone}, изменено ${d.changes.length - add - gone}`), ...d.changes.slice(0, 5).map(name)]);
 }
 
-return {FLOORS,FLOOR_LEVEL,CEILING,ROOF_BUILDUP,PARAPET_TOP,OPEN_ROOMS,GLASS_SOLID,PAV_COL,PAV_BAY,PAV_DOORS,GLASS_HEAD,GLASS_SILL,GLASS_STANDING,pavStations,glassEdges,glassAt,MANSARD_CEILING,DISCIPLINES,ELEMENT_TYPES,ROUTE_TYPES,FLOOR_RUN,inFloor,CEIL_LAY,inCeil,lineName,realRoutes,EMERGENCY_LINE,FIRE_LOOP,BOND_TYPES,LIGHTNING,ELEMENT_MARK,ROUTE_MARK,ROUTE_SIDES,FITTINGS,flowDir,flowPoints,offsetLine,BOARD_NUMBER,boardFloor,ROOM_USES,roomOfUse,CIRCUIT_KINDS,KIND_BASE,kindRow,ROLE_KIND,SOCKET_TYPES,isSocket,SWITCH_TYPES,isSwitch,CLEAN_ROLES,PROPOSAL_STATUS,CORRIDOR_ROOM,workplacesOf,WALK_POINTS,roomPointsOf,PRINTER_ROOMS,hasPrinter,GUARD_POST,boardBarred,siteScoreOf,BARRED_WORD,SITE_TERMS,CIRCUIT_PHASES,RISER_KINDS,RISER_LABEL,RISER_ROUTE,RISER_MARK,EARTHING,HEAT_SOURCES,HEAT_SOURCE_NAME,DHW_MODES,DHW_ELECTRIC,boilerSite,PEOPLE_LIST,RETIRED_ROOMS,MERGE_GONE,MERGED_AREA,STRIP_FOLD,STRIP_GONE,STRIP_WALL,STRIP_DOOR,STRIP_AREA,STRIP_SHIFT,stripShifted,stripDoorOf,stripOpen,foldStrip,foldRooms,RACK_GEAR,LV_LOADS,POINT_PORTS,PORT_STATUS,CCTV_CODECS,DOOR_SET,CAMERA_HALLS,cameraRoom,portId,portCable,VERIFY_STATUS,STAGE_STATUS,STAGES,PLACE_MODES,ITEM_FOOT,ITEM_WALK,ITEM_SEAT,ITEM_TOP,ITEM_LIGHT,ITEM_FIXTURE,ITEM_FITTED,WALL_NAMES,ESCAPE_ROUTES,CIRCULATION,TX,fin,r1,ruPlaces,r2,r3,sumBy,systemsOf,projectOf,mansardCeilingOf,stripProduct,productOf,idHighs,markHighs,assignMarks,SOFT_RUNS,markOf,markRange,heatSourceName,elementName,dhwOf,risersOf,stagesOf,elementKw,elementKind,elementLm,elementHeight,routeHeight,onCeiling,SAME_SPOT,nearCircuit,sameSpot,lineOf,routesFollow,elementSize,elementFoot,LOAD_LINES,WALL_POINTS,RAD_BODY,deskGap,underRadiator,spansFloor,pointInPoly,segDist,ringDist,ringArea,offsetRing,mansardContour,alongLine,stripSections,polyLen,ringLen,segCross,crossPoint,inDoorway,wallCrossings,compassOf,facing,facingDir,routeBody,routeLen,outsideDir,roomGeom,inRoom,roomAt,nearestRoom,itemCovers,itemFoot,itemsInRect,panelFreeDepth,openingClash,stairFeet,footless,stairFront,inCore,STAIR_MAX_RISER,stairSteps,stairTread,stairClear,shaftRect,inRect,rectsMeet,inBody,lenInRect,wallNear,floorWalls,ITEM_COUNTER,counterSpot,wallGap,doorSwept,dirOf,doorSide,streetDoor,doorSideOf,heaterOff,roomOpenings,spotsFor,deviceWires,ENTRY_LINE,feederLine,wallHoles,partHoles,cableLines,linesByRoute,branchPoints,lineMoved,diffStates,NORM_NOTE,UNIT_NAME,NORMS,normCheck,normOf,normValue,normsList,normSnapshot,CALC_VERSION,PRELIM_LABEL,SIGN_NOTE,pickBreaker,dropPct,phaseCurrent,arcOf,groupFactor,ambientFactor,NAMED_LOADS,loads,ESCAPE_TYPES,WORK_ITEMS,lightZones,lightSchedule,stripWm,ledStrip,LUX_BANDS,luxBand,luxGrid,lighting,lightsNeeded,nominalBtu,freonRow,matchAc,cooling,electricHeat,ahuCoil,ahuPower,layersU,envelopeOpen,heating,ventilation,LV_POINTS,rackGear,gearU,rackSlot,rackHeight,portsWanted,assignPorts,dropDeadPorts,rackLoad,lowVoltage,WIFI_SIDE,wifiSide,wifiInputs,wifiGrid,wifiReach,wifiField,wifiBands,wifiLoad,wifi,camInputs,camView,camEye,streetOff,camZones,camSees,camCone,camCones,camBlind,camWhere,camMbps,storeSaid,cctv,accessDoors,takeoff,allFixtures,water,peSection,loopOhm,protection,cableSchedule,pickDuct,ductRun,shaftBody,shaftSize,ducts,freonLines,peakFlow,pickPipe,manningQ,pipes,FINISH_NAMES,facadeMaterials,markTable,ceilingLevels,archSchedules,passages,naturalVent,DETAILS,detailSet,capText,SEWER_OD,FIRE_DAMPER,schedule,FIRE_NOTE,EARTH_NOTE,CABINET_NOTE,fireSafety,earthSystem,UTILITY_METERS,missingInputs,peopleTable,pointsTable,corridorSockets,reachGrid,cordFrom,vacuumReach,switchTable,gasBrief,designNotes,SECTIONS,isSection,sectionInputs,hashText,sectionHash,issueHash,sectionKeys,sectionStatus,verifyStatus,calcAll,SEVERITIES,insideWallBand,nearRoom,streetFacade,CHECKS,isCritical,ISSUE_CLASSES,issueClass,COORD_ROWS,coordRow,issueRows,stampOf,sevGroup,validationSummary,sheetAudit,INTERNAL_ID,runChecks,AUTO_DISCIPLINES,floorGrid,routeOn,autoScope,MANSARD_HEATER_STEP,deskSlides,autoPlanSize,autoPlanSteps,autoPlan,REPORT_GROUPS,RESULT_LABELS,buildReport,reportText,promptStatus,dec,TOOL_CALCS,toolCalc,toolConflicts,toolSchedule,toolRoute,toolCompare};
+return {FLOORS,FLOOR_LEVEL,CEILING,ROOF_BUILDUP,PARAPET_TOP,OPEN_ROOMS,GLASS_SOLID,PAV_COL,PAV_BAY,PAV_DOORS,GLASS_HEAD,GLASS_SILL,GLASS_STANDING,pavStations,glassEdges,glassAt,MANSARD_CEILING,DISCIPLINES,ELEMENT_TYPES,ROUTE_TYPES,FLOOR_RUN,inFloor,CEIL_LAY,inCeil,lineName,realRoutes,EMERGENCY_LINE,FIRE_LOOP,BOND_TYPES,LIGHTNING,ELEMENT_MARK,ROUTE_MARK,ROUTE_SIDES,FITTINGS,flowDir,flowPoints,offsetLine,BOARD_NUMBER,boardFloor,ROOM_USES,roomOfUse,CIRCUIT_KINDS,KIND_BASE,kindRow,ROLE_KIND,SOCKET_TYPES,isSocket,SWITCH_TYPES,isSwitch,CLEAN_ROLES,PROPOSAL_STATUS,CORRIDOR_ROOM,workplacesOf,WALK_POINTS,roomPointsOf,PRINTER_ROOMS,hasPrinter,GUARD_POST,boardBarred,siteScoreOf,BARRED_WORD,SITE_TERMS,CIRCUIT_PHASES,RISER_KINDS,RISER_LABEL,RISER_ROUTE,RISER_MARK,EARTHING,HEAT_SOURCES,HEAT_SOURCE_NAME,DHW_MODES,DHW_ELECTRIC,boilerSite,PEOPLE_LIST,RETIRED_ROOMS,MERGE_GONE,MERGED_AREA,STRIP_FOLD,STRIP_GONE,STRIP_WALL,STRIP_DOOR,STRIP_AREA,STRIP_SHIFT,stripShifted,stripDoorOf,stripOpen,foldStrip,foldRooms,RACK_GEAR,LV_LOADS,POINT_PORTS,PORT_STATUS,CCTV_CODECS,DOOR_SET,CAMERA_HALLS,cameraRoom,portId,portCable,VERIFY_STATUS,STAGE_STATUS,STAGES,PLACE_MODES,ITEM_FOOT,ITEM_WALK,ITEM_SEAT,ITEM_TOP,ITEM_LIGHT,ITEM_FIXTURE,ITEM_FITTED,WALL_NAMES,ESCAPE_ROUTES,CIRCULATION,TX,fin,r1,ruPlaces,r2,r3,sumBy,systemsOf,projectOf,OWNER_FREE,ownerKind,ownerOf,ownerRoomOf,ownerHolds,ownerRemovedNear,ownerNote,ownerMerge,OWNER_SOURCES,ownerStep,ownerFromHistory,mansardCeilingOf,stripProduct,productOf,idHighs,markHighs,assignMarks,SOFT_RUNS,markOf,markRange,heatSourceName,elementName,dhwOf,risersOf,stagesOf,elementKw,elementKind,elementLm,elementHeight,routeHeight,onCeiling,SAME_SPOT,nearCircuit,sameSpot,lineOf,routesFollow,elementSize,elementFoot,LOAD_LINES,WALL_POINTS,RAD_BODY,deskGap,underRadiator,spansFloor,pointInPoly,segDist,ringDist,ringArea,offsetRing,mansardContour,alongLine,stripSections,polyLen,ringLen,segCross,crossPoint,inDoorway,wallCrossings,compassOf,facing,facingDir,routeBody,routeLen,outsideDir,roomGeom,inRoom,roomAt,nearestRoom,itemCovers,itemFoot,itemsInRect,panelFreeDepth,openingClash,stairFeet,footless,stairFront,inCore,STAIR_MAX_RISER,stairSteps,stairTread,stairClear,shaftRect,inRect,rectsMeet,inBody,lenInRect,wallNear,floorWalls,ITEM_COUNTER,counterSpot,wallGap,doorSwept,dirOf,doorSide,streetDoor,doorSideOf,heaterOff,roomOpenings,spotsFor,deviceWires,ENTRY_LINE,feederLine,wallHoles,partHoles,cableLines,linesByRoute,branchPoints,lineMoved,diffStates,NORM_NOTE,UNIT_NAME,NORMS,normCheck,normOf,normValue,normsList,normSnapshot,CALC_VERSION,PRELIM_LABEL,SIGN_NOTE,pickBreaker,dropPct,phaseCurrent,arcOf,groupFactor,ambientFactor,NAMED_LOADS,loads,ESCAPE_TYPES,WORK_ITEMS,lightZones,lightSchedule,stripWm,ledStrip,LUX_BANDS,luxBand,luxGrid,lighting,lightsNeeded,nominalBtu,freonRow,matchAc,cooling,electricHeat,ahuCoil,ahuPower,layersU,envelopeOpen,heating,ventilation,LV_POINTS,rackGear,gearU,rackSlot,rackHeight,portsWanted,assignPorts,dropDeadPorts,rackLoad,lowVoltage,WIFI_SIDE,wifiSide,wifiInputs,wifiGrid,wifiReach,wifiField,wifiBands,wifiLoad,wifi,camInputs,camView,camEye,streetOff,camZones,camSees,camCone,camCones,camBlind,camWhere,camMbps,storeSaid,cctv,accessDoors,takeoff,allFixtures,water,peSection,loopOhm,protection,cableSchedule,pickDuct,ductRun,shaftBody,shaftSize,ducts,freonLines,peakFlow,pickPipe,manningQ,pipes,FINISH_NAMES,facadeMaterials,markTable,ceilingLevels,archSchedules,passages,naturalVent,DETAILS,detailSet,capText,SEWER_OD,FIRE_DAMPER,schedule,FIRE_NOTE,EARTH_NOTE,CABINET_NOTE,fireSafety,earthSystem,UTILITY_METERS,missingInputs,peopleTable,pointsTable,corridorSockets,reachGrid,cordFrom,vacuumReach,switchTable,gasBrief,designNotes,SECTIONS,isSection,sectionInputs,hashText,sectionHash,issueHash,sectionKeys,sectionStatus,verifyStatus,calcAll,SEVERITIES,insideWallBand,nearRoom,streetFacade,CHECKS,isCritical,ISSUE_CLASSES,issueClass,COORD_ROWS,coordRow,issueRows,stampOf,sevGroup,validationSummary,sheetAudit,INTERNAL_ID,runChecks,AUTO_DISCIPLINES,floorGrid,routeOn,autoScope,MANSARD_HEATER_STEP,deskSlides,WC_SPOTS,autoPlanSize,autoPlanSteps,autoPlan,REPORT_GROUPS,RESULT_LABELS,buildReport,reportText,promptStatus,dec,TOOL_CALCS,toolCalc,toolConflicts,toolSchedule,toolRoute,toolCompare};
 })();
 /* ------------------------------------------------------------------ engineering layer: overlays, panel, automatic design, review (part_systems.js)
    Overlays: per floor one merged line mesh (routes), one instanced mesh of symbols and one of small boxes, plus one line mesh for all risers. The four disciplines
